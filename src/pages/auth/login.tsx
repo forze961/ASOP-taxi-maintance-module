@@ -7,9 +7,6 @@ import Auth, { Group } from 'components/Auth';
 import Layout from 'Layouts';
 
 export default function Login() {
-  const onCheckbox = () => {
-    // v will be true or false
-  };
   return (
     <Layout title="Вітаємо!">
       <Auth title="Вітаємо!" subTitle="Введіть свій логін та пароль">
