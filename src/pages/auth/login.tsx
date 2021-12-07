@@ -1,11 +1,9 @@
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
-import { Checkbox } from '@paljs/ui/Checkbox';
 import React from 'react';
 import Link from 'next/link';
 
 import Auth, { Group } from 'components/Auth';
-import Socials from 'components/Auth/Socials';
 import Layout from 'Layouts';
 
 export default function Login() {
@@ -13,34 +11,32 @@ export default function Login() {
     // v will be true or false
   };
   return (
-    <Layout title="Login">
-      <Auth title="Login" subTitle="Hello! Login with your email">
+    <Layout title="Вітаємо!">
+      <Auth title="Вітаємо!" subTitle="Введіть свій логін та пароль">
         <form>
           <InputGroup fullWidth>
-            <input type="email" placeholder="Email Address" />
+            <input type="text" placeholder="Логін" />
           </InputGroup>
           <InputGroup fullWidth>
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Пароль" />
           </InputGroup>
           <Group>
-            <Checkbox checked onChange={onCheckbox}>
-              Remember me
-            </Checkbox>
             <Link href="/auth/request-password">
-              <a>Forgot Password?</a>
+              <a>Забули пароль?</a>
             </Link>
           </Group>
-          <Button status="Success" type="button" shape="SemiRound" fullWidth>
-            Login
+          <Button style={{
+            background: '#F17F14',
+            borderRadius: '36.5px',
+            borderColor: '#F17F14'
+          }}
+                  status="Success"
+                  type="button"
+                  shape="SemiRound"
+                  fullWidth >
+            Увійти
           </Button>
         </form>
-        <Socials />
-        <p>
-          Don&apos;t have account?{' '}
-          <Link href="/auth/register">
-            <a>Register</a>
-          </Link>
-        </p>
       </Auth>
     </Layout>
   );
