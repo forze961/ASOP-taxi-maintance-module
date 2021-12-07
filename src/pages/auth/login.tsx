@@ -10,6 +10,7 @@ export default function Login() {
   return (
     <Layout title="Вітаємо!">
       <Auth title="Вітаємо!" subTitle="Введіть свій логін та пароль">
+        <img src='/icons/man.png'/>
         <form>
           <InputGroup fullWidth>
             <input type="text" placeholder="Логін" />
