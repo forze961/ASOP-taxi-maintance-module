@@ -7,8 +7,6 @@ import { LayoutHeader } from '@paljs/ui/Layout';
 import { EvaIcon } from '@paljs/ui/Icon';
 import { Button } from '@paljs/ui/Button';
 import { Actions } from '@paljs/ui/Actions';
-import ContextMenu from '@paljs/ui/ContextMenu';
-import User from '@paljs/ui/User';
 import { breakpointDown } from '@paljs/ui/breakpoints';
 
 const HeaderStyle = styled.div`
@@ -80,25 +78,6 @@ const Header: React.FC<HeaderProps> = (props) => {
         </Label>
       ),
     },
-    {
-      value: 'cosmic',
-      label: (
-        <Label>
-          <EvaIcon name="droplet" options={{ fill: '#5a37b8' }} />
-          Cosmic
-        </Label>
-      ),
-    },
-    {
-      value: 'corporate',
-      label: (
-        <Label>
-          <EvaIcon name="droplet" options={{ fill: '#3366ff' }} />
-          Corporate
-        </Label>
-      ),
-      selected: true,
-    },
   ];
   return (
     <LayoutHeader fixed>
@@ -115,7 +94,7 @@ const Header: React.FC<HeaderProps> = (props) => {
             {
               content: (
                 <Link href="/">
-                  <a className="logo">Admin Template</a>
+                  <a className="logo">АСОП: маршрутні таксі</a>
                 </Link>
               ),
             },
@@ -137,53 +116,6 @@ const Header: React.FC<HeaderProps> = (props) => {
                 <Button size="Small" onClick={() => props.changeDir()}>
                   {props.dir}
                 </Button>
-              ),
-            },
-          ]}
-        />
-        <Actions
-          size="Small"
-          className="right"
-          actions={[
-            {
-              content: (
-                <a
-                  className="left"
-                  href={`https://github.com/paljs/nextjs-admin-template`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span className="github">Support us in GitHub</span>
-                  <img src={`https://badgen.net/github/stars/paljs/nextjs-admin-template`} />
-                </a>
-              ),
-            },
-            {
-              content: (
-                <a href="https://discord.gg/NRmdvDxsT8" target="_blank" rel="noreferrer">
-                  <img height="20" src="/discord.svg" alt="slack" />
-                </a>
-              ),
-            },
-            {
-              icon: 'twitter',
-              url: { href: 'https://twitter.com/AhmedElywh', target: '_blank' },
-            },
-            {
-              content: (
-                <ContextMenu
-                  nextJs
-                  style={{ cursor: 'pointer' }}
-                  placement="bottom"
-                  currentPath={router.pathname}
-                  items={[
-                    { title: 'Profile', link: { href: '/modal-overlays/tooltip' } },
-                    { title: 'Log out', link: { href: '/logout' } },
-                  ]}
-                  Link={Link}
-                >
-                  <User image="url('/icons/icon-72x72.png')" name="Ahmed Elywa" title="Manger" size="Medium" />
-                </ContextMenu>
               ),
             },
           ]}

@@ -5,8 +5,11 @@ import Link from 'next/link';
 
 import Auth, { Group } from 'components/Auth';
 import Layout from 'Layouts';
+import {useRouter} from "next/router";
 
 export default function Login() {
+  const router = useRouter();
+
   return (
     <Layout title="Вітаємо!">
       <Auth title="Вітаємо!" subTitle="Введіть свій логін та пароль">
@@ -28,10 +31,12 @@ export default function Login() {
             borderRadius: '36.5px',
             borderColor: '#F17F14'
           }}
-                  status="Success"
-                  type="button"
-                  shape="SemiRound"
-                  fullWidth >
+            status="Success"
+            type="button"
+            shape="SemiRound"
+            fullWidth
+                  onClick={() => router.push('/extra-components/accordion')}
+          >
             Увійти
           </Button>
         </form>
