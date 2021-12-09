@@ -36,9 +36,9 @@ export const Group = styled.div`
 
 const CardAuth = styled(Card)`
   margin-bottom: 0;
-  height: calc(100vh - 5rem);
+  height: calc(100vh - 10rem);
   ${breakpointDown('sm')`
-    height: 95vh;
+    height: 90vh;
   `}
   ${CardBody} {
     display: flex;

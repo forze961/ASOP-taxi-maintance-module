@@ -4,23 +4,22 @@ import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
 import React from 'react';
 
-import Auth from 'components/Auth';
+import Main from 'components/Main';
 import Layout from 'Layouts';
-import {useRouter} from "next/router";
+import { useRouter } from 'next/router';
 
 export default function Index() {
   const router = useRouter();
 
   return (
     <Layout title="Оберіть графік руху!" titleNow="Вибір графіку руху">
-      <Auth title="Оберіть графік руху!">
-
+      <Main title="Оберіть графік руху!">
         <Container>
           <Row>
             <Col breakPoint={{ xs: 12 }}>
               <Row center="xs">
                 <Col breakPoint={{ xs: 6 }}>
-                  <img src='/icons/choice-graph.png' alt="Асоп: маршрутні таксі" width="175px" height="150px"/>
+                  <img src="/icons/choice-graph.png" alt="Асоп: маршрутні таксі" width="175px" height="150px" />
                 </Col>
               </Row>
             </Col>
@@ -28,21 +27,22 @@ export default function Index() {
         </Container>
 
         <form>
-          <Button style={{
-            background: '#F17F14',
-            borderRadius: '36.5px',
-            borderColor: '#F17F14'
-          }}
+          <Button
+            style={{
+              background: '#F17F14',
+              borderRadius: '36.5px',
+              borderColor: '#F17F14',
+            }}
             status="Success"
             type="button"
             shape="SemiRound"
             fullWidth
-                  onClick={() => router.push('/route/choice-route')}
+            onClick={() => router.push('/route/choice-route')}
           >
             Вибрати
           </Button>
         </form>
-      </Auth>
+      </Main>
     </Layout>
   );
 }

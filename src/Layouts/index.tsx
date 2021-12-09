@@ -116,7 +116,7 @@ const LayoutPage: React.FC<SEOProps> = ({ children, titleNow }) => {
                 >
                   {seeHeader && (
                     <header>
-                      <User image="url('/icons/icon-72x72.png')" name="Іванов Іван" title="Водій" size="Medium" />
+                      <User image="url('/icons/face.png')" name="Іванов Іван" title="Водій" size="Medium" />
                     </header>
                   )}
                   <SidebarBody>
