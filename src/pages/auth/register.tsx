@@ -11,7 +11,7 @@ import Col from "@paljs/ui/Col";
 
 export default function Register() {
   return (
-      <Layout title="Зареєструватися!">
+      <Layout title="Зареєструватися!" titleNow="Зареєструватися">
         <Auth title="Зареєструватися!" subTitle="Введіть свій номер телефону та пароль">
 
           <Container>

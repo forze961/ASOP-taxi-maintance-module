@@ -53,7 +53,7 @@ interface HeaderProps {
   };
   changeDir: () => void;
   dir: 'rtl' | 'ltr';
-  title: string;
+  title?: string;
 }
 
 const Header: React.FC<HeaderProps> = (props) => {

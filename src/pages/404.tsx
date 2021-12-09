@@ -25,14 +25,14 @@ const ErrorStyle = styled.div`
 export default function Error(): JSX.Element {
   const router = useRouter();
   return (
-    <Layout title="404 Page Not Found">
+    <Layout title="404 Page Not Found" titleNow="Не знайдено">
       <Card>
         <CardBody>
           <ErrorStyle>
             <h1>404 Page Not Found</h1>
-            <small>The page you were looking for doesn&apos;t exist</small>
+            <small>Ця сторінка не знайдена або у розробці</small>
             <ButtonLink fullWidth appearance="hero" onClick={() => router.push('/')} shape="Rectangle">
-              Take me home
+              Додому
             </ButtonLink>
           </ErrorStyle>
         </CardBody>
