@@ -11,6 +11,7 @@ import User from '@paljs/ui/User';
 import { Menu, MenuRefObject } from '@paljs/ui/Menu';
 import Link from 'next/link';
 import menuItems from './menuItem';
+import SEO from "components/SEO";
 
 const getDefaultTheme = (): DefaultTheme['name'] => {
   if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -21,7 +22,42 @@ const getDefaultTheme = (): DefaultTheme['name'] => {
   }
 };
 
-const LayoutPage: React.FC<SEOProps> = ({ children, titleNow, ...rest }) => {
+export interface SEOProps {
+  description?: string;
+  lang?: string;
+  meta?: any[];
+  keywords?: string[];
+  title: string;
+  titleNow: string;
+}
+
+SEO.defaultProps = {
+  description: 'Free admin dashboard template based on Next.Js with @paljs/ui component package',
+  keywords: [
+    'admin-dashboard',
+    'admin',
+    'react',
+    'reactjs',
+    'dashboard',
+    'dashboard-templates',
+    'themes',
+    'styled-components',
+    'styledcomponents',
+    'admin-template',
+    'free-admin-template',
+    'react-admin-dashboard',
+    'react-admin-panel',
+    'react-admin-component',
+    'nextjs',
+    'react-forms',
+    'react-select',
+    'react-accordion',
+    'react-chat',
+    'react-admin-template',
+  ],
+};
+
+const LayoutPage: React.FC<SEOProps> = ({ children, titleNow }) => {
   const [theme, setTheme] = useState<DefaultTheme['name']>('default');
   const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
   const sidebarRef = useRef<SidebarRefObject>(null);
