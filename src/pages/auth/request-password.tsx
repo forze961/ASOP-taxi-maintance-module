@@ -8,22 +8,31 @@ import Auth, { Group } from 'components/Auth';
 
 export default function RequestPassword() {
   return (
-    <Layout title="Forgot Password">
-      <Auth title="Forgot Password" subTitle="Enter your email address and we’ll send a link to reset your password">
+    <Layout title="Забули пароль">
+      <Auth title="Забули пароль" subTitle="Введіть свій номер телефону для відновлення паролю">
         <form>
           <InputGroup fullWidth>
-            <input type="email" placeholder="Email Address" />
+            <input type="text" placeholder="Номер телефону" />
           </InputGroup>
-          <Button status="Success" type="button" shape="SemiRound" fullWidth>
-            Request Password
+          <Button style={{
+            background: '#F17F14',
+            borderRadius: '36.5px',
+            borderColor: '#F17F14'
+          }}
+                  status="Success"
+                  type="button"
+                  shape="SemiRound"
+                  fullWidth
+          >
+            Відновити пароль
           </Button>
         </form>
         <Group>
           <Link href="/auth/login">
-            <a>Back to Log In</a>
+            <a>Назад до авторизації</a>
           </Link>
           <Link href="/auth/register">
-            <a>Register</a>
+            <a>Реєстрація</a>
           </Link>
         </Group>
       </Auth>

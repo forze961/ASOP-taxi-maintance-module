@@ -4,7 +4,6 @@ import styled, { DefaultTheme } from 'styled-components';
 import Select from '@paljs/ui/Select';
 import { LayoutHeader } from '@paljs/ui/Layout';
 import { EvaIcon } from '@paljs/ui/Icon';
-import { Button } from '@paljs/ui/Button';
 import { Actions } from '@paljs/ui/Actions';
 import { breakpointDown } from '@paljs/ui/breakpoints';
 
@@ -107,13 +106,6 @@ const Header: React.FC<HeaderProps> = (props) => {
                   options={themeOptions()}
                   onChange={({ value }: { value: DefaultTheme['name'] }) => props.theme.set(value)}
                 />
-              ),
-            },
-            {
-              content: (
-                <Button size="Small" onClick={() => props.changeDir()}>
-                  {props.dir}
-                </Button>
               ),
             },
           ]}

@@ -1,5 +1,8 @@
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
+import Container from '@paljs/ui/Container';
+import Row from '@paljs/ui/Row';
+import Col from '@paljs/ui/Col';
 import React from 'react';
 import Link from 'next/link';
 
@@ -12,11 +15,23 @@ export default function Login() {
 
   return (
     <Layout title="Вітаємо!">
-      <Auth title="Вітаємо!" subTitle="Введіть свій логін та пароль">
-        <img src='/icons/man.png'/>
+      <Auth title="Вітаємо!" subTitle="Введіть свій номер телефону та пароль">
+
+        <Container>
+          <Row>
+            <Col breakPoint={{ xs: 12 }}>
+              <Row center="xs">
+                <Col breakPoint={{ xs: 6 }}>
+                  <img src='/icons/man.png'/>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+
         <form>
           <InputGroup fullWidth>
-            <input type="text" placeholder="Логін" />
+            <input type="text" placeholder="Номер телефону" />
           </InputGroup>
           <InputGroup fullWidth>
             <input type="password" placeholder="Пароль" />
@@ -24,6 +39,9 @@ export default function Login() {
           <Group>
             <Link href="/auth/request-password">
               <a>Забули пароль?</a>
+            </Link>
+            <Link href="/auth/register">
+              <a>Зареєструватися?</a>
             </Link>
           </Group>
           <Button style={{
@@ -35,7 +53,7 @@ export default function Login() {
             type="button"
             shape="SemiRound"
             fullWidth
-                  onClick={() => router.push('/extra-components/accordion')}
+                  onClick={() => router.push('/route')}
           >
             Увійти
           </Button>
