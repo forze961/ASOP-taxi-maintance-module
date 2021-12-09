@@ -19,7 +19,7 @@ export default function Register() {
               <Col breakPoint={{ xs: 12 }}>
                 <Row center="xs">
                   <Col breakPoint={{ xs: 6 }}>
-                    <img src='/icons/man.png'/>
+                    <img src='/icons/man.png' alt="Асоп: маршрутні таксі" width="200px" height="150px"/>
                   </Col>
                 </Row>
               </Col>

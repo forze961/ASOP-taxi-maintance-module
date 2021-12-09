@@ -11,7 +11,6 @@ import User from '@paljs/ui/User';
 import { Menu, MenuRefObject } from '@paljs/ui/Menu';
 import Link from 'next/link';
 import menuItems from './menuItem';
-import SEO, { SEOProps } from 'components/SEO';
 
 const getDefaultTheme = (): DefaultTheme['name'] => {
   if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -22,7 +21,7 @@ const getDefaultTheme = (): DefaultTheme['name'] => {
   }
 };
 
-const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
+const LayoutPage: React.FC<SEOProps> = ({ children, titleNow, ...rest }) => {
   const [theme, setTheme] = useState<DefaultTheme['name']>('default');
   const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
   const sidebarRef = useRef<SidebarRefObject>(null);
@@ -56,7 +55,6 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
 
   return (
     <Fragment>
-      <SEO {...rest} />
       <ThemeProvider theme={themes(theme, dir)}>
         <Fragment>
           <SimpleLayout />
@@ -67,6 +65,7 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
                 changeDir={changeDir}
                 theme={{ set: changeTheme, value: theme }}
                 toggleSidebar={() => sidebarRef.current?.toggle()}
+                title={titleNow}
               />
             )}
             <LayoutContainer>

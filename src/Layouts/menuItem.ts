@@ -4,22 +4,22 @@ const items: MenuItemType[] = [
   {
     title: 'Профіль',
     icon: { name: 'home' },
-    link: { href: '/dashboard' },
+    link: { href: '/profile' },
   },
   {
     title: 'Змінити маршрут',
     icon: { name: 'swap' },
-    link: { href: '/dashboard' },
+    link: { href: '/route' },
   },
   {
     title: 'Валідації',
     icon: { name: 'checkmark-circle' },
-    link: { href: '/dashboard' },
+    link: { href: '/validations' },
   },
   {
     title: 'Вийти',
     icon: { name: 'log-out' },
-    link: { href: '/dashboard' },
+    link: { href: '/auth/login' },
   },
 ];
 

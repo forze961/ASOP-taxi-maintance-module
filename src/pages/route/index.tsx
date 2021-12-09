@@ -12,7 +12,7 @@ export default function Index() {
   const router = useRouter();
 
   return (
-    <Layout title="Оберіть графік руху!">
+    <Layout title="Оберіть графік руху!" titleNow="Вибір графіку руху">
       <Auth title="Оберіть графік руху!">
 
         <Container>
@@ -20,7 +20,7 @@ export default function Index() {
             <Col breakPoint={{ xs: 12 }}>
               <Row center="xs">
                 <Col breakPoint={{ xs: 6 }}>
-                  <img src='/icons/choice-graph.png'/>
+                  <img src='/icons/choice-graph.png' alt="Асоп: маршрутні таксі" width="175px" height="150px"/>
                 </Col>
               </Row>
             </Col>

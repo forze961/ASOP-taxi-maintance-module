@@ -53,6 +53,7 @@ interface HeaderProps {
   };
   changeDir: () => void;
   dir: 'rtl' | 'ltr';
+  title: string;
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
@@ -91,7 +92,7 @@ const Header: React.FC<HeaderProps> = (props) => {
             {
               content: (
                 <Link href="/">
-                  <a className="logo">АСОП: маршрутні таксі</a>
+                  <a className="logo">{props.title || 'АСОП: маршрутні таксі'}</a>
                 </Link>
               ),
             },

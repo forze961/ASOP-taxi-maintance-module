@@ -8,7 +8,7 @@ import Auth, { Group } from 'components/Auth';
 
 export default function RequestPassword() {
   return (
-    <Layout title="Забули пароль">
+    <Layout title="Забули пароль" titleNow="АСОП: taxi">
       <Auth title="Забули пароль" subTitle="Введіть свій номер телефону для відновлення паролю">
         <form>
           <InputGroup fullWidth>

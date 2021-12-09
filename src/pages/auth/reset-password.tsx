@@ -8,7 +8,7 @@ import Auth, { Group } from 'components/Auth';
 
 export default function ResetPassword() {
   return (
-    <Layout title="Change Password">
+    <Layout title="Change Password" titleNow="АСОП: taxi">
       <Auth title="Change Password" subTitle="Please set a new password">
         <form>
           <InputGroup fullWidth>

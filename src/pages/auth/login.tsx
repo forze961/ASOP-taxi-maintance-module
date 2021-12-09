@@ -14,7 +14,7 @@ export default function Login() {
   const router = useRouter();
 
   return (
-    <Layout title="Вітаємо!">
+    <Layout title="Вітаємо!" titleNow="АСОП: taxi">
       <Auth title="Вітаємо!" subTitle="Введіть свій номер телефону та пароль">
 
         <Container>
@@ -22,7 +22,7 @@ export default function Login() {
             <Col breakPoint={{ xs: 12 }}>
               <Row center="xs">
                 <Col breakPoint={{ xs: 6 }}>
-                  <img src='/icons/man.png'/>
+                  <img src='/icons/man.png' alt="Асоп: маршрутні таксі" width="200px" height="150px"/>
                 </Col>
               </Row>
             </Col>

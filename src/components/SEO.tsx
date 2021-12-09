@@ -41,6 +41,7 @@ export interface SEOProps {
   meta?: any[];
   keywords?: string[];
   title: string;
+  titleNow: string;
 }
 
 SEO.defaultProps = {
