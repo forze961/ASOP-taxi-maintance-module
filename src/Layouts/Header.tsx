@@ -80,7 +80,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     <LayoutHeader fixed>
       <HeaderStyle>
         <Actions
-          size="Medium"
+          size="Small"
           actions={[
             {
               icon: { name: 'menu-2-outline' },

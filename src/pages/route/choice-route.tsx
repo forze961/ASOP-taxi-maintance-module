@@ -11,9 +11,9 @@ export default function Index() {
     <Layout title="Оберіть маршрут!">
         <Container>
           <Row>
-            <Col breakPoint={{ xs: 12 }}>
+            <Col breakPoint={{ xs: 12, sm: 12, md: 8, lg: 8 }}>
               <Row center="xs">
-                <Col breakPoint={{ xs: 6 }}>
+                <Col breakPoint={{ xs: 12, sm: 12, md: 8, lg: 8 }}>
                   <CardRoute/>
                 </Col>
               </Row>
