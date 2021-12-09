@@ -19,10 +19,10 @@ const Routes: React.FC<RoutesProps> = ({ num, endpoints }) => {
       <CardBody>
         <Row style={{ width: '100%' }}>
           <img style={{ paddingTop: '3px' }} height="30px" width="30px" src="/icons/bus.png" />
-          <Col breakPoint={{ xs: 1, sm: 1, md: 1, lg: 1 }} style={{ paddingTop: '3px' }}>
+          <Col breakPoint={{ xs: 2, sm: 2, md: 2, lg: 2 }} style={{ paddingTop: '3px' }}>
             <img src="/icons/route-points.png" />
           </Col>
-          <Col breakPoint={{ xs: 9, sm: 9, md: 9, lg: 9 }} style={{ paddingLeft: 0 }}>
+          <Col breakPoint={{ xs: 8, sm: 8, md: 8, lg: 8 }} style={{ paddingLeft: 0 }}>
             <div>
               <b>{endpoints.start}</b>
               <p>
