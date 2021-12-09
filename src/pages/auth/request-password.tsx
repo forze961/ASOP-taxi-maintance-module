@@ -14,15 +14,16 @@ export default function RequestPassword() {
           <InputGroup fullWidth>
             <input type="text" placeholder="Номер телефону" />
           </InputGroup>
-          <Button style={{
-            background: '#F17F14',
-            borderRadius: '36.5px',
-            borderColor: '#F17F14'
-          }}
-                  status="Success"
-                  type="button"
-                  shape="SemiRound"
-                  fullWidth
+          <Button
+            style={{
+              background: '#F17F14',
+              borderRadius: '36.5px',
+              borderColor: '#F17F14',
+            }}
+            status="Success"
+            type="button"
+            shape="SemiRound"
+            fullWidth
           >
             Відновити пароль
           </Button>

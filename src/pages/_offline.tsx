@@ -23,20 +23,20 @@ const ErrorStyle = styled.div`
   }
 `;
 export default function Error(): JSX.Element {
-    const router = useRouter();
-    return (
-        <Layout title="Немає підключення" titleNow="Немає підключення">
-            <Card>
-                <CardBody>
-                    <ErrorStyle>
-                        <h1>Немає підключення до інтернету</h1>
-                        <small>Перевірте підключення до мережі інтернет та оновіть сторінку</small>
-                        <ButtonLink fullWidth appearance="hero" onClick={() => router.push('/')} shape="Rectangle">
-                            Оновити
-                        </ButtonLink>
-                    </ErrorStyle>
-                </CardBody>
-            </Card>
-        </Layout>
-    );
+  const router = useRouter();
+  return (
+    <Layout title="Немає підключення" titleNow="Немає підключення">
+      <Card>
+        <CardBody>
+          <ErrorStyle>
+            <h1>Немає підключення до інтернету</h1>
+            <small>Перевірте підключення до мережі інтернет та оновіть сторінку</small>
+            <ButtonLink fullWidth appearance="hero" onClick={() => router.push('/')} shape="Rectangle">
+              Оновити
+            </ButtonLink>
+          </ErrorStyle>
+        </CardBody>
+      </Card>
+    </Layout>
+  );
 }

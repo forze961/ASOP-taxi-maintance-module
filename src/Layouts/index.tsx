@@ -11,7 +11,7 @@ import User from '@paljs/ui/User';
 import { Menu, MenuRefObject } from '@paljs/ui/Menu';
 import Link from 'next/link';
 import menuItems from './menuItem';
-import SEO from "components/SEO";
+import SEO from 'components/SEO';
 
 const getDefaultTheme = (): DefaultTheme['name'] => {
   if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
