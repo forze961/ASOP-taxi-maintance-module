@@ -1,9 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import styled, { DefaultTheme } from 'styled-components';
-import Select from '@paljs/ui/Select';
+import styled from 'styled-components';
 import { LayoutHeader } from '@paljs/ui/Layout';
-import { EvaIcon } from '@paljs/ui/Icon';
 import { Actions } from '@paljs/ui/Actions';
 import { breakpointDown } from '@paljs/ui/breakpoints';
 
@@ -36,47 +34,14 @@ const HeaderStyle = styled.div`
   }
 `;
 
-const Label = styled.span`
-  display: flex;
-  align-items: center;
-`;
-
-const SelectStyled = styled(Select)`
-  min-width: 150px;
-`;
-
 interface HeaderProps {
   toggleSidebar: () => void;
-  theme: {
-    set: (value: DefaultTheme['name']) => void;
-    value: DefaultTheme['name'];
-  };
   changeDir: () => void;
   dir: 'rtl' | 'ltr';
   title?: string;
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
-  const themeOptions = () => [
-    {
-      value: 'default',
-      label: (
-        <Label>
-          <EvaIcon name="droplet" options={{ fill: '#a6c1ff' }} />
-          Default
-        </Label>
-      ),
-    },
-    {
-      value: 'dark',
-      label: (
-        <Label>
-          <EvaIcon name="droplet" options={{ fill: '#192038' }} />
-          Dark
-        </Label>
-      ),
-    },
-  ];
   return (
     <LayoutHeader fixed>
       <HeaderStyle>
@@ -94,19 +59,6 @@ const Header: React.FC<HeaderProps> = (props) => {
                 <Link href="/">
                   <a className="logo">{props.title || 'АСОП: маршрутні таксі'}</a>
                 </Link>
-              ),
-            },
-            {
-              content: (
-                <SelectStyled
-                  instanceId="react-select-input"
-                  isSearchable={false}
-                  shape="SemiRound"
-                  placeholder="Themes"
-                  value={themeOptions().find((item) => item.value === props.theme.value)}
-                  options={themeOptions()}
-                  onChange={({ value }: { value: DefaultTheme['name'] }) => props.theme.set(value)}
-                />
               ),
             },
           ]}

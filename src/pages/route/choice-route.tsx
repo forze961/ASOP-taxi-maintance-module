@@ -10,17 +10,13 @@ import Main from 'components/Main';
 export default function Index() {
   return (
     <Layout title="Оберіть маршрут!" titleNow="Оберіть маршрут">
-      <Main title="Оберіть маршрут!">
+      <Main>
         <Container>
           <Row>
-            <Col>
-              <Row center="xs">
-                <Col>
-                  {routes.map((route) => (
-                    <CardRoute key={route.num} num={route.num} endpoints={route.endpoints} />
-                  ))}
-                </Col>
-              </Row>
+            <Col breakPoint={{ xs: 12, sm: 12, md: 8, lg: 8 }}>
+              {routes.map((route) => (
+                <CardRoute key={route.num} num={route.num} endpoints={route.endpoints} />
+              ))}
             </Col>
           </Row>
         </Container>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { DefaultTheme, ThemeProvider } from 'styled-components';
+import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
 import themes from './themes';
 import { Layout, LayoutContent, LayoutContainer, LayoutColumns, LayoutColumn } from '@paljs/ui/Layout';
 import icons from '@paljs/icons';
@@ -12,6 +12,8 @@ import { Menu, MenuRefObject } from '@paljs/ui/Menu';
 import Link from 'next/link';
 import menuItems from './menuItem';
 import SEO from 'components/SEO';
+import { EvaIcon } from '@paljs/ui/Icon';
+import Select from '@paljs/ui/Select';
 
 const getDefaultTheme = (): DefaultTheme['name'] => {
   if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -89,6 +91,37 @@ const LayoutPage: React.FC<SEOProps> = ({ children, titleNow }) => {
 
   const authLayout = router.pathname.startsWith('/auth');
 
+  const Label = styled.span`
+    display: flex;
+    align-items: center;
+  `;
+
+  const SelectStyled = styled(Select)`
+    min-width: 150px;
+    padding-top: 25px;
+  `;
+
+  const themeOptions = () => [
+    {
+      value: 'default',
+      label: (
+        <Label>
+          <EvaIcon name="droplet" options={{ fill: '#a6c1ff' }} />
+          Світла тема
+        </Label>
+      ),
+    },
+    {
+      value: 'dark',
+      label: (
+        <Label>
+          <EvaIcon name="droplet" options={{ fill: '#192038' }} />
+          Темна тема
+        </Label>
+      ),
+    },
+  ];
+
   return (
     <Fragment>
       <ThemeProvider theme={themes(theme, dir)}>
@@ -99,7 +132,6 @@ const LayoutPage: React.FC<SEOProps> = ({ children, titleNow }) => {
               <Header
                 dir={dir}
                 changeDir={changeDir}
-                theme={{ set: changeTheme, value: theme }}
                 toggleSidebar={() => sidebarRef.current?.toggle()}
                 title={titleNow}
               />
@@ -128,6 +160,15 @@ const LayoutPage: React.FC<SEOProps> = ({ children, titleNow }) => {
                       items={menuItems}
                       currentPath={router.pathname}
                       toggleSidebar={() => sidebarRef.current?.hide()}
+                    />
+                    <SelectStyled
+                      instanceId="react-select-input"
+                      isSearchable={false}
+                      shape="SemiRound"
+                      placeholder="Themes"
+                      value={themeOptions().find((item) => item.value === theme)}
+                      options={themeOptions()}
+                      onChange={({ value }: { value: DefaultTheme['name'] }) => changeTheme(value)}
                     />
                   </SidebarBody>
                 </Sidebar>

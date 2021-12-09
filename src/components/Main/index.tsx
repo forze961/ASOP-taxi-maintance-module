@@ -45,7 +45,7 @@ const CardAuth = styled(Card)`
   }
 `;
 interface AuthProps {
-  title: string;
+  title?: string;
   subTitle?: string;
 }
 const Auth: React.FC<AuthProps> = ({ subTitle, title, children }) => {
@@ -53,7 +53,7 @@ const Auth: React.FC<AuthProps> = ({ subTitle, title, children }) => {
     <CardAuth>
       <CardBody>
         <AuthStyle subTitle={subTitle}>
-          <h1>{title}</h1>
+          {title && <h1>{title}</h1>}
           {subTitle && <p>{subTitle}</p>}
           {children}
         </AuthStyle>
