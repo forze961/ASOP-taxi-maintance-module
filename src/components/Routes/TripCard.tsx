@@ -45,7 +45,7 @@ const Trips: React.FC<TripsProps> = ({ route, name, time, stations }) => {
         <CardHeader style={{ padding: '0.7rem' }}>
           Рейс #<b>{name}</b> | <b>Зупинки</b>:
         </CardHeader>
-        <CardBody style={{ padding: '0.7rem' }}>
+        <CardBody style={{ padding: 0 }}>
           <Accordion>
             <AccordionItem uniqueKey={1} title="Показати зупинки">
               <Row style={{ width: '100%' }}>
@@ -54,7 +54,7 @@ const Trips: React.FC<TripsProps> = ({ route, name, time, stations }) => {
                     <Col breakPoint={{ xs: 1, sm: 1, md: 1, lg: 1 }} key={`${station.name}point`}>
                       <img style={{ paddingTop: '3px' }} src="/icons/station-point.png" />
                     </Col>
-                    <Col breakPoint={{ xs: 11, sm: 11, md: 11, lg: 11 }} key={`${station.name}name`}>
+                    <Col breakPoint={{ xs: 10, sm: 10, md: 10, lg: 10 }} key={`${station.name}name`}>
                       {station.name}
                     </Col>
                   </>
