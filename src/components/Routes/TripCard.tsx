@@ -51,7 +51,7 @@ const Trips: React.FC<TripsProps> = ({ route, name, time, stations }) => {
               <Row style={{ width: '100%' }}>
                 {stations?.map((station) => (
                   <>
-                    <Col breakPoint={{ xs: 1, sm: 1, md: 1, lg: 1 }} key={`${station.name}point`}>
+                    <Col breakPoint={{ xs: 2, sm: 2, md: 2, lg: 2 }} key={`${station.name}point`}>
                       <img style={{ paddingTop: '3px' }} src="/icons/station-point.png" />
                     </Col>
                     <Col breakPoint={{ xs: 10, sm: 10, md: 10, lg: 10 }} key={`${station.name}name`}>
