@@ -6,7 +6,7 @@ import React from 'react';
 const AuthStyle = styled.div<{ subTitle?: string }>`
   margin: auto;
   display: block;
-  width: 100%;
+  width: 90%;
   max-width: 35rem;
   a {
     font-weight: 600;
@@ -38,7 +38,7 @@ const CardAuth = styled(Card)`
   margin-bottom: 0;
   height: calc(100vh - 10rem);
   ${breakpointDown('sm')`
-    height: 90vh;
+    height: 85vh;
   `}
   ${CardBody} {
     display: flex;

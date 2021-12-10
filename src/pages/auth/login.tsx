@@ -20,7 +20,7 @@ export default function Login() {
           <Row>
             <Col breakPoint={{ xs: 12 }}>
               <Row center="xs">
-                <Col breakPoint={{ xs: 6 }}>
+                <Col breakPoint={{ xs: 8 }}>
                   <img src="/icons/man.png" alt="Асоп: маршрутні таксі" width="200px" height="150px" />
                 </Col>
               </Row>
@@ -29,10 +29,10 @@ export default function Login() {
         </Container>
 
         <form>
-          <InputGroup fullWidth>
+          <InputGroup fullWidth shape="Round">
             <input type="text" placeholder="Номер телефону" />
           </InputGroup>
-          <InputGroup fullWidth>
+          <InputGroup fullWidth shape="Round">
             <input type="password" placeholder="Пароль" />
           </InputGroup>
           <Group>

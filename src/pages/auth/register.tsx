@@ -26,10 +26,10 @@ export default function Register() {
         </Container>
 
         <form>
-          <InputGroup fullWidth>
+          <InputGroup fullWidth shape="Round">
             <input type="text" placeholder="Номер телефону" />
           </InputGroup>
-          <InputGroup fullWidth>
+          <InputGroup fullWidth shape="Round">
             <input type="password" placeholder="Пароль" />
           </InputGroup>
           <Group>

@@ -11,7 +11,7 @@ export default function RequestPassword() {
     <Layout title="Забули пароль" titleNow="АСОП: taxi">
       <Auth title="Забули пароль" subTitle="Введіть свій номер телефону для відновлення паролю">
         <form>
-          <InputGroup fullWidth>
+          <InputGroup fullWidth shape="Round">
             <input type="text" placeholder="Номер телефону" />
           </InputGroup>
           <Button
