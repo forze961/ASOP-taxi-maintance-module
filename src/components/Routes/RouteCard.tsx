@@ -2,6 +2,7 @@ import React from 'react';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
 import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
+import { useRouter } from 'next/router';
 
 interface RoutesProps {
   num: number;
@@ -11,12 +12,14 @@ interface RoutesProps {
   };
 }
 const Routes: React.FC<RoutesProps> = ({ num, endpoints }) => {
+  const router = useRouter();
+
   return (
     <Card accent="Success" style={{ borderTopColor: '#F17F14', width: 'auto', cursor: 'pointer' }}>
       <CardHeader>
         Маршрут #<b>{num}</b>
       </CardHeader>
-      <CardBody>
+      <CardBody onClick={() => router.push(`/route/${num}`)}>
         <Row style={{ width: '100%' }}>
           <img style={{ paddingTop: '3px' }} height="30px" width="30px" src="/icons/bus.png" />
           <Col breakPoint={{ xs: 2, sm: 2, md: 2, lg: 2 }} style={{ paddingTop: '3px' }}>
