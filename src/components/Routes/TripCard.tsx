@@ -14,10 +14,10 @@ const Trips: React.FC<TripsProps> = ({ route, name, time, stations }) => {
   return (
     <FlipCard>
       <Card accent="Success" style={{ borderTopColor: '#F17F14', width: 'auto', cursor: 'pointer' }}>
-        <CardHeader>
+        <CardHeader style={{ padding: '0.7rem' }}>
           Рейс #<b>{name}</b> | Початок: <b>{time}</b>
         </CardHeader>
-        <CardBody>
+        <CardBody style={{ padding: '0.7rem' }}>
           <Row style={{ width: '100%' }}>
             <Col breakPoint={{ xs: 2, sm: 2, md: 2, lg: 2 }} style={{ paddingTop: '3px' }}>
               <img style={{ paddingTop: '3px' }} height="30px" width="30px" src="/icons/bus.png" />
@@ -41,10 +41,10 @@ const Trips: React.FC<TripsProps> = ({ route, name, time, stations }) => {
         </CardBody>
       </Card>
       <Card accent="Success" style={{ borderTopColor: '#F17F14', width: 'auto', cursor: 'pointer' }}>
-        <CardHeader>
+        <CardHeader style={{ padding: '0.7rem' }}>
           Рейс #<b>{name}</b> | <b>Зупинки</b>:
         </CardHeader>
-        <CardBody>
+        <CardBody style={{ padding: '0.7rem' }}>
           <Row style={{ width: '100%' }}>
             {stations?.map((station) => (
               <>

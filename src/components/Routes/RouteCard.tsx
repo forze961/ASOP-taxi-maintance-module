@@ -16,12 +16,12 @@ const Routes: React.FC<RoutesProps> = ({ num, endpoints }) => {
 
   return (
     <Card accent="Success" style={{ borderTopColor: '#F17F14', width: 'auto', cursor: 'pointer' }}>
-      <CardHeader>
+      <CardHeader style={{ padding: '0.7rem' }}>
         Маршрут #<b>{num}</b>
       </CardHeader>
-      <CardBody onClick={() => router.push(`/route/${num}`)}>
+      <CardBody style={{ padding: '0.7rem' }} onClick={() => router.push(`/route/${num}`)}>
         <Row style={{ width: '100%' }}>
-          <img style={{ paddingTop: '3px' }} height="30px" width="30px" src="/icons/bus.png" />
+          <img style={{ paddingTop: 'px', paddingLeft: '5px' }} height="30px" width="30px" src="/icons/bus.png" />
           <Col breakPoint={{ xs: 2, sm: 2, md: 2, lg: 2 }} style={{ paddingTop: '3px' }}>
             <img src="/icons/route-points.png" />
           </Col>
