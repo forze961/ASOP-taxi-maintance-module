@@ -19,7 +19,7 @@ const items: MenuItemType[] = [
   {
     title: 'Вийти',
     icon: { name: 'log-out' },
-    link: { href: '/auth/login' },
+    link: { href: '/api/logout' },
   },
 ];
 

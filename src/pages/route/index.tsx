@@ -7,12 +7,13 @@ import React from 'react';
 import Main from 'components/Main';
 import Layout from 'Layouts';
 import { useRouter } from 'next/router';
+import withSession from 'lib/session';
 
-export default function Index() {
+export default function Index({ user }: any) {
   const router = useRouter();
 
   return (
-    <Layout title="Оберіть графік руху!" titleNow="Вибір графіку руху">
+    <Layout title="Оберіть графік руху!" titleNow="Вибір графіку руху" username={user.userName}>
       <Main title="Оберіть графік руху!">
         <Container>
           <Row>
@@ -46,3 +47,18 @@ export default function Index() {
     </Layout>
   );
 }
+
+export const getServerSideProps = withSession(async ({ req, res }: any) => {
+  const user = req.session.get('user');
+
+  if (!user) {
+    res.setHeader('location', '/auth/login');
+    res.statusCode = 302;
+    res.end();
+    return { props: {} };
+  }
+
+  return {
+    props: { user },
+  };
+});

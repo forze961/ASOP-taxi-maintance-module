@@ -31,6 +31,7 @@ export interface SEOProps {
   keywords?: string[];
   title: string;
   titleNow?: string;
+  username?: string;
 }
 
 SEO.defaultProps = {
@@ -59,7 +60,7 @@ SEO.defaultProps = {
   ],
 };
 
-const LayoutPage: React.FC<SEOProps> = ({ children, titleNow }) => {
+const LayoutPage: React.FC<SEOProps> = ({ children, titleNow, username }) => {
   const [theme, setTheme] = useState<DefaultTheme['name']>('default');
   const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
   const sidebarRef = useRef<SidebarRefObject>(null);
@@ -148,7 +149,12 @@ const LayoutPage: React.FC<SEOProps> = ({ children, titleNow }) => {
                 >
                   {seeHeader && (
                     <header>
-                      <User image="url('/icons/face.png')" name="Іванов Іван" title="Водій" size="Medium" />
+                      <User
+                        image="url('/icons/face.png')"
+                        name={username || 'Іванов Іван'}
+                        title="Водій"
+                        size="Medium"
+                      />
                     </header>
                   )}
                   <SidebarBody>

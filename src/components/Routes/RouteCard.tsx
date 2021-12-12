@@ -6,22 +6,23 @@ import { useRouter } from 'next/router';
 
 interface RoutesProps {
   num: number;
+  tariff: string;
   endpoints: {
     start: string;
     end: string;
   };
 }
-const Routes: React.FC<RoutesProps> = ({ num, endpoints }) => {
+const Routes: React.FC<RoutesProps> = ({ num, tariff, endpoints }) => {
   const router = useRouter();
 
   return (
     <Card accent="Success" style={{ borderTopColor: '#F17F14', width: 'auto', cursor: 'pointer' }}>
       <CardHeader style={{ padding: '0.7rem' }}>
-        Маршрут #<b>{num}</b>
+        Маршрут #<b>{num}</b> | Тариф: <b>{tariff}</b>
       </CardHeader>
       <CardBody style={{ padding: '0.7rem' }} onClick={() => router.push(`/route/${num}`)}>
         <Row style={{ width: '100%' }}>
-          <img style={{ paddingTop: 'px', paddingLeft: '5px' }} height="30px" width="30px" src="/icons/bus.png" />
+          <img style={{ paddingTop: 'px', paddingLeft: '5px' }} height="30px" width="35px" src="/icons/bus.png" />
           <Col breakPoint={{ xs: 2, sm: 2, md: 2, lg: 2 }} style={{ paddingTop: '3px' }}>
             <img src="/icons/route-points.png" />
           </Col>

@@ -1,5 +1,6 @@
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
+import Select from '@paljs/ui/Select';
 import React from 'react';
 import Link from 'next/link';
 
@@ -8,8 +9,45 @@ import Layout from 'Layouts';
 import Container from '@paljs/ui/Container';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
+import { useRouter } from 'next/router';
+
+const statusOption: { value: any; label: any }[] = [
+  { label: 'Перевізник #1', value: '1' },
+  { label: 'Перевізник #2', value: '2' },
+  { label: 'Перевізник #3', value: '3' },
+];
 
 export default function Register() {
+  const router = useRouter();
+
+  const handleSubmit = async (event: { preventDefault: () => void; target: any }) => {
+    event.preventDefault();
+    const form = event.target;
+
+    const formData = new window.FormData(form);
+    const userFil = formData.get('userFil');
+    const userNum = formData.get('userNum');
+    const userName = formData.get('userName');
+    const userMob = formData.get('userMob');
+    const userPass = formData.get('userPass');
+
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userFil, userNum, userName, userMob, userPass }),
+    });
+
+    form.reset();
+
+    if (response.ok) {
+      if (typeof window !== 'undefined') {
+        router.push('/route');
+      } else {
+        router.push('/route');
+      }
+    }
+  };
+
   return (
     <Layout title="Зареєструватися!" titleNow="Зареєструватися">
       <Auth title="Зареєструватися!" subTitle="Введіть свій номер телефону та пароль">
@@ -25,12 +63,19 @@ export default function Register() {
           </Row>
         </Container>
 
-        <form>
+        <form onSubmit={handleSubmit}>
+          <Select name="userFil" fullWidth shape="Round" options={statusOption} placeholder="Status" size="Large" />
           <InputGroup fullWidth shape="Round">
-            <input type="text" placeholder="Номер телефону" />
+            <input name="userNum" type="text" placeholder="Таб. номер" />
           </InputGroup>
           <InputGroup fullWidth shape="Round">
-            <input type="password" placeholder="Пароль" />
+            <input name="userName" type="text" placeholder="ПІБ" />
+          </InputGroup>
+          <InputGroup fullWidth shape="Round">
+            <input name="userMob" type="text" placeholder="Номер телефону" />
+          </InputGroup>
+          <InputGroup fullWidth shape="Round">
+            <input name="userPass" type="password" placeholder="Пароль" />
           </InputGroup>
           <Group>
             <Link href="/auth/login">
@@ -44,7 +89,7 @@ export default function Register() {
               borderColor: '#F17F14',
             }}
             status="Success"
-            type="button"
+            type="submit"
             shape="SemiRound"
             fullWidth
           >

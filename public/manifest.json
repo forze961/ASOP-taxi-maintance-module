@@ -1,6 +1,6 @@
 {
-  "name": "АСОП: Маршрутні таксі",
-  "short_name": "АСОП: Taxi",
+  "name": "Route taxi's",
+  "short_name": "Route taxi's",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#FFFFFF",

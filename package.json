@@ -1,9 +1,9 @@
 {
-  "name": "nextjs-admin-template",
+  "name": "Route taxi's",
   "private": true,
-  "description": "Admin dashboard template based on nextjs with @paljs/ui component package",
-  "version": "0.1.0",
-  "author": "Ahmed Elywa",
+  "description": "Route taxi's",
+  "version": "0.0.1",
+  "author": "Amrita",
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "29.2.0",
     "@ckeditor/ckeditor5-react": "3.0.2",
@@ -12,9 +12,11 @@
     "@tinymce/tinymce-react": "3.12.6",
     "babel-plugin-styled-components": "^1.13.2",
     "next": "^11.1.2",
+    "next-iron-session": "^4.2.0",
     "next-pwa": "^5.4.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-toastify": "^8.1.0",
     "styled-components": "5.3.1",
     "web-push": "^3.4.5"
   },

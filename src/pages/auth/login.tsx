@@ -8,13 +8,14 @@ import Link from 'next/link';
 
 import Auth, { Group } from 'components/Auth';
 import Layout from 'Layouts';
-import { useRouter } from 'next/router';
+import ToastContainer from 'components/Toasts';
+import { toast } from 'react-toastify';
 
 export default function Login() {
-  const router = useRouter();
-
   return (
     <Layout title="Вітаємо!" titleNow="АСОП: taxi">
+      <ToastContainer />
+
       <Auth title="Вітаємо!" subTitle="Введіть свій номер телефону та пароль">
         <Container>
           <Row>
@@ -53,7 +54,7 @@ export default function Login() {
             type="button"
             shape="SemiRound"
             fullWidth
-            onClick={() => router.push('/route')}
+            onClick={() => toast.error('Профіль не знайдено, спробуйте зареєструватися!')}
           >
             Увійти
           </Button>
