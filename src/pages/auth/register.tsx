@@ -6,9 +6,6 @@ import Link from 'next/link';
 
 import Auth, { Group } from 'components/Auth';
 import Layout from 'Layouts';
-import Container from '@paljs/ui/Container';
-import Row from '@paljs/ui/Row';
-import Col from '@paljs/ui/Col';
 import { useRouter } from 'next/router';
 
 const statusOption: { value: any; label: any }[] = [
@@ -51,20 +48,8 @@ export default function Register() {
   return (
     <Layout title="Зареєструватися!" titleNow="Зареєструватися">
       <Auth title="Зареєструватися!" subTitle="Введіть свій номер телефону та пароль">
-        <Container>
-          <Row>
-            <Col breakPoint={{ xs: 12 }}>
-              <Row center="xs">
-                <Col breakPoint={{ xs: 6 }}>
-                  <img src="/icons/man.png" alt="Асоп: маршрутні таксі" width="200px" height="150px" />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-
         <form onSubmit={handleSubmit}>
-          <Select name="userFil" fullWidth shape="Round" options={statusOption} placeholder="Status" size="Large" />
+          <Select name="userFil" fullWidth shape="Round" options={statusOption} placeholder="Перевізник" size="Large" />
           <InputGroup fullWidth shape="Round">
             <input name="userNum" type="text" placeholder="Таб. номер" />
           </InputGroup>

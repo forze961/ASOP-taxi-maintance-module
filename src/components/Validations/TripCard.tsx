@@ -9,21 +9,16 @@ interface TripsProps {
   route: string;
   name: string;
   time: string;
-  isCurTrip: boolean;
-  onChangeTrip: (trip: string) => void;
   stations: [{ name: string }];
 }
-const Trips: React.FC<TripsProps> = ({ route, name, time, stations, isCurTrip, onChangeTrip }) => {
+const Trips: React.FC<TripsProps> = ({ route, name, time, stations }) => {
   return (
     <FlipCard>
-      <Card
-        accent="Success"
-        style={{ borderTopColor: !isCurTrip ? '#F17F14' : 'green', width: 'auto', cursor: 'pointer' }}
-      >
-        <CardHeader style={{ padding: '0.7rem' }}>
-          Рейс #<b>{name}</b> | Початок: <b>{time}</b> {isCurTrip && '(Поточний)'}
+      <Card accent="Success" style={{ borderTopColor: '#F17F14', width: 'auto', cursor: 'pointer' }}>
+        <CardHeader style={{ padding: '0.7rem' }} onClick={() => console.log('Hi')}>
+          Рейс #<b>{name}</b> | Початок: <b>{time}</b>
         </CardHeader>
-        <CardBody style={{ padding: '0.7rem', height: '10%' }} onClick={() => onChangeTrip(name)}>
+        <CardBody style={{ padding: '0.7rem', height: '10%' }}>
           <Row style={{ width: '100%' }}>
             <Col breakPoint={{ xs: 2, sm: 2, md: 2, lg: 2 }} style={{ paddingTop: '3px' }}>
               <img style={{ paddingTop: '3px' }} height="30px" width="30px" src="/icons/bus.png" />
@@ -46,10 +41,7 @@ const Trips: React.FC<TripsProps> = ({ route, name, time, stations, isCurTrip, o
           </Row>
         </CardBody>
       </Card>
-      <Card
-        accent="Success"
-        style={{ borderTopColor: !isCurTrip ? '#F17F14' : 'green', width: 'auto', cursor: 'pointer' }}
-      >
+      <Card accent="Success" style={{ borderTopColor: '#F17F14', width: 'auto', cursor: 'pointer' }}>
         <CardHeader style={{ padding: '0.7rem' }}>
           Рейс #<b>{name}</b> | <b>Зупинки</b>:
         </CardHeader>

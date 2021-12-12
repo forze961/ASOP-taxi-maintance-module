@@ -6,9 +6,6 @@ import { toast } from 'react-toastify';
 import ToastContainer from '../../components/Toasts';
 import Auth from 'components/Auth';
 import Layout from 'Layouts';
-import Container from '@paljs/ui/Container';
-import Row from '@paljs/ui/Row';
-import Col from '@paljs/ui/Col';
 import withSession from 'lib/session';
 
 const statusOption: { value: any; label: any }[] = [
@@ -61,25 +58,13 @@ const Profile: React.FC<UserProps> = ({ user }) => {
       <ToastContainer />
 
       <Auth title="Профіль" subTitle="Ви можете оновити інформацію та закріпити за собою РО">
-        <Container>
-          <Row>
-            <Col breakPoint={{ xs: 12 }}>
-              <Row center="xs">
-                <Col breakPoint={{ xs: 6 }}>
-                  <img src="/icons/man.png" alt="Асоп: маршрутні таксі" width="200px" height="150px" />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-
         <form onSubmit={handleSubmit}>
           <Select
             name="userFil"
             fullWidth
             shape="Round"
             options={statusOption}
-            placeholder="Status"
+            placeholder="Перевізник"
             size="Large"
             defaultValue={getCurrFilial(user.userFil || '')}
           />
