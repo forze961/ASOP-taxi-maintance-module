@@ -1,9 +1,9 @@
 {
-  "name": "Route taxi's",
+  "name": "nextjs-admin-template",
   "private": true,
-  "description": "Route taxi's",
-  "version": "0.0.1",
-  "author": "Amrita",
+  "description": "Route taxis mobile",
+  "version": "0.1.0",
+  "author": "Route taxi's",
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "29.2.0",
     "@ckeditor/ckeditor5-react": "3.0.2",
@@ -35,13 +35,6 @@
     "prepare": "husky install",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/paljs/nextjs-admin-template"
-  },
-  "bugs": {
-    "url": "https://github.com/paljs/nextjs-admin-template/issues"
   },
   "devDependencies": {
     "@types/node": "16.7.10",
