@@ -14,7 +14,7 @@
     },
     {
       "src": "icons/maskable_icon_x72.png",
-      "sizes": "96x96",
+      "sizes": "72x72",
       "type": "image/png"
     },
     {
@@ -40,7 +40,7 @@
     },
     {
       "src": "icons/icon-384x384.png",
-      "sizes": "384x384",
+      "sizes": "284x284",
       "type": "image/png"
     },
     {
