@@ -17,6 +17,11 @@ const items: MenuItemType[] = [
     link: { href: '/validations' },
   },
   {
+    title: 'Закінчити поїздку',
+    icon: { name: 'pin-outline' },
+    link: { href: '/work-end' },
+  },
+  {
     title: 'Вийти',
     icon: { name: 'log-out' },
     link: { href: '/api/logout' },

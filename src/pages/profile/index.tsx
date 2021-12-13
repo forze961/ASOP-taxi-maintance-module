@@ -1,12 +1,13 @@
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
 import Select from '@paljs/ui/Select';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import ToastContainer from '../../components/Toasts';
 import Auth from 'components/Auth';
 import Layout from 'Layouts';
 import withSession from 'lib/session';
+import Spinner from '@paljs/ui/Spinner';
 
 const statusOption: { value: any; label: any }[] = [
   { label: 'Перевізник #1', value: '1' },
@@ -30,7 +31,10 @@ const getCurrFilial = (value: string) => {
 };
 
 const Profile: React.FC<UserProps> = ({ user }) => {
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (event: { preventDefault: () => void; target: any }) => {
+    setLoading(true);
     event.preventDefault();
     const form = event.target;
 
@@ -51,6 +55,7 @@ const Profile: React.FC<UserProps> = ({ user }) => {
     if (response.ok) {
       toast.success('Профіль оновлено!');
     }
+    setLoading(false);
   };
 
   return (
@@ -58,6 +63,12 @@ const Profile: React.FC<UserProps> = ({ user }) => {
       <ToastContainer />
 
       <Auth title="Профіль" subTitle="Ви можете оновити інформацію та закріпити за собою РО">
+        {loading && (
+          <Spinner status="Warning" size={'Large'}>
+            Зачекайте...
+          </Spinner>
+        )}
+
         <form onSubmit={handleSubmit}>
           <Select
             name="userFil"

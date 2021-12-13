@@ -1,8 +1,9 @@
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
 import Select from '@paljs/ui/Select';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import Spinner from '@paljs/ui/Spinner';
 
 import Auth, { Group } from 'components/Auth';
 import Layout from 'Layouts';
@@ -16,8 +17,10 @@ const statusOption: { value: any; label: any }[] = [
 
 export default function Register() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: { preventDefault: () => void; target: any }) => {
+    setLoading(true);
     event.preventDefault();
     const form = event.target;
 
@@ -43,11 +46,18 @@ export default function Register() {
         router.push('/route');
       }
     }
+    setLoading(false);
   };
 
   return (
     <Layout title="Зареєструватися!" titleNow="Зареєструватися">
       <Auth title="Зареєструватися!" subTitle="Введіть свій номер телефону та пароль">
+        {loading && (
+          <Spinner status="Warning" size={'Large'}>
+            Зачекайте...
+          </Spinner>
+        )}
+
         <form onSubmit={handleSubmit}>
           <Select name="userFil" fullWidth shape="Round" options={statusOption} placeholder="Перевізник" size="Large" />
           <InputGroup fullWidth shape="Round">
