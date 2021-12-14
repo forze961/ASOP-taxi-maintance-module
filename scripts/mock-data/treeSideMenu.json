@@ -1,0 +1,252 @@
+{
+  "id": "1",
+  "parentId": "0",
+  "text": "Категорії",
+  "query": [],
+  "filter": [],
+  "level": "0",
+  "children": [
+    {
+      "id": "2",
+      "parentId": "1",
+      "text": "Статистика",
+      "query": [],
+      "filter": [],
+      "level": "1",
+      "children": [
+        {
+          "id": "20",
+          "parentId": "2",
+          "text": "Загальна статистика",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": ""
+        },
+        {
+          "id": "21",
+          "parentId": "2",
+          "text": "Статистика по філіям КП «Київпастранс»",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": ""
+        },
+        {
+          "id": "22",
+          "parentId": "2",
+          "text": "Інформація по рухомій одиниці",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "parentId": "1",
+      "text": "Рухомий склад КПТ",
+      "query": [],
+      "filter": [],
+      "level": "1",
+      "children": [
+        {
+          "id": "30",
+          "parentId": "3",
+          "text": "Рухомий склад",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": "/main",
+          "isAuth": true
+        },
+        {
+          "id": "31",
+          "parentId": "3",
+          "text": "Формуляри за добу",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": "/vn",
+          "isAuth": true
+        },
+        {
+          "id": "32",
+          "parentId": "3",
+          "text": "Рейси",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": "/intrips",
+          "isAuth": true
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "parentId": "1",
+      "text": "Турнікети КПТ",
+      "query": [],
+      "filter": [],
+      "level": "1",
+      "children": [
+        {
+          "id": "50",
+          "parentId": "5",
+          "text": "Турнікети КПТ",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": "/st",
+          "isAuth": true
+        },
+        {
+          "id": "51",
+          "parentId": "5",
+          "text": "Конфігурація турнікетів КПТ",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": "/stconfig",
+          "isAuth": true
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "parentId": "1",
+      "text": "Турнікети Метро",
+      "query": [],
+      "filter": [],
+      "level": "1",
+      "children": [
+        {
+          "id": "60",
+          "parentId": "6",
+          "text": "Турнікети Метро",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": "/metro",
+          "isAuth": true
+        },
+        {
+          "id": "61",
+          "parentId": "6",
+          "text": "Конфігурація турнікетів метро",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": "/metroconfig",
+          "isAuth": true
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "parentId": "1",
+      "text": "Ведення конфігурації турнікетів",
+      "query": [],
+      "filter": [],
+      "level": "1",
+      "children": [
+        {
+          "id": "70",
+          "parentId": "7",
+          "text": "Планова конфігурація турнікетів",
+          "query": [
+            "CARS"
+          ],
+          "children": [],
+          "filter": [],
+          "level": "2",
+          "url": "/inventory-plan-akp",
+          "isAuth": true
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "parentId": "1",
+      "text": "Аларми",
+      "query": [],
+      "filter": [],
+      "level": "1",
+      "children": [{
+        "id": "80",
+        "parentId": "8",
+        "text": "Аларми",
+        "query": [],
+        "filter": [],
+        "level": "2",
+        "children": [],
+        "url": ""
+      }
+      ]
+    },
+    {
+      "id": "9",
+      "parentId": "1",
+      "text": "Адміністрування",
+      "query": [],
+      "filter": [],
+      "level": "1",
+      "children": [{
+        "id": "90",
+        "parentId": "9",
+        "text": "Адміністрування",
+        "query": [],
+        "filter": [],
+        "level": "2",
+        "children": [],
+        "url": "/admin",
+        "isAuth": true
+      },
+      {
+        "id": "91",
+        "parentId": "9",
+        "text": "Валідації",
+        "query": [
+          "CARS"
+        ],
+        "children": [],
+        "filter": [],
+        "level": "2",
+        "url": "/agent",
+        "isAuth": true
+      }
+      ]
+    }
+  ]
+}
