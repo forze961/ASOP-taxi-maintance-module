@@ -258,7 +258,7 @@ export default function Schedule() {
 
           <TableHeaderBar
             selectedDateNow={selectedDateNow}
-            handleDateChangeNow={(() => {})}
+            handleDateChangeNow={(value) => setSelectedDateNow(moment(value.ts ? value.ts : value).format('yyyy-MM-DD'))}
             btnTitle="Створити розклад"
             btnOnClick={() => {
               setRows([createData({
