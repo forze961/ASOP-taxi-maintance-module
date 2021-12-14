@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import clsx from 'clsx';
 import ListItemText from '@material-ui/core/ListItemText';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const drawerWidth = 340;
 
@@ -80,7 +81,6 @@ const styles = (theme: Theme) => ({
 const itemsMenu = [
   { name: 'Розклад', url: '/schedule', img: 'schedule.png' },
   { name: 'Електронні наряди', url: '/schedule', img: 'orders.png' },
-  { name: 'Формуляри', url: '/schedule', img: 'form.png' },
   { name: 'Звіти', url: '/schedule', img: 'rep.png' },
   { name: 'Працівники', url: '/schedule', img: 'workers.png' },
   { name: 'Маршрути та тарифи', url: '/schedule', img: 'routes.png' }];
@@ -91,6 +91,7 @@ type Props = {|
   +classes: { [key: $Keys<$Call<typeof styles, Theme>>]: string },
   +open: boolean,
   +close: () => void,
+  +onChoice: () => void,
   +userName: string,
 |};
 
@@ -105,6 +106,7 @@ class SideMenu extends PureComponent<Props, State> {
     const {
       classes,
       open,
+      onChoice,
     } = this.props;
 
     return (
@@ -131,14 +133,17 @@ class SideMenu extends PureComponent<Props, State> {
           <Box className={classes.container}>
             <List>
               {itemsMenu.map((item, index) => (
-                <ListItem button key={item.name} style={{ paddingLeft: '25px' }}>
-                  <ListItemIcon>
-                    {index === 1 ? (
-                      <img src={`/images/menu/${item.img}`} alt={index} style={{ paddingLeft: '2px' }} />
-                    ) : (
-                      <img src={`/images/menu/${item.img}`} alt={index} />
-                    )}
-                  </ListItemIcon>
+
+                <ListItem button key={item.name} style={{ paddingLeft: '25px' }} onClick={() => onChoice(index)}>
+                  <Tooltip title={item.name} aria-label="add">
+                    <ListItemIcon>
+                      {index === 1 ? (
+                        <img src={`/images/menu/${item.img}`} alt={index} style={{ paddingLeft: '2px' }} />
+                      ) : (
+                        <img src={`/images/menu/${item.img}`} alt={index} />
+                      )}
+                    </ListItemIcon>
+                  </Tooltip>
                   <ListItemText primary={item.name} />
                 </ListItem>
               ))}

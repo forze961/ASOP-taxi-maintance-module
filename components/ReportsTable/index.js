@@ -3,10 +3,10 @@ import TabsNav from '../StatsNav';
 
 const useStyles = makeStyles(() => ({
   menuOpen: {
-    paddingLeft: '320px',
+    paddingLeft: '330px',
   },
   menuClosed: {
-    paddingLeft: '50px',
+    paddingLeft: '65px',
   },
 }));
 

@@ -9,7 +9,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { useState } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Alert from '@material-ui/lab/Alert';
+import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
 import useWindowSize from '../../screenSizeHelper';
 
@@ -38,17 +38,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn(): React$Node {
+  const { enqueueSnackbar } = useSnackbar();
   const size = useWindowSize();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [login, setLogin] = useState('');
+  const [pass, setPass] = useState('');
 
   const handleSubmit = async () => {
     setLoading(true);
-    if (typeof window !== 'undefined') {
-      router.push('/main/1');
+
+    if (login === 'admin' && pass === 'admin') {
+      if (typeof window !== 'undefined') {
+        router.push('/main/1');
+      } else {
+        router.push('/main/1');
+      }
     } else {
-      router.push('/main/1');
+      enqueueSnackbar('Логін або пароль — не вірні!', { variant: 'error' });
     }
+    setLoading(false);
   };
 
   const classes = useStyles();
@@ -64,6 +73,9 @@ export default function SignIn(): React$Node {
         >
 
           <Grid xs={6} sm={6} md={6} style={{ borderRight: '1px solid #CACACA', height: '100%' }}>
+            <Box my={3} mx={3}>
+              <img src="/images/logoMain.png" alt="Route Taxi's" />
+            </Box>
             <Container component="main" maxWidth="xs">
               <div className={classes.paper}>
                 <Box className={classes.container}>
@@ -83,6 +95,8 @@ export default function SignIn(): React$Node {
                     name="email"
                     autoComplete="email"
                     autoFocus
+                    value={login}
+                    onChange={(e) => setLogin(e.target.value)}
                   />
                   <TextField
                     variant="outlined"
@@ -94,6 +108,8 @@ export default function SignIn(): React$Node {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
                   />
                   <Button
                     type="button"

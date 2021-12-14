@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import FormControl from '@material-ui/core/FormControl';
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     backgroundColor: '#144367',
     height: '44px',
+    textTransform: 'none',
   },
   title: {
     flexGrow: 1,
@@ -64,34 +66,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchAppBar({ selectedDateNow, handleDateChangeNow, btnTitle }) {
+export default function SearchAppBar({
+  selectedDateNow, handleDateChangeNow, btnTitle, btnOnClick, disableDatepicker = false, titleNoDatepicker
+}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar style={{ padding: 0 }}>
+
           <FormControl className={classes.title}>
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="yyyy-MM-dd"
-              id="date-picker-inline"
-              label="Оберіть дату"
-              value={selectedDateNow}
-              onChange={handleDateChangeNow}
-              autoOk
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }}
-            />
+            {!disableDatepicker ? (
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="yyyy-MM-dd"
+                id="date-picker-inline"
+                label="Оберіть дату"
+                value={selectedDateNow}
+                onChange={handleDateChangeNow}
+                autoOk
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            ) : (
+              <Box>
+                <h2>{titleNoDatepicker}</h2>
+              </Box>
+            )}
           </FormControl>
+
           <div className={classes.search}>
             <Button
               variant="contained"
               color="primary"
               className={classes.button}
               startIcon={<AddCircleOutlineIcon />}
+              onClick={btnOnClick}
             >
               {btnTitle}
             </Button>

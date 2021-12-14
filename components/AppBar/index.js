@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     background: 'transparent',
     boxShadow: 'none',
     flexGrow: 1,
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: 1300,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     flexGrow: 1,
     marginLeft: drawerWidth,
+    zIndex: 1300,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -63,6 +64,8 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
   },
 }));
+
+
 
 export default function AppBarLayout({
   onOpenMenu, signIn = false, noLogo = false, openMenu,
@@ -85,7 +88,7 @@ export default function AppBarLayout({
   return (
     <>
       <AppBar
-        position="fixed"
+        position="absolute"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: openMenu,
         })}

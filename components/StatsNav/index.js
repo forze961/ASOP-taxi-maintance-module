@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import AllFilies from '../AllFilies';
-import EachFilies from '../EachFilies';
+import Schedule from '../Schedule';
+import Tariffs from '../Tariffs';
 import ServiceOnIframe from '../ServiceOnIframe';
 import useWindowSize from '../screenSizeHelper';
 
@@ -35,6 +36,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getCurrPage = (id) => {
+  switch (id) {
+    case 0: {
+      return <Schedule />;
+    }
+
+    case 4: {
+      return <Tariffs />;
+    }
+
+    default: <Schedule />;
+  }
+};
+
 export default function NavTabs({ menuFilter }) {
   const classes = useStyles();
   // For horizontal menu get choise tab index
@@ -50,8 +65,7 @@ export default function NavTabs({ menuFilter }) {
 
   return (
     <div className={classes.root}>
-      <EachFilies />
-
+      {getCurrPage(choisedValue)}
     </div>
   );
 }
