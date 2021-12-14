@@ -79,7 +79,7 @@ export default function SignIn(): React$Node {
             <Container component="main" maxWidth="xs">
               <div className={classes.paper}>
                 <Box className={classes.container}>
-                  <Box my={3} mx={8}>
+                  <Box my={1} mx={8}>
                     <h1 className="sign-in-h1">Вітаємо!</h1>
                   </Box>
                 </Box>
