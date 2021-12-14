@@ -1,15 +1,13 @@
 {
-  "name": "ASOP-statistic",
+  "name": "ASOP-taxi",
   "version": "1.0.0",
-  "description": "ASOP module statistic",
+  "description": "ASOP taxi",
   "scripts": {
     "dev": "next -p 3001",
-    "prebuild": "node ./scripts/setup.js",
     "build": "next build",
-    "start": "next start -p 3123",
+    "start": "next start -p 3223",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "getAsopStats": "node ./util/getDataASOP.js"
+    "lint:fix": "eslint . --fix"
   },
   "author": "forze961",
   "license": "ISC",
