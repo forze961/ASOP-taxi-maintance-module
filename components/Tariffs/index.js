@@ -147,20 +147,26 @@ export default function Tariffs() {
 
   const [rows, setRows] = useState([
     createData({
-      route: 203,
+      route: 155,
       tariff: 10,
       dateS: '2021-02-13',
       dateE: '2022-02-13',
     }),
     createData({
-      route: 401,
-      tariff: 10,
+      route: 202,
+      tariff: 8,
       dateS: '2021-02-13',
       dateE: '2022-02-13',
     }),
     createData({
-      route: 111,
+      route: 220,
       tariff: 12,
+      dateS: '2021-02-13',
+      dateE: '2022-02-13',
+    }),
+    createData({
+      route: 171,
+      tariff: 10,
       dateS: '2021-02-13',
       dateE: '2022-02-13',
     }),

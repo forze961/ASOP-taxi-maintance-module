@@ -126,7 +126,7 @@ export default function Schedule() {
 
   const [rows, setRows] = useState([
     createData({
-      route: 215,
+      route: 202,
       graph: 1,
       smen: '1',
       trips: 11,
@@ -138,7 +138,7 @@ export default function Schedule() {
       carType: 'Богдан А091',
     }),
     createData({
-      route: 401,
+      route: 220,
       graph: 1,
       smen: '1',
       trips: 6,
@@ -150,7 +150,7 @@ export default function Schedule() {
       carType: 'Богдан А091',
     }),
     createData({
-      route: 401,
+      route: 220,
       graph: 1,
       smen: '2',
       trips: 5,
@@ -162,7 +162,7 @@ export default function Schedule() {
       carType: 'Богдан А091',
     }),
     createData({
-      route: 203,
+      route: 155,
       graph: 1,
       smen: '1/2',
       trips: 20,
@@ -174,7 +174,7 @@ export default function Schedule() {
       carType: 'Volvo TRN',
     }),
     createData({
-      route: 203,
+      route: 155,
       graph: 2,
       smen: '1/2',
       trips: 20,
@@ -183,10 +183,10 @@ export default function Schedule() {
       time3: '-',
       time4: '22:00',
       time5: '-',
-      carType: 'МАЗ 203',
+      carType: 'МАЗ 155',
     }),
     createData({
-      route: 203,
+      route: 155,
       graph: 3,
       smen: '1/2',
       trips: 20,

@@ -8,6 +8,12 @@ import Tariffs from '../Tariffs';
 import ServiceOnIframe from '../ServiceOnIframe';
 import useWindowSize from '../screenSizeHelper';
 
+const urls = [
+  '/orders/',
+  '/drivers/',
+  '/vehicles/',
+];
+
 function TabPanel(props) {
   const {
     children, value, index, ...other
@@ -36,13 +42,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const getCurrPage = (id) => {
+const getCurrPage = (id, sizeClient, menuOpen) => {
   switch (id) {
     case 0: {
       return <Schedule />;
     }
 
+    case 1: case 2: case 3: {
+      return <ServiceOnIframe menuOpen={menuOpen} url={urls[id - 1]} sizeClient={sizeClient} id={id} />;
+    }
+
     case 4: {
+      return <Tariffs />;
+    }
+
+    case 5: {
       return <Tariffs />;
     }
 
@@ -50,8 +64,9 @@ const getCurrPage = (id) => {
   }
 };
 
-export default function NavTabs({ menuFilter }) {
+export default function NavTabs({ menuFilter, menuOpen }) {
   const classes = useStyles();
+  const sizeClient = useWindowSize();
   // For horizontal menu get choise tab index
 
   const choisedValue = Number(menuFilter) || 0;
@@ -65,7 +80,7 @@ export default function NavTabs({ menuFilter }) {
 
   return (
     <div className={classes.root}>
-      {getCurrPage(choisedValue)}
+      {getCurrPage(choisedValue, sizeClient, menuOpen)}
     </div>
   );
 }

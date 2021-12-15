@@ -81,9 +81,11 @@ const styles = (theme: Theme) => ({
 const itemsMenu = [
   { name: 'Розклад', url: '/schedule', img: 'schedule.png' },
   { name: 'Електронні наряди', url: '/schedule', img: 'orders.png' },
-  { name: 'Звіти', url: '/schedule', img: 'rep.png' },
   { name: 'Працівники', url: '/schedule', img: 'workers.png' },
-  { name: 'Маршрути та тарифи', url: '/schedule', img: 'routes.png' }];
+  { name: 'Рухомі одиниці', url: '/schedule', img: 'workers.png' },
+  { name: 'Маршрути та тарифи', url: '/schedule', img: 'routes.png' },
+  { name: 'Звіти', url: '/schedule', img: 'rep.png' },
+];
 
 type Props = {|
   +image: string,

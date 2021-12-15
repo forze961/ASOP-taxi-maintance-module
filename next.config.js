@@ -20,21 +20,13 @@ module.exports = {
             },
           },
         ],
-      })
+      });
     }
     return config;
   },
   env: {
-    postgresHost: process.env.postgresHost,
-    postgresPort: process.env.postgresPort,
-    postgresDatabase: process.env.postgresDatabase,
-    postgresUser: process.env.postgresUser,
-    postgresPassword: process.env.postgresPassword,
-    APPLICATION_SECRET: process.env.APPLICATION_SECRET,
-    BACKEND_SERVICE: process.env.BACKEND_SERVICE || 'http://localhost:3124',
-    ZABBIX_REDIRECT: process.env.ZABBIX_REDIRECT || 'https://z-kmda.kyivcity.gov.ua/zabbix.php?action=dashboard.view',
-    USER_INFO_SERVICE: process.env.USER_INFO_SERVICE || 'https://geolocation-db.com/json/',
-    SESSION_TTL: process.env.SESSION_TTL || 604800,
+    BACKEND_SERVICE: process.env.BACKEND_SERVICE || 'http://193.23.225.178:3125',
+
   },
   poweredByHeader: false,
 };
