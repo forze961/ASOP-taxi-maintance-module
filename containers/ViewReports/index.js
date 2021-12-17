@@ -9,15 +9,15 @@ export default function ViewReportContainer({ category }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   // Set default menu category from main page choised
-  const [menuFilter, setMenuFilter] = useState(Number(router.query?.category - 1) || 0);
+  const [menuFilter, setMenuFilter] = useState(Number(router.query?.category) || 1);
 
   const handleOnChoice = (value) => {
-    router.push(`/main/${Number(value) + 1}`, undefined, { shallow: true });
+    router.push(`/main/${Number(value)}`, undefined, { shallow: true });
     setMenuFilter(value);
   };
 
   useEffect(() => {
-    setMenuFilter(Number(router.query?.category - 1));
+    setMenuFilter(Number(router.query?.category));
   }, [router]);
 
   return (

@@ -79,12 +79,24 @@ const styles = (theme: Theme) => ({
 });
 
 const itemsMenu = [
-  { name: 'Розклад', url: '/schedule', img: 'schedule.png' },
-  { name: 'Електронні наряди', url: '/schedule', img: 'orders.png' },
-  { name: 'Працівники', url: '/schedule', img: 'workers.png' },
-  { name: 'Рухомі одиниці', url: '/schedule', img: 'workers.png' },
-  { name: 'Маршрути та тарифи', url: '/schedule', img: 'routes.png' },
-  { name: 'Звіти', url: '/schedule', img: 'rep.png' },
+  {
+    id: 1, name: 'Розклад', url: '/schedule', img: 'schedule.png',
+  },
+  {
+    id: 2, name: 'Електронні наряди', url: '/schedule', img: 'orders.png',
+  },
+  {
+    id: 4, name: 'Працівники', url: '/schedule', img: 'workers.png',
+  },
+  {
+    id: 5, name: 'Рухомі одиниці', url: '/schedule', img: 'car.png',
+  },
+  {
+    id: 6, name: 'Маршрути та тарифи', url: '/schedule', img: 'routes.png',
+  },
+  {
+    id: 7, name: 'Звіти', url: '/schedule', img: 'rep.png',
+  },
 ];
 
 type Props = {|
@@ -134,15 +146,15 @@ class SideMenu extends PureComponent<Props, State> {
 
           <Box className={classes.container}>
             <List>
-              {itemsMenu.map((item, index) => (
+              {itemsMenu.map((item) => (
 
-                <ListItem button key={item.name} style={{ paddingLeft: '25px' }} onClick={() => onChoice(index)}>
+                <ListItem button key={item.name} style={{ paddingLeft: '25px' }} onClick={() => onChoice(item.id)}>
                   <Tooltip title={item.name} aria-label="add">
                     <ListItemIcon>
-                      {index === 1 ? (
-                        <img src={`/images/menu/${item.img}`} alt={index} style={{ paddingLeft: '2px' }} />
+                      {item.id === 2 ? (
+                        <img src={`/images/menu/${item.img}`} alt={item.id} style={{ paddingLeft: '2px' }} />
                       ) : (
-                        <img src={`/images/menu/${item.img}`} alt={index} />
+                        <img src={`/images/menu/${item.img}`} alt={item.id} />
                       )}
                     </ListItemIcon>
                   </Tooltip>
