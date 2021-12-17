@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import FormControl from '@material-ui/core/FormControl';
-import Box from "@material-ui/core/Box";
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SearchAppBar({
-  selectedDateNow, handleDateChangeNow, btnTitle, btnOnClick, disableDatepicker = false, titleNoDatepicker
+  selectedDateNow, handleDateChangeNow, btnTitle, btnOnClick, disableDatepicker = false, titleNoDatepicker, child,
 }) {
   const classes = useStyles();
 
@@ -93,7 +93,7 @@ export default function SearchAppBar({
               />
             ) : (
               <Box>
-                <h2>{titleNoDatepicker}</h2>
+                {child || <h2>{titleNoDatepicker}</h2>}
               </Box>
             )}
           </FormControl>

@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import { useRouter } from 'next/router';
 import Schedule from '../Schedule';
 import Tariffs from '../Tariffs';
+import Reports from '../Reports';
 import ServiceOnIframe from '../ServiceOnIframe';
 import useWindowSize from '../screenSizeHelper';
 
@@ -92,7 +93,7 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
     }
 
     case 7: {
-      return <Tariffs />;
+      return <Reports />;
     }
 
     default: <Schedule />;
