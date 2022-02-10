@@ -11,7 +11,6 @@ import User from '@paljs/ui/User';
 import { Menu, MenuRefObject } from '@paljs/ui/Menu';
 import Link from 'next/link';
 import menuItems from './menuItem';
-import SEO from 'components/SEO';
 import { EvaIcon } from '@paljs/ui/Icon';
 import Select from '@paljs/ui/Select';
 
@@ -24,6 +23,14 @@ const getDefaultTheme = (): DefaultTheme['name'] => {
   }
 };
 
+/*const getDefaultScreenLock = () => {
+  if (typeof localStorage !== 'undefined' && localStorage.getItem('screenLock')) {
+    return localStorage.getItem('screenLock');
+  } else {
+    return 0;
+  }
+};*/
+
 export interface SEOProps {
   description?: string;
   lang?: string;
@@ -34,34 +41,9 @@ export interface SEOProps {
   username?: string;
 }
 
-SEO.defaultProps = {
-  description: 'Free admin dashboard template based on Next.Js with @paljs/ui component package',
-  keywords: [
-    'admin-dashboard',
-    'admin',
-    'react',
-    'reactjs',
-    'dashboard',
-    'dashboard-templates',
-    'themes',
-    'styled-components',
-    'styledcomponents',
-    'admin-template',
-    'free-admin-template',
-    'react-admin-dashboard',
-    'react-admin-panel',
-    'react-admin-component',
-    'nextjs',
-    'react-forms',
-    'react-select',
-    'react-accordion',
-    'react-chat',
-    'react-admin-template',
-  ],
-};
-
 const LayoutPage: React.FC<SEOProps> = ({ children, titleNow, username }) => {
   const [theme, setTheme] = useState<DefaultTheme['name']>('default');
+  const [screenWakeLock, setScreenWakeLock] = useState('1');
   const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
   const sidebarRef = useRef<SidebarRefObject>(null);
   const router = useRouter();
@@ -76,6 +58,11 @@ const LayoutPage: React.FC<SEOProps> = ({ children, titleNow, username }) => {
   const changeTheme = (newTheme: DefaultTheme['name']) => {
     setTheme(newTheme);
     typeof localStorage !== 'undefined' && localStorage.setItem('theme', newTheme);
+  };
+
+  const changeScreenWakeLock = (value: string) => {
+    setScreenWakeLock(value);
+    typeof localStorage !== 'undefined' && localStorage.setItem('screenLock', value);
   };
 
   useEffect(() => {
@@ -123,6 +110,26 @@ const LayoutPage: React.FC<SEOProps> = ({ children, titleNow, username }) => {
     },
   ];
 
+  const screenOptions = () => [
+    {
+      value: '1',
+      label: (
+        <Label>
+          <EvaIcon name="eye-outline" options={{ fill: 'green' }} />
+          Активний екран
+        </Label>
+      ),
+    },
+    {
+      value: '0',
+      label: (
+        <Label>
+          <EvaIcon name="eye-off-outline" options={{ fill: 'red' }} />
+          Звичайний екран
+        </Label>
+      ),
+    },
+  ];
   return (
     <Fragment>
       <ThemeProvider theme={themes(theme, dir)}>
@@ -175,6 +182,15 @@ const LayoutPage: React.FC<SEOProps> = ({ children, titleNow, username }) => {
                       value={themeOptions().find((item) => item.value === theme)}
                       options={themeOptions()}
                       onChange={({ value }: { value: DefaultTheme['name'] }) => changeTheme(value)}
+                    />
+                    <SelectStyled
+                      instanceId="react-select-input-screen-lock"
+                      isSearchable={false}
+                      shape="SemiRound"
+                      placeholder="Режим активного екрану"
+                      value={screenOptions().find((item) => item.value === screenWakeLock)}
+                      options={screenOptions()}
+                      onChange={({ value }: { value: string }) => changeScreenWakeLock(value)}
                     />
                   </SidebarBody>
                 </Sidebar>

@@ -4,33 +4,45 @@ import Col from '@paljs/ui/Col';
 import React, { useEffect, useState } from 'react';
 import Layout from 'Layouts';
 import CardTrip from '../../components/Routes/TripCard';
-import routes from '../../../data/mockRoutes.json';
 import withSession from 'lib/session';
 import ToastContainer from 'components/Toasts';
 import { toast } from 'react-toastify';
-
-const getTrips = (route = 0): any => {
-  if (route !== 0) {
-    const result = routes.find((cur) => cur.num === route);
-
-    if (result) return result;
-  }
-
-  return [];
-};
+import { getCurrentDate } from '../../lib/utils';
+import { DutyObj } from 'types';
 
 const getTripFromStore = () => {
   return typeof localStorage !== 'undefined' && localStorage.getItem('curTrip');
 };
 
+const getDutyFromStore = () => {
+  const prepareDuty = typeof localStorage !== 'undefined' && localStorage.getItem('curDuty');
+
+  if (prepareDuty) return JSON.parse(prepareDuty);
+
+  return false;
+};
+
 export default function Index({ user }: any) {
   const router = useRouter();
   const { trip: routeNum }: any = router.query;
-  const { trips, stations }: any = getTrips(Number(routeNum));
+  const { trips = [], stations = [] }: any = getDutyFromStore();
+
   const [curTrip, setCurTrip] = useState(getTripFromStore() || '');
 
   const changeTrip = (trip: string) => {
     typeof localStorage !== 'undefined' && localStorage.setItem('curTrip', trip);
+    const currDuty: DutyObj = getDutyFromStore();
+
+    // Change time, when trip has bin started
+    if (currDuty) {
+      const findCurTripIndex = currDuty.trips.findIndex((x) => x.trip === trip);
+
+      if (findCurTripIndex !== -1) {
+        currDuty.trips[findCurTripIndex].time = getCurrentDate();
+        typeof localStorage !== 'undefined' && localStorage.setItem('curDuty', JSON.stringify(currDuty));
+      }
+    }
+
     toast.success(`Рейс змінено! Поточний рейс: ${trip}`);
     setCurTrip(trip);
   };

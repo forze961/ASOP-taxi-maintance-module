@@ -5,7 +5,7 @@ import { Card, CardBody, CardHeader } from '@paljs/ui/Card';
 import { useRouter } from 'next/router';
 
 interface RoutesProps {
-  num: number;
+  num: string;
   tariff: string;
   endpoints: {
     start: string;
