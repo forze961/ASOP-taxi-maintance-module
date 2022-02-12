@@ -50,8 +50,14 @@ export default function Index({ user }: any) {
       <Row>
         {duty.length > 0 ? (
           <Col breakPoint={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
-            {duty.map((route: DutyObj) => (
-              <CardRoute key={route.num} num={route.num} endpoints={route.endpoints} tariff={route.tariff} />
+            {duty.map((route: DutyObj, i: number) => (
+              <CardRoute
+                key={route.num}
+                num={route.num}
+                endpoints={route.endpoints}
+                tariff={route.tariff}
+                duty={duty[i]}
+              />
             ))}
           </Col>
         ) : (
