@@ -1,0 +1,10 @@
+Dockerfile
+.dockerignore
+node_modules
+.next
+.idea
+.husky
+npm-debug.log
+README.md
+docker
+.git
