@@ -11,11 +11,25 @@ RUN \
   fi
 
 COPY . .
+COPY public ./public
+COPY next.config.js .
 
-EXPOSE 8081
-ENV PORT 8081
+ARG FRONT_PORT
+ENV FRONT_PORT=${FRONT_PORT}
+ARG BACKEND_SERVICE
+ENV BACKEND_SERVICE=${BACKEND_SERVICE}
 
-RUN yarn cache clean
-RUN yarn build
+# Build Next.js based on the preferred package manager
+RUN \
+  if [ -f yarn.lock ]; then yarn build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then pnpm build; \
+  else yarn build; \
+  fi
 
-CMD yarn start
+CMD \
+  if [ -f yarn.lock ]; then yarn start; \
+  elif [ -f package-lock.json ]; then npm run start; \
+  elif [ -f pnpm-lock.yaml ]; then pnpm start; \
+  else yarn start; \
+  fi

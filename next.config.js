@@ -25,7 +25,13 @@ module.exports = {
     return config;
   },
   env: {
-    BACKEND_SERVICE: process.env.BACKEND_SERVICE || 'http://localhost:8082',
+    BACKEND_SERVICE: process.env.BACKEND_SERVICE, 
+  },
+  serverRuntimeConfig: {
+    BACKEND_SERVICE: process.env.BACKEND_SERVICE,
+  },
+  publicRuntimeConfig: {
+    BACKEND_SERVICE: process.env.BACKEND_SERVICE,
   },
   poweredByHeader: false,
 };

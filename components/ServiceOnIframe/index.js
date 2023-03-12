@@ -1,10 +1,13 @@
 /* eslint-disable prefer-const */
 import Iframe from 'react-iframe';
+import getConfig from 'next/config';
 import ScrollTop from '../returnTop';
 
 export default function ServiceIframe({
   menuOpen, url, sizeClient, id,
 }) {
+  const { publicRuntimeConfig: config } = getConfig();
+  console.log('config:', JSON.stringify(config));
   return (
     <>
       <div id="back-to-top-anchor" style={{ maxHeight: '1px' }} />
