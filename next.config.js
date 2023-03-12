@@ -25,8 +25,7 @@ module.exports = {
     return config;
   },
   env: {
-    BACKEND_SERVICE: process.env.BACKEND_SERVICE || 'http://193.23.225.178:3125',
-
+    BACKEND_SERVICE: process.env.BACKEND_SERVICE || 'http://localhost:8082',
   },
   poweredByHeader: false,
 };

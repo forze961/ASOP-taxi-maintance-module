@@ -1,11 +1,11 @@
 {
-  "name": "ASOP-taxi",
+  "name": "asop-taxi-desktop",
   "version": "1.0.0",
   "description": "ASOP taxi",
   "scripts": {
-    "dev": "next -p 3001",
+    "dev": "next",
     "build": "next build",
-    "start": "next start -p 3126",
+    "start": "next start --port ${PORT-3000}",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

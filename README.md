@@ -13,3 +13,9 @@
 - [Material-ui](http://material-ui.com)
 - [Styled components](https://www.styled-components.com)
 - [WebPack](https://webpack.js.org/)
+
+
+## Deploy:
+1. Download module from docker registry 
+2. Mount needed .env `docker run -p 3000:3000 -v /absolute/path/to/.env:/opt/route-taxi/desktop-module`
+3. Run docker container
