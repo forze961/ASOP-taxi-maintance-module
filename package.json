@@ -32,7 +32,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start --port ${PORT-3000}",
+    "start": "next start --port ${MOBILE_PORT-3000}",
     "export": "yarn build && next export -o _static",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

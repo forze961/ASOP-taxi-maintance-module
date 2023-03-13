@@ -1,7 +1,10 @@
 const withPWA = require('next-pwa');
 
 const settings = {
-  env: {},
+  env: {
+    BACKEND_SERVICE: process.env.BACKEND_SERVICE,
+    FRONTEND_SERVICE: process.env.FRONTEND_SERVICE,
+  },
   devIndicators: {
     autoPrerender: false,
   },

@@ -11,8 +11,27 @@ RUN \
   fi
 
 COPY . .
+COPY public ./public
+COPY next.config.js .
 
-RUN yarn cache clean
-RUN yarn build
+ARG MOBILE_PORT
+ENV MOBILE_PORT=${MOBILE_PORT}
+ARG BACKEND_SERVICE
+ENV BACKEND_SERVICE=${BACKEND_SERVICE}
+ARG FRONTEND_SERVICE
+ENV FRONTEND_SERVICE=${FRONTEND_SERVICE}
 
-CMD yarn start
+# Build Next.js based on the preferred package manager
+RUN \
+  if [ -f yarn.lock ]; then yarn build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then pnpm build; \
+  else yarn build; \
+  fi
+
+CMD \
+  if [ -f yarn.lock ]; then yarn start; \
+  elif [ -f package-lock.json ]; then npm run start; \
+  elif [ -f pnpm-lock.yaml ]; then pnpm start; \
+  else yarn start; \
+  fi
