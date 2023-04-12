@@ -5,11 +5,20 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import { useRouter } from 'next/router';
+import Callendar from '../Callendar';
+import Carriers from '../Carriers';
+import Drivers from '../Drivers';
+import Fare from '../Fare';
+import PaymentWays from '../PaymentWays';
+import RouteFlights from '../RouteFlights';
+import Routes from '../Routes';
 import Schedule from '../Schedule';
+import Stops from '../Stops';
 import Tariffs from '../Tariffs';
 import Reports from '../Reports';
 import ServiceOnIframe from '../ServiceOnIframe';
 import useWindowSize from '../screenSizeHelper';
+import Vehicle from '../Vehicle';
 
 const urls = [
   '',
@@ -60,32 +69,21 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
       return <Schedule />;
     }
 
-    case 2: case 3: {
-      return (
-        <>
-          <Grid container>
-            <FormControlLabel
-              control={<Checkbox checked={id === 2} onChange={() => handleChange(2)} inputProps={{ 'aria-label': 'primary checkbox' }} color="primary" />}
-              label="Добові наряди"
-            />
-            <Box m={1} />
-            <FormControlLabel
-              control={<Checkbox checked={id === 3} onChange={() => handleChange(3)} inputProps={{ 'aria-label': 'primary checkbox' }} color="primary" />}
-              label="Формуляри"
-            />
-          </Grid>
-          <ServiceOnIframe
-            menuOpen={menuOpen}
-            url={urls[id]}
-            sizeClient={sizeClient}
-            id={id}
-          />
-        </>
-      );
+    case 2: {
+      return <Carriers />;
+      // return <Schedule />;
     }
 
-    case 4: case 5: {
-      return <ServiceOnIframe menuOpen={menuOpen} url={urls[id]} sizeClient={sizeClient} id={id} />;
+    case 3: {
+      return <Vehicle />
+    }
+
+    case 4: {
+      return <Drivers />
+    }
+
+    case 5: {
+      return <Routes />;
     }
 
     case 6: {
@@ -94,6 +92,26 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
 
     case 7: {
       return <Reports />;
+    }
+
+    case 8: {
+      return <Stops />;
+    }
+
+    case 9: {
+      return <Callendar />;
+    }
+
+    case 10: {
+      return <PaymentWays />;
+    }
+
+    case 11: {
+      return <Fare />;
+    }
+
+    case 12: {
+      return <RouteFlights />;
     }
 
     default: <Schedule />;

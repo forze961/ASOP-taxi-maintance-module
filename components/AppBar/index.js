@@ -108,7 +108,7 @@ export default function AppBarLayout({
             </IconButton>
             <div className={classes.title}>
               {sizeClient.width > 980 && (
-                <img src="/images/logoMain.png" style={{ paddingTop: '8px' }} alt="allSuccess" />
+                <img src="/images/logoMain.png" style={{ marginLeft: '10px', paddingTop: '8px' }} alt="allSuccess" />
               )}
               {sizeClient.width < 980 && sizeClient.width > 600 && (
                 <img src="/images/logoMain.png" style={{ paddingTop: '6px', maxHeight: 25 }} alt="allSuccess" />

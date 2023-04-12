@@ -80,22 +80,40 @@ const styles = (theme: Theme) => ({
 
 const itemsMenu = [
   {
-    id: 1, name: 'Розклад', url: '/schedule', img: 'schedule.png',
+    id: 1, name: 'Розклад', url: '/schedule', img: 'clip.svg',
   },
   {
-    id: 2, name: 'Електронні наряди', url: '/schedule', img: 'orders.png',
+    id: 2, name: 'Перевізники', url: '/schedule', img: 'carriers.svg',
   },
   {
-    id: 4, name: 'Працівники', url: '/schedule', img: 'workers.png',
+    id: 3, name: 'Рухомі одиниці', url: '/schedule', img: 'desktop.svg',
   },
   {
-    id: 5, name: 'Рухомі одиниці', url: '/schedule', img: 'car.png',
+    id: 4, name: 'Водії', url: '/schedule', img: 'users.svg',
   },
   {
-    id: 6, name: 'Маршрути та тарифи', url: '/schedule', img: 'routes.png',
+    id: 7, name: 'Формуляри', url: '/schedule', img: 'formular.svg',
   },
   {
-    id: 7, name: 'Звіти', url: '/schedule', img: 'rep.png',
+    id: 5, name: 'Маршрути', url: '/schedule', img: 'tarify.svg',
+  },
+  {
+    id: 6, name: 'Звіти', url: '/schedule', img: 'documentText.svg',
+  },
+  {
+    id: 8, name: 'Зупинки', url: '/schedule', img: 'locationMarker.svg',
+  },
+  {
+    id: 9, name: 'Тижневий календар', url: '/schedule', img: 'calendar.svg',
+  },
+  {
+    id: 10, name: 'Способи оплати проїзду', url: '/schedule', img: 'payments.svg',
+  },
+  {
+    id: 11, name: 'Вартість проїзду', url: '/schedule', img: 'price.svg',
+  },
+  {
+    id: 12, name: 'Рейси маршрутів', url: '/schedule', img: 'tablerRoute.svg',
   },
 ];
 
@@ -152,7 +170,7 @@ class SideMenu extends PureComponent<Props, State> {
                   <Tooltip title={item.name} aria-label="add">
                     <ListItemIcon>
                       {item.id === 2 ? (
-                        <img src={`/images/menu/${item.img}`} alt={item.id} style={{ paddingLeft: '2px' }} />
+                        <img src={`/images/menu/${item.img}`} alt={item.id} />
                       ) : (
                         <img src={`/images/menu/${item.img}`} alt={item.id} />
                       )}

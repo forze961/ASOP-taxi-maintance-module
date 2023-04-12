@@ -1,6 +1,7 @@
 /* eslint-disable prefer-const */
+import {date} from '@storybook/addon-knobs';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -22,6 +23,7 @@ import RevertIcon from '@material-ui/icons/NotInterestedOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import Input from '@material-ui/core/Input';
 import clsx from 'clsx';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import TableHeaderBar from '../TableHeaderBar';
 
 const useStyles = makeStyles((theme) => ({
@@ -75,13 +77,13 @@ const useStyles = makeStyles((theme) => ({
   },
   bg: {
     backgroundColor: '#fafafa'
-  }
+  },
 }));
 
 const createData = (obj) => ({
   id: Math.floor(Math.random() * 1000),
   ...obj,
-  isEditMode: false,
+  isEditMode: true,
 });
 
 const getCellSplit = (row, name) => {
@@ -100,108 +102,92 @@ const getCellSplit = (row, name) => {
   return row[name];
 };
 
-const CustomTableCell = ({ row, name, onChange }) => {
+const CustomTableCell = ({
+  row, name, onChange, onChangeDate,
+}) => {
   const classes = useStyles();
   const { isEditMode } = row;
   return (
     <TableCell align="center" className={classes.tableCell}>
-      {isEditMode ? (
-        <Input
-          value={row[name]}
-          name={name}
-          onChange={(e) => onChange(e, row)}
-          className={classes.input}
-        />
-      ) : getCellSplit(row, name)}
+      {
+        isEditMode ? (
+            name.includes('date') ? (
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="yyyy-MM-dd"
+                id="date-picker-inline"
+                label="Оберіть дату"
+                value={row[name]}
+                onChange={(value) => onChangeDate(value, name, row)}
+                autoOk
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            ) : (
+              <Input
+                value={row[name]}
+                name={name}
+                onChange={(e) => onChange(e, row)}
+                className={classes.input}
+              />
+            )
+          )
+          : (getCellSplit(row, name))
+      }
     </TableCell>
   );
 };
 
-export default function Schedule() {
+export default function Callendar() {
   const classes = useStyles();
 
   const DateNow = new Date();
   let DateBefore = new Date();
   DateBefore.setDate(DateBefore.getDate() - 1);
   const [selectedDateNow, setSelectedDateNow] = useState(DateNow);
-  const [timeNow, setTimeNow] = useState(`${moment().format('HH')}:00`);
   const [loadingTable, setLoadingTable] = useState(false);
   const [previous, setPrevious] = React.useState({});
+  const [created, setCreated] = useState(false);
 
-  const [rows, setRows] = useState([
-    createData({
-      route: 202,
-      graph: 1,
-      smen: '1',
-      trips: 11,
-      time1: '05:24',
-      time2: '05:30',
-      time3: '-',
-      time4: '18:41',
-      time5: '-',
-      carType: 'Богдан А091',
-    }),
-    createData({
-      route: 220,
-      graph: 1,
-      smen: '1',
-      trips: 6,
-      time1: '05:24',
-      time2: '05:30',
-      time3: '12:43',
-      time4: '12:41',
-      time5: '-',
-      carType: 'Богдан А091',
-    }),
-    createData({
-      route: 220,
-      graph: 1,
-      smen: '2',
-      trips: 5,
-      time1: '12:45',
-      time2: '12:45',
-      time3: '-',
-      time4: '23:10',
-      time5: '-',
-      carType: 'Богдан А091',
-    }),
-    createData({
-      route: 155,
-      graph: 1,
-      smen: '1/2',
-      trips: 20,
-      time1: '05:24',
-      time2: '05:30',
-      time3: '-',
-      time4: '22:00',
-      time5: '-',
-      carType: 'Volvo TRN',
-    }),
-    createData({
-      route: 155,
-      graph: 2,
-      smen: '1/2',
-      trips: 20,
-      time1: '05:24',
-      time2: '05:30',
-      time3: '-',
-      time4: '22:00',
-      time5: '-',
-      carType: 'МАЗ 155',
-    }),
-    createData({
-      route: 155,
-      graph: 3,
-      smen: '1/2',
-      trips: 20,
-      time1: '05:24',
-      time2: '05:30',
-      time3: '-',
-      time4: '22:00',
-      time5: '-',
-      carType: 'Богдан А092',
-    }),
-  ]);
+  const [rows, setRows] = useState([]);
+
+  const getData = useCallback(async () => {
+    const { data } = await axios({
+      method: 'get',
+      url: `http://193.23.225.178:8082/api/ausersIRW`,
+      headers: {
+        'Content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+      },
+    });
+
+    const formatted = data.reduce((acc, curr) => {
+      const splitted = curr.age.split(',');
+
+      acc.push({
+        id: curr.id,
+        name: curr.name,
+        mon: splitted[1],
+        tues: splitted[2],
+        wedn: splitted[3],
+        thurs: splitted[4],
+        friday: splitted[5],
+        sat: splitted[6],
+        sun: splitted[7],
+        startDate: curr.timea.substring(1),
+        endDate: curr.timeb.substring(1),
+      })
+      return acc;
+    },[])
+    setRows(formatted);
+  }, [])
+
+  useEffect(() => {
+    getData().catch(console.error);
+  }, [getData])
 
   const onToggleEditMode = (id) => {
     setRows((state) => rows.map((row) => {
@@ -228,6 +214,75 @@ export default function Schedule() {
     setRows(newRows);
   };
 
+  const onChangeDate = (value, name, row) => {
+    if (!previous[row.id]) {
+      setPrevious((state) => ({ ...state, [row.id]: row }));
+    }
+    const { id } = row;
+    const newRows = rows.map((row) => {
+      if (row.id === id) {
+        return { ...row, [name]: moment(value.ts ? value.ts : value).format('yyyy-MM-DD') };
+      }
+      return row;
+    });
+    setRows(newRows);
+  };
+
+  const onSave = async (row) => {
+    const age = `,${row.mon},${row.tues},${row.wedn},${row.thurs},${row.friday},${row.sat},${row.sun}`;
+    const time = `,${row.startDate}`,
+          timeB = `,${row.endDate}`;
+
+    if (created) {
+      const fetchData = async () => {
+        const data = await axios({
+          method: 'post',
+          url: `http://193.23.225.178:8082/api/ausersIRW`,
+          headers: {
+            'Content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+          },
+          data: {
+            age,
+            time,
+            timeB,
+            name: row.name,
+          }
+        });
+        return data;
+      }
+      const created = fetchData().catch(console.error);
+      if (created) {
+        onToggleEditMode(row.id);
+        setCreated(false);
+        return await getData();
+      }
+    }
+
+    const fetchData = async () => {
+      await axios({
+        method: 'put',
+        url: `http://193.23.225.178:8082/api/ausersIRW`,
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+        },
+        data: {
+          age,
+          time,
+          timeB,
+          id: row.id,
+          name: row.name,
+        }
+      });
+    }
+    fetchData().catch(console.error);
+    onToggleEditMode(row.id);
+    setCreated(false);
+  }
+
   const onRevert = (id) => {
     const newRows = rows.map((row) => {
       if (row.id === id) {
@@ -243,34 +298,19 @@ export default function Schedule() {
     onToggleEditMode(id);
   };
 
-  // useEffect(() => {
-  //   let el;
-  //   // (async () => el = await axios.get('http://193.23.225.178:8082/api/ausers',{
-  //   //   headers: {
-  //   //     'Content-type': 'application/json',
-  //   //     'Access-Control-Allow-Origin': '*',
-  //   //     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-  //   //   },
-  //   // })())();
-  //   const elem = async () => {
-  //      const data = await axios({
-  //       method: 'get',
-  //       url: `http://193.23.225.178:8082/api/ausers`,
-  //       headers: {
-  //         'Content-type': 'application/json',
-  //         'Access-Control-Allow-Origin': '*',
-  //         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-  //       },
-  //     });
-  //     return data;
-  //   }
-  //   console.log(elem());
-  //   return;
-  // })
-
-  const onDelete = (id) => {
+  const onDelete = async (id) => {
     const newRows = rows.filter((row) => row.id !== id);
     setRows(newRows);
+    await axios({
+      method: 'delete',
+      url: `http://193.23.225.178:8082/api/ausersIRW/${id}`,
+      headers: {
+        'Content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+      },
+    });
+
     setPrevious((state) => {
       delete state[id];
       return state;
@@ -281,26 +321,25 @@ export default function Schedule() {
     <Grid container spacing={3} className={classes.bg}>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Box>
-            <h2>{`Розклад станом на: ${moment(selectedDateNow.ts ? selectedDateNow.ts : selectedDateNow).format('yyyy-MM-DD')}`}</h2>
-          </Box>
-
           <TableHeaderBar
             selectedDateNow={selectedDateNow}
-            handleDateChangeNow={(value) => setSelectedDateNow(moment(value.ts ? value.ts : value).format('yyyy-MM-DD'))}
-            btnTitle="Створити розклад"
+            handleDateChangeNow={(() => {})}
+            disableDatepicker
+            titleNoDatepicker="Календар"
+            btnTitle="Додати календар"
             btnOnClick={() => {
+              setCreated(true);
               setRows([createData({
-                route: 0,
-                graph: 1,
-                smen: '1',
-                trips: 0,
-                time1: '',
-                time2: '',
-                time3: '',
-                time4: '',
-                time5: '',
-                carType: '',
+                name: '',
+                mon: '',
+                tues: '',
+                wedn: '',
+                thurs: '',
+                friday: '',
+                sat: '',
+                sun: '',
+                startDate: '',
+                endDate: '',
               }), ...rows]);
             }}
           />
@@ -319,25 +358,17 @@ export default function Schedule() {
                   <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead>
                       <TableRow>
-                        <TableCell className={classes.tableHeaderFirst} colSpan={1} align="center">Ред.</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} colSpan={4} align="center">Маршрут/Графік/Зміна/К-сть рейсів</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} colSpan={5} align="center">Час</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} colSpan={1} align="center">РО</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className={classes.tableHeaderFirst} align="center" />
-                        <TableCell className={classes.tableHeaderSecond} align="center">М</TableCell>
-                        <TableCell className={classes.tableHeaderSecond} align="center">Г</TableCell>
-                        <TableCell className={classes.tableHeaderSecond} align="center">З</TableCell>
-                        <TableCell className={classes.tableHeaderSecond} align="center">Рейси</TableCell>
-
-                        <TableCell className={classes.tableHeaderSecond} align="center">Явка</TableCell>
-                        <TableCell className={classes.tableHeaderSecond} align="center">Виїзд</TableCell>
-                        <TableCell className={classes.tableHeaderSecond} align="center">Перезміна</TableCell>
-                        <TableCell className={classes.tableHeaderSecond} align="center">Заїзд</TableCell>
-                        <TableCell className={classes.tableHeaderSecond} align="center">Час зміни</TableCell>
-                        <TableCell className={classes.tableHeaderSecond} align="center">Марка</TableCell>
-
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Понеділок</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Вівторок</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Середа</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Четвер</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Пятниця</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Субота</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Неділя</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Дата початку</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Дата кінця</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -354,7 +385,7 @@ export default function Schedule() {
                               <>
                                 <IconButton
                                   aria-label="done"
-                                  onClick={() => onToggleEditMode(row.id)}
+                                  onClick={() => onSave(row)}
                                 >
                                   <DoneIcon />
                                 </IconButton>
@@ -382,16 +413,16 @@ export default function Schedule() {
                               </>
                             )}
                           </TableCell>
-                          <CustomTableCell clas {...{ row, name: 'route', onChange }} />
-                          <CustomTableCell {...{ row, name: 'graph', onChange }} />
-                          <CustomTableCell {...{ row, name: 'smen', onChange }} />
-                          <CustomTableCell {...{ row, name: 'trips', onChange }} />
-                          <CustomTableCell {...{ row, name: 'time1', onChange }} />
-                          <CustomTableCell {...{ row, name: 'time2', onChange }} />
-                          <CustomTableCell {...{ row, name: 'time3', onChange }} />
-                          <CustomTableCell {...{ row, name: 'time4', onChange }} />
-                          <CustomTableCell {...{ row, name: 'time5', onChange }} />
-                          <CustomTableCell {...{ row, name: 'carType', onChange }} />
+                          <CustomTableCell clas {...{ row, name: 'name', onChange }} />
+                          <CustomTableCell {...{ row, name: 'mon', onChange }} />
+                          <CustomTableCell {...{ row, name: 'tues', onChange,}}/>
+                          <CustomTableCell {...{ row, name: 'wedn', onChange,}}/>
+                          <CustomTableCell {...{ row, name: 'thurs', onChange,}}/>
+                          <CustomTableCell {...{ row, name: 'friday', onChange,}}/>
+                          <CustomTableCell {...{ row, name: 'sat', onChange }}/>
+                          <CustomTableCell {...{ row, name: 'sun', onChange }}/>
+                          <CustomTableCell {...{ row, name: 'startDate', onChange }}/>
+                          <CustomTableCell {...{ row, name: 'endDate', onChange }}/>
                         </TableRow>
                       ))}
 

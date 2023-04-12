@@ -6,7 +6,7 @@
   </a>
 </p>
 
-
+// Node 16.13.0
 ## Стек
 - [React](https://reactjs.org)
 - [Nextjs](https://nextjs.org/)
