@@ -155,7 +155,7 @@ export default function RouteFlights() {
   const getData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
-      url: `http://193.23.225.178:8082/api/ausersIR`,
+      url: `/api/ausersIR`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -248,7 +248,7 @@ export default function RouteFlights() {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `http://193.23.225.178:8082/api/ausersIR`,
+          url: `/api/ausersIR`,
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -274,7 +274,7 @@ export default function RouteFlights() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `http://193.23.225.178:8082/api/ausersIR`,
+        url: `/api/ausersIR`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -315,7 +315,7 @@ export default function RouteFlights() {
 
     await axios({
       method: 'delete',
-      url: `http://193.23.225.178:8082/api/ausersIR/${id}`,
+      url: `/api/ausersIR/${id}`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',

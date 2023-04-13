@@ -155,7 +155,7 @@ export default function Fare() {
   const getData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
-      url: `http://193.23.225.178:8082/api/ausersP`,
+      url: `/api/ausersP`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -230,7 +230,7 @@ export default function Fare() {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `http://193.23.225.178:8082/api/ausersP`,
+          url: `/api/ausersP`,
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -252,7 +252,7 @@ export default function Fare() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `http://193.23.225.178:8082/api/ausersP`,
+        url: `/api/ausersP`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -291,7 +291,7 @@ export default function Fare() {
 
     await axios({
       method: 'delete',
-      url: `http://193.23.225.178:8082/api/ausersP/${id}`,
+      url: `/api/ausersP/${id}`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',

@@ -159,7 +159,7 @@ export default function Vehicle() {
     if (carrier) {
       const { data } = await axios({
         method: 'get',
-        url: `http://193.23.225.178:8082/api/auserspe1/${carrier}`,
+        url: `/api/auserspe1/${carrier}`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -227,7 +227,7 @@ export default function Vehicle() {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `http://193.23.225.178:8082/api/auserspe`,
+          url: `/api/auserspe`,
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -249,7 +249,7 @@ export default function Vehicle() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `http://193.23.225.178:8082/api/auserspe`,
+        url: `/api/auserspe`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -288,7 +288,7 @@ export default function Vehicle() {
 
     await axios({
       method: 'delete',
-      url: `http://193.23.225.178:8082/api/auserspe/${id}`,
+      url: `/api/auserspe/${id}`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',

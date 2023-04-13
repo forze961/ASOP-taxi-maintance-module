@@ -25,7 +25,7 @@ export default function ControlledOpenSelect({carrier, setCarrier}) {
   const fetchData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
-      url: `http://193.23.225.178:8082/api/ausers`,
+      url: `/api/ausers`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',

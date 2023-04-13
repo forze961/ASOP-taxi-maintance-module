@@ -167,7 +167,7 @@ export default function Drivers() {
     if (drivers) {
       const { data } = await axios({
         method: 'get',
-        url: `http://193.23.225.178:8082/api/ausersdr1/${drivers}`,
+        url: `/api/ausersdr1/${drivers}`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -226,7 +226,7 @@ export default function Drivers() {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `http://193.23.225.178:8082/api/ausersdr`,
+          url: `/api/ausersdr`,
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -247,7 +247,7 @@ export default function Drivers() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `http://193.23.225.178:8082/api/ausersdr`,
+        url: `/api/ausersdr`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -285,7 +285,7 @@ export default function Drivers() {
     setRows(newRows);
     await axios({
       method: 'delete',
-      url: `http://193.23.225.178:8082/api/ausersdr/${id}`,
+      url: `/api/ausersdr/${id}`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',

@@ -154,7 +154,7 @@ export default function Routes() {
   const getData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
-      url: `http://193.23.225.178:8082/api/ausersR`,
+      url: `/api/ausersR`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -227,7 +227,7 @@ export default function Routes() {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `http://193.23.225.178:8082/api/ausersR`,
+          url: `/api/ausersR`,
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -249,7 +249,7 @@ export default function Routes() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `http://193.23.225.178:8082/api/ausersR`,
+        url: `/api/ausersR`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -287,7 +287,7 @@ export default function Routes() {
     setRows(newRows);
     await axios({
       method: 'delete',
-      url: `http://193.23.225.178:8082/api/ausersR/${id}`,
+      url: `/api/ausersR/${id}`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',

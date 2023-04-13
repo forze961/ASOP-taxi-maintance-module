@@ -155,7 +155,7 @@ export default function Carriers() {
   const getData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
-      url: `http://193.23.225.178:8082/api/ausers`,
+      url: `/api/ausers`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -229,7 +229,7 @@ export default function Carriers() {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `http://193.23.225.178:8082/api/ausers`,
+          url: `/api/ausers`,
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -252,7 +252,7 @@ export default function Carriers() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `http://193.23.225.178:8082/api/ausers`,
+        url: `/api/ausers`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -290,7 +290,7 @@ export default function Carriers() {
     setRows(newRows);
     await axios({
       method: 'delete',
-      url: `http://193.23.225.178:8082/api/ausers/${id}`,
+      url: `/api/ausers/${id}`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
