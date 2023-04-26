@@ -238,12 +238,14 @@ export default function Routes() {
             name: row.name,
           }
         });
+        return data;
       }
-      fetchData().catch(console.error);
-      onToggleEditMode(row.id);
-      setCreated(false);
-
-      return await getData();
+      const record = await fetchData().catch(console.error);
+      if (record) {
+        onToggleEditMode(row.id);
+        setCreated(false);
+        return await getData();
+      }
     }
 
     const fetchData = async () => {
@@ -338,7 +340,6 @@ export default function Routes() {
                     <TableHead>
                       <TableRow>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">ID</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Персональний ідентифікатор</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Коротке ім'я маршруту</TableCell>
@@ -388,7 +389,6 @@ export default function Routes() {
                               </>
                             )}
                           </TableCell>
-                          <CustomTableCell {...{ row, name: 'id', onChange }} />
                           <CustomTableCell clas {...{ row, name: 'name', onChange }} />
                           <CustomTableCell {...{
                             row, name: 'personalId', onChange,

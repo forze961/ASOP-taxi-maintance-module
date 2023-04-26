@@ -11,7 +11,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import moment from 'moment';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TableHead from '@material-ui/core/TableHead';
@@ -111,7 +110,7 @@ const CustomTableCell = ({
     <TableCell align="center" className={classes.tableCell}>
       {
         isEditMode ? (
-            name.includes('date') ? (
+            name.includes('datelocal') ? (
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
@@ -140,7 +139,7 @@ const CustomTableCell = ({
   );
 };
 
-export default function RouteFlights() {
+export default function Accoutrement() {
   const classes = useStyles();
 
   const DateNow = new Date();
@@ -155,7 +154,7 @@ export default function RouteFlights() {
   const getData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
-      url: `/api/ausersIR`,
+      url: `/api/ausersNa1IRBS`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -170,6 +169,13 @@ export default function RouteFlights() {
 
       acc.push({
         id: curr.id,
+        timedate: curr.datebe,
+        coundpt: curr.coundpt,
+        driver: curr.driver,
+        filial: curr.filial,
+        price: curr.price,
+        dutystate: curr.dutystate,
+        vehicle: curr.pe,
         name: curr.name ? curr.name : '',
         serviceId: splitted[0] ? splitted[0] : '',
         tripId: splitted[1] ? splitted[1] : '',
@@ -243,12 +249,12 @@ export default function RouteFlights() {
   const onSave = async (row) => {
     const age = `${row.serviceId},${row.tripId},${row.tripHead},${row.directionId}`;
     const time = `${row.tripIdA},${row.arrivalTimeA},${row.departureTimeA},${row.stopIdA},${row.stopSeqA},${row.stopHeadA},${row.pickUpA},${row.dropOffA}`,
-          timeB = `${row.tripIdB},${row.arrivalTimeB},${row.departureTimeB},${row.stopIdB},${row.stopSeqB},${row.stopHeadB},${row.pickUpB},${row.dropOffB}`;
+      timeB = `${row.tripIdB},${row.arrivalTimeB},${row.departureTimeB},${row.stopIdB},${row.stopSeqB},${row.stopHeadB},${row.pickUpB},${row.dropOffB}`;
     if (created) {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `/api/ausersIR`,
+          url: `/api/ausersNa1IRBS`,
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -258,6 +264,13 @@ export default function RouteFlights() {
             age,
             time,
             timeB,
+            datebe: row.timedate,
+            coundpt: row.coundpt,
+            driver: row.driver,
+            filial: row.filial,
+            price: row.price,
+            dutystate: row.dutystate,
+            pe: row.vehicle,
             name: row.name,
           }
         });
@@ -274,7 +287,7 @@ export default function RouteFlights() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `/api/ausersIR`,
+        url: `/api/ausersNaIRB`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -285,6 +298,13 @@ export default function RouteFlights() {
           time,
           timeB,
           id: row.id,
+          datebe: row.timedate,
+          coundpt: row.coundpt,
+          driver: row.driver,
+          filial: row.filial,
+          price: row.price,
+          dutystate: row.dutystate,
+          pe: row.vehicle,
           name: row.name,
         }
       });
@@ -315,7 +335,7 @@ export default function RouteFlights() {
 
     await axios({
       method: 'delete',
-      url: `/api/ausersIR/${id}`,
+      url: `/api/ausersNa1IRBS/${id}`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -337,12 +357,19 @@ export default function RouteFlights() {
             selectedDateNow={selectedDateNow}
             handleDateChangeNow={(() => {})}
             disableDatepicker
-            titleNoDatepicker="Рейси маршрутів"
-            btnTitle="Додати рейс"
+            titleNoDatepicker="Наряди"
+            btnTitle="Створити наряд"
             btnOnClick={() => {
               setCreated(true);
               setRows([createData({
                 name: '',
+                timedate: '',
+                coundpt: '',
+                driver: '',
+                filial: '',
+                price: '',
+                dutystate: '',
+                vehicle: '',
                 serviceId: '',
                 tripId: '',
                 tripHead: '',
@@ -381,13 +408,19 @@ export default function RouteFlights() {
                   <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead>
                       <TableRow>
-                        <TableCell className={classes.tableHeaderFirst} colSpan={7} align="center"></TableCell>
+                        <TableCell className={classes.tableHeaderFirst} colSpan={12} align="center"></TableCell>
                         <TableCell className={classes.tableHeaderFirst} colSpan={8} align="center">Час на зупинці А</TableCell>
                         <TableCell className={classes.tableHeaderFirst} colSpan={8} align="center">Час на зупинці Б</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Маршрут</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип дня</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Перевізник</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Рухома одиниця</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Водій</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Випуск</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Термін роботи</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Календар</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор маршруту</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Назва маршруту</TableCell>
@@ -453,6 +486,12 @@ export default function RouteFlights() {
                             )}
                           </TableCell>
                           <CustomTableCell clas {...{ row, name: 'name', onChange }} />
+                          <CustomTableCell {...{ row, name: 'dutystate', onChange }} />
+                          <CustomTableCell {...{ row, name: 'filial', onChange }} />
+                          <CustomTableCell {...{ row, name: 'vehicle', onChange }} />
+                          <CustomTableCell {...{ row, name: 'driver', onChange }} />
+                          <CustomTableCell {...{ row, name: 'coundpt', onChange }} />
+                          <CustomTableCell {...{ row, name: 'timedate', onChange }} />
                           <CustomTableCell {...{ row, name: 'serviceId', onChange }} />
                           <CustomTableCell {...{ row, name: 'tripId', onChange }} />
                           <CustomTableCell {...{ row, name: 'tripHead', onChange }} />

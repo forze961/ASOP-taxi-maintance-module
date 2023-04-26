@@ -252,12 +252,10 @@ export default function Callendar() {
         });
         return data;
       }
-      const created = fetchData().catch(console.error);
-      if (created) {
+      const record = await fetchData().catch(console.error);
         onToggleEditMode(row.id);
         setCreated(false);
         return await getData();
-      }
     }
 
     const fetchData = async () => {

@@ -244,12 +244,10 @@ export default function Stops() {
         });
         return data;
       }
-      fetchData().catch(console.error);
-      if (fetchData) {
+      const record = await fetchData().catch(console.error);
         onToggleEditMode(row.id);
         setCreated(false);
         return await getData();
-      }
     }
 
     const fetchData = async () => {

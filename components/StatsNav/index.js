@@ -5,6 +5,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import { useRouter } from 'next/router';
+import Accoutrement from '../Accoutrement';
 import Callendar from '../Callendar';
 import Carriers from '../Carriers';
 import Drivers from '../Drivers';
@@ -112,6 +113,9 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
 
     case 12: {
       return <RouteFlights />;
+    }
+    case 13: {
+      return <Accoutrement />;
     }
 
     default: <Schedule />;

@@ -39,7 +39,10 @@
     color: #1E88E5; }
     .edit-details-btn:hover .icon-svg .icon {
       color: #1E88E5; }
-
+.MuiDrawer-paper {
+  position: absolute !important;
+  /*height: 100rem !important;*/
+}
 .btn-hint {
   position: absolute;
   background: #FFFFFF;

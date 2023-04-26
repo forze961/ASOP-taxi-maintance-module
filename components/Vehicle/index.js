@@ -238,12 +238,14 @@ export default function Vehicle() {
             name: row.name,
           }
         });
+        return data;
       }
-      const record = fetchData().catch(console.error);
-      onToggleEditMode(row.id);
-      setCreated(false);
-      return await getData()
-
+      const record = await fetchData().catch(console.error);
+      if (record) {
+        onToggleEditMode(row.id);
+        setCreated(false);
+        return await getData();
+      }
     }
 
     const fetchData = async () => {

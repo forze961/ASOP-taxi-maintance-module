@@ -237,7 +237,7 @@ export default function PaymentWays() {
         });
         return data;
       }
-      const record = fetchData().catch(console.error);
+      const record = await fetchData().catch(console.error);
       if (record) {
         onToggleEditMode(row.id);
         setCreated(false);

@@ -243,10 +243,12 @@ export default function Fare() {
         });
         return data;
       }
-      const record = fetchData().catch(console.error);
+      const record = await fetchData().catch(console.error);
+      if (record) {
         onToggleEditMode(row.id);
         setCreated(false);
         return await getData();
+      }
     }
 
     const fetchData = async () => {
@@ -344,7 +346,6 @@ export default function Fare() {
                     <TableHead>
                       <TableRow>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">ID</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Назва/Гаманець</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ціна</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Тип валюти</TableCell>
@@ -396,7 +397,6 @@ export default function Fare() {
                               </>
                             )}
                           </TableCell>
-                          <CustomTableCell clas {...{ row, name: 'id', onChange }} />
                           <CustomTableCell clas {...{ row, name: 'name', onChange }} />
                           <CustomTableCell {...{ row, name: 'price', onChange }} />
                           <CustomTableCell {...{ row, name: 'currencyType', onChange }} />

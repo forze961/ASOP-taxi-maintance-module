@@ -237,11 +237,14 @@ export default function Drivers() {
             name: row.name,
           }
         });
+        return data;
       }
-      fetchData().catch(console.error);
-      onToggleEditMode(row.id);
-      setCreated(false);
-      return await getData()
+      const record = await fetchData().catch(console.error);
+      if (record) {
+        onToggleEditMode(row.id);
+        setCreated(false);
+        return await getData();
+      }
     }
 
     const fetchData = async () => {

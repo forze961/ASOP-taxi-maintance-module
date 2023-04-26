@@ -1,6 +1,6 @@
 // @flow strict
 // eslint-disable-next-line import/no-unresolved
-import { PureComponent } from 'react';
+import {PureComponent, useState} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import type { Theme } from '@material-ui/core';
 
@@ -70,7 +70,7 @@ const styles = (theme: Theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    background: '#FEFEFE',
+    background: 'red',
   },
   drawerContainer: {
     overflow: 'none',
@@ -115,6 +115,9 @@ const itemsMenu = [
   {
     id: 12, name: 'Рейси маршрутів', url: '/schedule', img: 'tablerRoute.svg',
   },
+  {
+    id: 13, name: 'Наряди', url: '/schedule', img: 'formular.svg',
+  },
 ];
 
 type Props = {|
@@ -134,12 +137,23 @@ type State = {|
 |};
 
 class SideMenu extends PureComponent<Props, State> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSelected: 1,
+    }
+  }
   menuContent = () => {
     const {
       classes,
       open,
       onChoice,
     } = this.props;
+
+    const setectTab = (item) => {
+      this.setState({isSelected: item.id});
+      return onChoice(item.id);
+    }
 
     return (
       <Drawer
@@ -164,16 +178,21 @@ class SideMenu extends PureComponent<Props, State> {
 
           <Box className={classes.container}>
             <List>
-              {itemsMenu.map((item) => (
+              {itemsMenu.map((item) => item.id === this.state.isSelected ? (
 
-                <ListItem button key={item.name} style={{ paddingLeft: '25px' }} onClick={() => onChoice(item.id)}>
+                <ListItem button key={item.name} style={{ paddingLeft: '25px', backgroundColor: '#e0e0e0', borderRadius: '10px' }} onClick={() => setectTab(item)}>
+                    <Tooltip title={item.name} aria-label="add">
+                      <ListItemIcon>
+                        <img src={`/images/menu/${item.img}`} alt={item.id}/>
+                      </ListItemIcon>
+                    </Tooltip>
+                    <ListItemText primary={item.name} />
+                </ListItem>
+              ) : (
+                <ListItem button key={item.name} style={{ paddingLeft: '25px'}} onClick={() => setectTab(item)}>
                   <Tooltip title={item.name} aria-label="add">
                     <ListItemIcon>
-                      {item.id === 2 ? (
-                        <img src={`/images/menu/${item.img}`} alt={item.id} />
-                      ) : (
-                        <img src={`/images/menu/${item.img}`} alt={item.id} />
-                      )}
+                      <img src={`/images/menu/${item.img}`} alt={item.id} />
                     </ListItemIcon>
                   </Tooltip>
                   <ListItemText primary={item.name} />
