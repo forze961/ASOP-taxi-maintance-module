@@ -26,6 +26,8 @@ module.exports = {
   },
   env: {
     BACKEND_SERVICE: process.env.BACKEND_SERVICE,
+    SESSION_TTL: process.env.SESSION_TTL || 604800,
+    APP_PROTOCOL: process.env.APP_PROTOCOL || 'http://',
   },
   poweredByHeader: false,
 };

@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import { useState } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useSnackbar } from 'notistack';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import useWindowSize from '../../screenSizeHelper';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn(): React$Node {
+export default function SignIn(): void {
   const { enqueueSnackbar } = useSnackbar();
   const size = useWindowSize();
   const router = useRouter();
@@ -45,19 +45,31 @@ export default function SignIn(): React$Node {
   const [login, setLogin] = useState('');
   const [pass, setPass] = useState('');
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setLoading(true);
+    const form = event.target;
+    const formData = new window.FormData(form);
+    const email = formData.get('email');
+    const password = formData.get('password');
 
-    if (login === 'admin' && pass === 'admin') {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    form.reset();
+    setLoading(false);
+
+    if (response.ok) {
       if (typeof window !== 'undefined') {
         router.push('/main/1');
       } else {
-        router.push('/main/1');
+        Router.push('/main/1');
       }
-    } else {
-      enqueueSnackbar('Логін або пароль — не вірні!', { variant: 'error' });
-    }
-    setLoading(false);
+    } else if (response.status === 401) enqueueSnackbar('Логін або пароль не вірні!', { variant: 'error' });
+    else enqueueSnackbar('Доступ для даного користувача — заблоковано!', { variant: 'error' });
   };
 
   const classes = useStyles();
@@ -112,10 +124,9 @@ export default function SignIn(): React$Node {
                     onChange={(e) => setPass(e.target.value)}
                   />
                   <Button
-                    type="button"
+                    type="submit"
                     fullWidth
                     variant="contained"
-                    onClick={handleSubmit}
                     className={classes.submit}
                   >
                     Увійти
@@ -177,10 +188,9 @@ export default function SignIn(): React$Node {
                   autoComplete="current-password"
                 />
                 <Button
-                  type="button"
+                  type="submit"
                   fullWidth
                   variant="contained"
-                  onClick={handleSubmit}
                   className={classes.submit}
                 >
                   Увійти
