@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import clsx from 'clsx';
 import useWindowSize from '../screenSizeHelper';
 
@@ -65,8 +65,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 export default function AppBarLayout({
   onOpenMenu, signIn = false, noLogo = false, openMenu,
 }): React$Node {
@@ -81,6 +79,19 @@ export default function AppBarLayout({
 
   const handleClose = () => {
     setAnchorEl(false);
+  };
+
+  const handleLogout = async () => {
+    await fetch('/api/logout', {
+      method: 'POST',
+      cache: 'no-cache',
+    });
+
+    if (typeof window !== 'undefined') {
+      await router.push('/');
+    } else {
+      await Router.push('/');
+    }
   };
 
   const classes = useStyles();
@@ -143,9 +154,7 @@ export default function AppBarLayout({
               onClose={handleClose}
             >
               <MenuItem
-                onClick={async (e) => {
-                  router.push('/');
-                }}
+                onClick={handleLogout}
               >
                 Вийти
               </MenuItem>
