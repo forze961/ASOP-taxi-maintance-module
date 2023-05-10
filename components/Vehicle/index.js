@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import axios from 'axios';
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -26,6 +26,7 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import ControlledOpenSelect from '../Select/select';
 import SelectSmall from '../Select/select';
 import TableHeaderBar from '../TableHeaderBar';
+import useUser from '../../lib/useUser';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: '5px solid #ED9137',
   },
   bg: {
-    backgroundColor: '#fafafa'
+    backgroundColor: '#fafafa',
   },
 }));
 
@@ -144,6 +145,7 @@ const CustomTableCell = ({
 export default function Vehicle() {
   const classes = useStyles();
 
+  const { user } = useUser();
   const DateNow = new Date();
   let DateBefore = new Date();
   DateBefore.setDate(DateBefore.getDate() - 1);
@@ -152,6 +154,14 @@ export default function Vehicle() {
   const [previous, setPrevious] = React.useState({});
   const [carrier, setCarrier] = React.useState('');
   const [created, setCreated] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      const getCarrier = user?.login?.filialParsed;
+
+      if (getCarrier && !carrier) setCarrier(getCarrier);
+    }
+  }, [user]);
 
   const [rows, setRows] = useState([]);
 
@@ -163,7 +173,7 @@ export default function Vehicle() {
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
         },
       });
 
@@ -172,16 +182,16 @@ export default function Vehicle() {
           id: curr.id,
           name: curr.name,
           description: curr.age,
-        })
+        });
         return acc;
-      },[])
+      }, []);
       setRows(formatted);
     }
-  }, [carrier])
+  }, [carrier]);
 
   useEffect(() => {
     getData().catch(console.error);
-  }, [getData, carrier])
+  }, [getData, carrier]);
 
   const onToggleEditMode = (id) => {
     setRows((state) => rows.map((row) => {
@@ -227,19 +237,19 @@ export default function Vehicle() {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `/api/auserspe`,
+          url: '/api/auserspe',
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           },
           data: {
             age: row.description,
             name: row.name,
-          }
+          },
         });
         return data;
-      }
+      };
       const record = await fetchData().catch(console.error);
       if (record) {
         onToggleEditMode(row.id);
@@ -251,23 +261,23 @@ export default function Vehicle() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `/api/auserspe`,
+        url: '/api/auserspe',
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
         },
         data: {
           age: row.description,
           id: row.id,
           name: row.name,
-        }
+        },
       });
-    }
+    };
     fetchData().catch(console.error);
     onToggleEditMode(row.id);
     setCreated(false);
-  }
+  };
 
   const onRevert = (id) => {
     const newRows = rows.map((row) => {
@@ -294,7 +304,7 @@ export default function Vehicle() {
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       },
     });
     setPrevious((state) => {

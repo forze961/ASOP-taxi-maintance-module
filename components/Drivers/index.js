@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import axios from 'axios';
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -25,6 +25,7 @@ import clsx from 'clsx';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import ControlledOpenSelect from '../Select/select';
 import TableHeaderBar from '../TableHeaderBar';
+import useUser from '../../lib/useUser';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: '5px solid #ED9137',
   },
   bg: {
-    backgroundColor: '#fafafa'
+    backgroundColor: '#fafafa',
   },
 }));
 
@@ -143,6 +144,7 @@ const CustomTableCell = ({
 export default function Drivers() {
   const classes = useStyles();
 
+  const { user } = useUser();
   const DateNow = new Date();
   let DateBefore = new Date();
   DateBefore.setDate(DateBefore.getDate() - 1);
@@ -163,6 +165,14 @@ export default function Drivers() {
     }));
   };
 
+  useEffect(() => {
+    if (user) {
+      const getCarrier = user?.login?.filialParsed;
+
+      if (getCarrier && !drivers) setDrivers(getCarrier);
+    }
+  }, [user]);
+
   const getData = useCallback(async () => {
     if (drivers) {
       const { data } = await axios({
@@ -171,7 +181,7 @@ export default function Drivers() {
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
         },
       });
 
@@ -180,16 +190,16 @@ export default function Drivers() {
           id: curr.id,
           name: curr.name,
           description: curr.age,
-        })
+        });
         return acc;
-      },[])
+      }, []);
       setRows(formatted);
     }
-  }, [drivers])
+  }, [drivers]);
 
   useEffect(() => {
     getData().catch(console.error);
-  }, [getData, drivers])
+  }, [getData, drivers]);
 
   const onChange = (e, row) => {
     if (!previous[row.id]) {
@@ -226,19 +236,19 @@ export default function Drivers() {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `/api/ausersdr`,
+          url: '/api/ausersdr',
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           },
           data: {
             age: row.description,
             name: row.name,
-          }
+          },
         });
         return data;
-      }
+      };
       const record = await fetchData().catch(console.error);
       if (record) {
         onToggleEditMode(row.id);
@@ -250,23 +260,23 @@ export default function Drivers() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `/api/ausersdr`,
+        url: '/api/ausersdr',
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
         },
         data: {
           age: row.description,
           id: row.id,
           name: row.name,
-        }
+        },
       });
-    }
+    };
     fetchData().catch(console.error);
     onToggleEditMode(row.id);
     setCreated(false);
-  }
+  };
 
   const onRevert = (id) => {
     const newRows = rows.map((row) => {
@@ -292,7 +302,7 @@ export default function Drivers() {
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       },
     });
 
