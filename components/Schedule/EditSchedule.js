@@ -1,5 +1,6 @@
 /* eslint-disable prefer-const */
 import {Tooltip} from '@material-ui/core';
+import {date} from '@storybook/addon-knobs';
 import axios from 'axios';
 import {useState, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -25,7 +26,6 @@ import Input from '@material-ui/core/Input';
 import clsx from 'clsx';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import TableHeaderBar from '../TableHeaderBar';
-import {CarrierConst} from './constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const createNewData = (obj, rows) => ({
+const createData = (obj) => ({
   id: Math.floor(Math.random() * 1000),
   ...obj,
   isEditMode: true,
@@ -141,7 +141,7 @@ const CustomTableCell = ({
   );
 };
 
-export default function Carriers() {
+export default function EditSchedule() {
   const classes = useStyles();
 
   const DateNow = new Date();
@@ -149,32 +149,56 @@ export default function Carriers() {
   DateBefore.setDate(DateBefore.getDate() - 1);
   const [selectedDateNow, setSelectedDateNow] = useState(DateNow);
   const [loadingTable, setLoadingTable] = useState(false);
-  const [previous, setPrevious] = useState({});
+  const [previous, setPrevious] = React.useState({});
   const [created, setCreated] = useState(false);
-
   const [rows, setRows] = useState([]);
 
   const getData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
-      url: `/api/ausers`,
+      url: `/api/ausersIRB`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
       },
     });
+
     const formatted = data.reduce((acc, curr) => {
       const splitted = curr.age.split(',');
+      const stopA = curr.timea.split(',');
+      const stopB = curr.timeb.split(',');
+      const coundpt = curr.coundpt.split(',');
 
       acc.push({
         id: curr.id,
-        name: curr.name,
-        personalId: splitted[1],
-        address: splitted[2],
-        timezone: splitted[3],
-        phone: splitted[4],
-        lang: splitted[5],
+        name: curr.name ? curr.name : '',
+        serviceId: splitted[0] ? splitted[0] : '',
+        tripId: splitted[1] ? splitted[1] : '',
+        tripHead: splitted[2] ? splitted[2] : '',
+        directionId: splitted[3] ? splitted[3] : '',
+        tripIdA: stopA[0] ? stopA[0] : '',
+        arrivalTimeA: stopA[1] ? stopA[1] : '',
+        departureTimeA: stopA[2] ? stopA[2] : '',
+        stopIdA: stopA[3] ? stopA[3] : '',
+        stopSeqA: stopA[4] ? stopA[4] : '',
+        stopHeadA: stopA[5] ? stopA[5] : '',
+        pickUpA: stopA[6] ? stopA[6] : '',
+        dropOffA: stopA[7] ? stopA[7] : '',
+        tripIdB: stopB[0] ? stopB[0] : '',
+        arrivalTimeB: stopB[1] ? stopB[1] : '',
+        departureTimeB: stopB[2] ? stopB[2] : '',
+        stopIdB: stopB[3] ? stopB[3] : '',
+        stopSeqB: stopB[4] ? stopB[4] : '',
+        stopHeadB: stopB[5] ? stopB[5] : '',
+        pickUpB: stopB[6] ? stopB[6] : '',
+        dropOffB: stopB[7] ? stopB[7] : '',
+        countOfVehicles: coundpt[0] ? coundpt[0] : '',
+        countOfRides: coundpt[1] ? coundpt[1] : '',
+        timeA: coundpt[2] ? coundpt[2] : '',
+        timeB: coundpt[3] ? coundpt[3] : '',
+        timeStart: coundpt[4] ? coundpt[4] : '',
+        time: curr.datebe ? curr.datebe :  '',
       })
       return acc;
     },[])
@@ -207,7 +231,6 @@ export default function Carriers() {
       }
       return row;
     });
-
     setRows(newRows);
   };
 
@@ -226,12 +249,14 @@ export default function Carriers() {
   };
 
   const onSave = async (row) => {
-    const age = `,${row.personalId},${row.address},${row.timezone},${row.phone},${row.lang}`;
+    const age = `${row.serviceId},${row.tripId},${row.tripHead},${row.directionId}`;
+    const time = `${row.tripIdA},${row.arrivalTimeA},${row.departureTimeA},${row.stopIdA},${row.stopSeqA},${row.stopHeadA},${row.pickUpA},${row.dropOffA}`,
+      timeB = `${row.tripIdB},${row.arrivalTimeB},${row.departureTimeB},${row.stopIdB},${row.stopSeqB},${row.stopHeadB},${row.pickUpB},${row.dropOffB}`;
     if (created) {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `/api/ausers`,
+          url: `/api/ausersIRB`,
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -239,6 +264,8 @@ export default function Carriers() {
           },
           data: {
             age,
+            time,
+            timeB,
             name: row.name,
           }
         });
@@ -255,7 +282,7 @@ export default function Carriers() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `/api/ausers`,
+        url: `/api/ausersIRB`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -263,6 +290,8 @@ export default function Carriers() {
         },
         data: {
           age,
+          time,
+          timeB,
           id: row.id,
           name: row.name,
         }
@@ -291,15 +320,17 @@ export default function Carriers() {
   const onDelete = async (id) => {
     const newRows = rows.filter((row) => row.id !== id);
     setRows(newRows);
+
     await axios({
       method: 'delete',
-      url: `/api/ausers/${id}`,
+      url: `/api/ausersIRB/${id}`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
       },
     });
+
     setPrevious((state) => {
       delete state[id];
       return state;
@@ -310,23 +341,6 @@ export default function Carriers() {
     <Grid container spacing={3} className={classes.bg}>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <TableHeaderBar
-            selectedDateNow={selectedDateNow}
-            handleDateChangeNow={(() => {})}
-            disableDatepicker
-            titleNoDatepicker="Перевізники"
-            btnTitle="Додати перевізника"
-            btnOnClick={() => {
-              setCreated(true);
-              setRows([createNewData({
-                name: '',
-                address: '',
-                timezone: CarrierConst.timezone,
-                phone: '',
-                lang: CarrierConst.lang,
-              }, rows), ...rows]);
-            }}
-          />
 
           <Box pt={2}>
             {loadingTable ? (
@@ -342,10 +356,40 @@ export default function Carriers() {
                   <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead>
                       <TableRow>
+                        <TableCell className={classes.tableHeaderFirst} colSpan={7} align="center"></TableCell>
+                        <TableCell className={classes.tableHeaderFirst} colSpan={8} align="center">Час на зупинці А</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} colSpan={8} align="center">Час на зупинці Б</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} colSpan={5} align="center"></TableCell>
+                      </TableRow>
+                      <TableRow>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Поштова адреса</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Телефон</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Календар</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор маршруту</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Назва маршруту</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор напрямку</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор маршруту</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час прибуття</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час відправлення</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор зупинки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Послідовність зупинок</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Знак зупинки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип завантаження</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип вигрузки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор маршруту</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час прибуття</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час відправлення</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор зупинки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Послідовність зупинок</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Знак зупинки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип посадки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип висадки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Водіїв на маршруті</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Кількість поїздок</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час поїздки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час повернення</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Початок рейсу</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Термін роботи</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -396,14 +440,32 @@ export default function Carriers() {
                             )}
                           </TableCell>
                           <CustomTableCell clas {...{ row, name: 'name', onChange }} />
-                          <CustomTableCell {...{
-                            row, name: 'address', onChange,
-                          }}
-                          />
-                          <CustomTableCell {...{
-                            row, name: 'phone', onChange,
-                          }}
-                          />
+                          <CustomTableCell {...{ row, name: 'serviceId', onChange }} />
+                          <CustomTableCell {...{ row, name: 'tripId', onChange }} />
+                          <CustomTableCell {...{ row, name: 'tripHead', onChange }} />
+                          <CustomTableCell {...{ row, name: 'directionId', onChange }} />
+                          <CustomTableCell {...{ row, name: 'tripIdA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'arrivalTimeA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'departureTimeA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopIdA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopSeqA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopHeadA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'pickUpA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'dropOffA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'tripIdB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'arrivalTimeB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'departureTimeB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopIdB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopSeqB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopHeadB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'pickUpB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'dropOffB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'countOfVehicles', onChange }} />
+                          <CustomTableCell {...{ row, name: 'countOfRides', onChange }} />
+                          <CustomTableCell {...{ row, name: 'timeA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'timeB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'timeStart', onChange }} />
+                          <CustomTableCell {...{ row, name: 'time', onChange }} />
                         </TableRow>
                       ))}
 

@@ -1,7 +1,8 @@
 /* eslint-disable prefer-const */
+import {Tooltip} from '@material-ui/core';
 import {date} from '@storybook/addon-knobs';
 import axios from 'axios';
-import {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -381,18 +382,22 @@ export default function Callendar() {
                           >
                             {row.isEditMode ? (
                               <>
-                                <IconButton
-                                  aria-label="done"
-                                  onClick={() => onSave(row)}
-                                >
-                                  <DoneIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="revert"
-                                  onClick={() => onRevert(row.id)}
-                                >
-                                  <RevertIcon />
-                                </IconButton>
+                                <Tooltip title="Зберегти">
+                                  <IconButton
+                                    aria-label="done"
+                                    onClick={() => onSave(row)}
+                                  >
+                                    <DoneIcon />
+                                  </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Відмінити">
+                                  <IconButton
+                                    aria-label="revert"
+                                    onClick={() => onRevert(row.id)}
+                                  >
+                                    <RevertIcon />
+                                  </IconButton>
+                                </Tooltip>
                               </>
                             ) : (
                               <>

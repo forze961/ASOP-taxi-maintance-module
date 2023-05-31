@@ -7,7 +7,7 @@ export default withIronSession(
     if (req?.method === 'POST') {
       const { email, password } = req?.body;
 
-      const login = await fetchJson(`${process.env.APP_PROTOCOL}nginx/api/auth-service`, {
+      const login = await fetchJson(`${process.env.APP_PROTOCOL}localhost/api/auth-service`, {
         method: 'POST',
         cache: 'no-cache',
         headers: {

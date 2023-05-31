@@ -5,7 +5,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import { useRouter } from 'next/router';
-import Accoutrement from '../Accoutrement';
+import {AccoutrementWrapped} from '../Accoutrement';
 import Callendar from '../Callendar';
 import Carriers from '../Carriers';
 import Drivers from '../Drivers';
@@ -13,10 +13,10 @@ import Fare from '../Fare';
 import PaymentWays from '../PaymentWays';
 import RouteFlights from '../RouteFlights';
 import Routes from '../Routes';
-import Schedule from '../Schedule';
+import {Schedule} from '../Schedule';
 import Stops from '../Stops';
 import Tariffs from '../Tariffs';
-import Reports from '../Reports';
+import {ReportsWrapped} from '../Reports';
 import ServiceOnIframe from '../ServiceOnIframe';
 import useWindowSize from '../screenSizeHelper';
 import Vehicle from '../Vehicle';
@@ -92,7 +92,7 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
     }
 
     case 7: {
-      return <Reports />;
+      return <ReportsWrapped />;
     }
 
     case 8: {
@@ -115,7 +115,7 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
       return <RouteFlights />;
     }
     case 13: {
-      return <Accoutrement />;
+      return <AccoutrementWrapped />;
     }
 
     default: <Schedule />;

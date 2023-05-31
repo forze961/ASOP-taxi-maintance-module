@@ -43,6 +43,9 @@
   position: absolute !important;
   /*height: 100rem !important;*/
 }
+.MuiGrid-spacing-xs-3 {
+  padding: 0px;
+}
 .btn-hint {
   position: absolute;
   background: #FFFFFF;

@@ -1,7 +1,8 @@
 /* eslint-disable prefer-const */
 import {Tooltip} from '@material-ui/core';
+import {date} from '@storybook/addon-knobs';
 import axios from 'axios';
-import {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -11,7 +12,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import moment from 'moment';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TableHead from '@material-ui/core/TableHead';
@@ -25,7 +25,6 @@ import Input from '@material-ui/core/Input';
 import clsx from 'clsx';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import TableHeaderBar from '../TableHeaderBar';
-import {CarrierConst} from './constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const createNewData = (obj, rows) => ({
+const createData = (obj) => ({
   id: Math.floor(Math.random() * 1000),
   ...obj,
   isEditMode: true,
@@ -112,7 +111,7 @@ const CustomTableCell = ({
     <TableCell align="center" className={classes.tableCell}>
       {
         isEditMode ? (
-            name.includes('date') ? (
+            name.includes('datelocal') ? (
               <KeyboardDatePicker
                 disableToolbar
                 variant="inline"
@@ -141,7 +140,7 @@ const CustomTableCell = ({
   );
 };
 
-export default function Carriers() {
+export default function Accoutrement() {
   const classes = useStyles();
 
   const DateNow = new Date();
@@ -149,32 +148,56 @@ export default function Carriers() {
   DateBefore.setDate(DateBefore.getDate() - 1);
   const [selectedDateNow, setSelectedDateNow] = useState(DateNow);
   const [loadingTable, setLoadingTable] = useState(false);
-  const [previous, setPrevious] = useState({});
+  const [previous, setPrevious] = React.useState({});
   const [created, setCreated] = useState(false);
-
   const [rows, setRows] = useState([]);
 
   const getData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
-      url: `/api/ausers`,
+      url: `/api/ausersNa1IRBS`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
       },
     });
+
     const formatted = data.reduce((acc, curr) => {
       const splitted = curr.age.split(',');
+      const stopA = curr.timea.split(',');
+      const stopB = curr.timeb.split(',');
 
       acc.push({
         id: curr.id,
-        name: curr.name,
-        personalId: splitted[1],
-        address: splitted[2],
-        timezone: splitted[3],
-        phone: splitted[4],
-        lang: splitted[5],
+        timedate: curr.datebe,
+        coundpt: curr.coundpt,
+        driver: curr.driver,
+        filial: curr.filial,
+        price: curr.price,
+        dutystate: curr.dutystate,
+        vehicle: curr.pe,
+        name: curr.name ? curr.name : '',
+        serviceId: splitted[0] ? splitted[0] : '',
+        tripId: splitted[1] ? splitted[1] : '',
+        tripHead: splitted[2] ? splitted[2] : '',
+        directionId: splitted[3] ? splitted[3] : '',
+        tripIdA: stopA[0] ? stopA[0] : '',
+        arrivalTimeA: stopA[1] ? stopA[1] : '',
+        departureTimeA: stopA[2] ? stopA[2] : '',
+        stopIdA: stopA[3] ? stopA[3] : '',
+        stopSeqA: stopA[4] ? stopA[4] : '',
+        stopHeadA: stopA[5] ? stopA[5] : '',
+        pickUpA: stopA[6] ? stopA[6] : '',
+        dropOffA: stopA[7] ? stopA[7] : '',
+        tripIdB: stopB[0] ? stopB[0] : '',
+        arrivalTimeB: stopB[1] ? stopB[1] : '',
+        departureTimeB: stopB[2] ? stopB[2] : '',
+        stopIdB: stopB[3] ? stopB[3] : '',
+        stopSeqB: stopB[4] ? stopB[4] : '',
+        stopHeadB: stopB[5] ? stopB[5] : '',
+        pickUpB: stopB[6] ? stopB[6] : '',
+        dropOffB: stopB[7] ? stopB[7] : '',
       })
       return acc;
     },[])
@@ -207,7 +230,6 @@ export default function Carriers() {
       }
       return row;
     });
-
     setRows(newRows);
   };
 
@@ -226,12 +248,14 @@ export default function Carriers() {
   };
 
   const onSave = async (row) => {
-    const age = `,${row.personalId},${row.address},${row.timezone},${row.phone},${row.lang}`;
+    const age = `${row.serviceId},${row.tripId},${row.tripHead},${row.directionId}`;
+    const time = `${row.tripIdA},${row.arrivalTimeA},${row.departureTimeA},${row.stopIdA},${row.stopSeqA},${row.stopHeadA},${row.pickUpA},${row.dropOffA}`,
+      timeB = `${row.tripIdB},${row.arrivalTimeB},${row.departureTimeB},${row.stopIdB},${row.stopSeqB},${row.stopHeadB},${row.pickUpB},${row.dropOffB}`;
     if (created) {
       const fetchData = async () => {
         const data = await axios({
           method: 'post',
-          url: `/api/ausers`,
+          url: `/api/ausersNa1IRBS`,
           headers: {
             'Content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -239,6 +263,15 @@ export default function Carriers() {
           },
           data: {
             age,
+            time,
+            timeB,
+            datebe: row.timedate,
+            coundpt: row.coundpt,
+            driver: row.driver,
+            filial: row.filial,
+            price: row.price,
+            dutystate: row.dutystate,
+            pe: row.vehicle,
             name: row.name,
           }
         });
@@ -255,7 +288,7 @@ export default function Carriers() {
     const fetchData = async () => {
       await axios({
         method: 'put',
-        url: `/api/ausers`,
+        url: `/api/ausersNaIRB`,
         headers: {
           'Content-type': 'application/json',
           'Access-Control-Allow-Origin': '*',
@@ -263,7 +296,16 @@ export default function Carriers() {
         },
         data: {
           age,
+          time,
+          timeB,
           id: row.id,
+          datebe: row.timedate,
+          coundpt: row.coundpt,
+          driver: row.driver,
+          filial: row.filial,
+          price: row.price,
+          dutystate: row.dutystate,
+          pe: row.vehicle,
           name: row.name,
         }
       });
@@ -291,15 +333,17 @@ export default function Carriers() {
   const onDelete = async (id) => {
     const newRows = rows.filter((row) => row.id !== id);
     setRows(newRows);
+
     await axios({
       method: 'delete',
-      url: `/api/ausers/${id}`,
+      url: `/api/ausersNa1IRBS/${id}`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
       },
     });
+
     setPrevious((state) => {
       delete state[id];
       return state;
@@ -314,17 +358,40 @@ export default function Carriers() {
             selectedDateNow={selectedDateNow}
             handleDateChangeNow={(() => {})}
             disableDatepicker
-            titleNoDatepicker="Перевізники"
-            btnTitle="Додати перевізника"
+            titleNoDatepicker="Наряди"
+            btnTitle="Створити наряд"
             btnOnClick={() => {
               setCreated(true);
-              setRows([createNewData({
+              setRows([createData({
                 name: '',
-                address: '',
-                timezone: CarrierConst.timezone,
-                phone: '',
-                lang: CarrierConst.lang,
-              }, rows), ...rows]);
+                timedate: '',
+                coundpt: '',
+                driver: '',
+                filial: '',
+                price: '',
+                dutystate: '',
+                vehicle: '',
+                serviceId: '',
+                tripId: '',
+                tripHead: '',
+                directionId: '',
+                tripIdA: '',
+                arrivalTimeA: '',
+                departureTimeA: '',
+                stopIdA: '',
+                stopSeqA: '',
+                stopHeadA: '',
+                pickUpA: '',
+                dropOffA: '',
+                tripIdB: '',
+                arrivalTimeB: '',
+                departureTimeB: '',
+                stopIdB: '',
+                stopSeqB: '',
+                stopHeadB: '',
+                pickUpB: '',
+                dropOffB: '',
+              }), ...rows]);
             }}
           />
 
@@ -342,10 +409,39 @@ export default function Carriers() {
                   <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead>
                       <TableRow>
+                        <TableCell className={classes.tableHeaderFirst} colSpan={12} align="center"></TableCell>
+                        <TableCell className={classes.tableHeaderFirst} colSpan={8} align="center">Час на зупинці А</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} colSpan={8} align="center">Час на зупинці Б</TableCell>
+                      </TableRow>
+                      <TableRow>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Поштова адреса</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Телефон</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Маршрут</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип дня</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Перевізник</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Рухома одиниця</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Водій</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Випуск</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Термін роботи</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Календар</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор маршруту</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Назва маршруту</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор напрямку</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор маршруту</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час прибуття</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час відправлення</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор зупинки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Послідовність зупинок</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Знак зупинки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип завантаження</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип вигрузки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор маршруту</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час прибуття</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Час відправлення</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Ідентифікатор зупинки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Послідовність зупинок</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Знак зупинки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип посадки</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Тип висадки</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -364,7 +460,6 @@ export default function Carriers() {
                                   <IconButton
                                     aria-label="done"
                                     onClick={() => onSave(row)}
-                                    tooltip="done"
                                   >
                                     <DoneIcon />
                                   </IconButton>
@@ -396,14 +491,32 @@ export default function Carriers() {
                             )}
                           </TableCell>
                           <CustomTableCell clas {...{ row, name: 'name', onChange }} />
-                          <CustomTableCell {...{
-                            row, name: 'address', onChange,
-                          }}
-                          />
-                          <CustomTableCell {...{
-                            row, name: 'phone', onChange,
-                          }}
-                          />
+                          <CustomTableCell {...{ row, name: 'dutystate', onChange }} />
+                          <CustomTableCell {...{ row, name: 'filial', onChange }} />
+                          <CustomTableCell {...{ row, name: 'vehicle', onChange }} />
+                          <CustomTableCell {...{ row, name: 'driver', onChange }} />
+                          <CustomTableCell {...{ row, name: 'coundpt', onChange }} />
+                          <CustomTableCell {...{ row, name: 'timedate', onChange }} />
+                          <CustomTableCell {...{ row, name: 'serviceId', onChange }} />
+                          <CustomTableCell {...{ row, name: 'tripId', onChange }} />
+                          <CustomTableCell {...{ row, name: 'tripHead', onChange }} />
+                          <CustomTableCell {...{ row, name: 'directionId', onChange }} />
+                          <CustomTableCell {...{ row, name: 'tripIdA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'arrivalTimeA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'departureTimeA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopIdA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopSeqA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopHeadA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'pickUpA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'dropOffA', onChange }} />
+                          <CustomTableCell {...{ row, name: 'tripIdB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'arrivalTimeB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'departureTimeB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopIdB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopSeqB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'stopHeadB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'pickUpB', onChange }} />
+                          <CustomTableCell {...{ row, name: 'dropOffB', onChange }} />
                         </TableRow>
                       ))}
 

@@ -1,4 +1,5 @@
 /* eslint-disable prefer-const */
+import {Tooltip} from '@material-ui/core';
 import axios from 'axios';
 import React, { useState, useEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -178,10 +179,11 @@ export default function Vehicle() {
       });
 
       const formatted = data.reduce((acc, curr) => {
+        const rollNumber = curr.name.split('/');
         acc.push({
           id: curr.id,
-          name: curr.name,
-          description: curr.age,
+          name: rollNumber[0],
+          rollNumber: rollNumber[1],
         });
         return acc;
       }, []);
@@ -233,6 +235,7 @@ export default function Vehicle() {
   };
 
   const onSave = async (row) => {
+    const name = `${row.name}/${row.rollNumber}`
     if (created) {
       const fetchData = async () => {
         const data = await axios({
@@ -244,8 +247,8 @@ export default function Vehicle() {
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           },
           data: {
+            name,
             age: row.description,
-            name: row.name,
           },
         });
         return data;
@@ -268,9 +271,9 @@ export default function Vehicle() {
           'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
         },
         data: {
+          name,
           age: row.description,
           id: row.id,
-          name: row.name,
         },
       });
     };
@@ -328,7 +331,8 @@ export default function Vehicle() {
               setCreated(true);
               setRows([createData({
                 name: '',
-                description: '',
+                description: carrier,
+                rollNumber: ''
               }), ...rows]);
             }}
           />
@@ -348,8 +352,8 @@ export default function Vehicle() {
                     <TableHead>
                       <TableRow>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Опис</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Державний номер</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Бортовий номер</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -364,18 +368,22 @@ export default function Vehicle() {
                           >
                             {row.isEditMode ? (
                               <>
-                                <IconButton
-                                  aria-label="done"
-                                  onClick={() => onSave(row)}
-                                >
-                                  <DoneIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="revert"
-                                  onClick={() => onRevert(row.id)}
-                                >
-                                  <RevertIcon />
-                                </IconButton>
+                                <Tooltip title="Зберегти">
+                                  <IconButton
+                                    aria-label="done"
+                                    onClick={() => onSave(row)}
+                                  >
+                                    <DoneIcon />
+                                  </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Відмінити">
+                                  <IconButton
+                                    aria-label="revert"
+                                    onClick={() => onRevert(row.id)}
+                                  >
+                                    <RevertIcon />
+                                  </IconButton>
+                                </Tooltip>
                               </>
                             ) : (
                               <>
@@ -396,7 +404,7 @@ export default function Vehicle() {
                           </TableCell>
                           <CustomTableCell clas {...{ row, name: 'name', onChange }} />
                           <CustomTableCell {...{
-                            row, name: 'description', onChange,
+                            row, name: 'rollNumber', onChange,
                           }}
                           />
                         </TableRow>

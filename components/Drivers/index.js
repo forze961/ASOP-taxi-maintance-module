@@ -1,4 +1,5 @@
 /* eslint-disable prefer-const */
+import {Tooltip} from '@material-ui/core';
 import axios from 'axios';
 import React, { useState, useEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -190,6 +191,7 @@ export default function Drivers() {
           id: curr.id,
           name: curr.name,
           description: curr.age,
+          rollNumber: curr.rollNumber,
         });
         return acc;
       }, []);
@@ -243,8 +245,9 @@ export default function Drivers() {
             'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           },
           data: {
-            age: row.description,
+            age: drivers,
             name: row.name,
+            rollNumber: row.rollNumber,
           },
         });
         return data;
@@ -267,9 +270,10 @@ export default function Drivers() {
           'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
         },
         data: {
-          age: row.description,
+          age: drivers,
           id: row.id,
           name: row.name,
+          rollNumber: row.rollNumber,
         },
       });
     };
@@ -348,7 +352,7 @@ export default function Drivers() {
                       <TableRow>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Опис</TableCell>
+                        <TableCell className={classes.tableHeaderFirst} align="center">Табельний номер</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -363,18 +367,23 @@ export default function Drivers() {
                           >
                             {row.isEditMode ? (
                               <>
-                                <IconButton
-                                  aria-label="done"
-                                  onClick={() => onSave(row)}
-                                >
-                                  <DoneIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="revert"
-                                  onClick={() => onRevert(row.id)}
-                                >
-                                  <RevertIcon />
-                                </IconButton>
+                                <Tooltip title="Зберегти">
+                                  <IconButton
+                                    aria-label="done"
+                                    onClick={() => onSave(row)}
+                                    tooltip="done"
+                                  >
+                                    <DoneIcon />
+                                  </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Відмінити">
+                                  <IconButton
+                                    aria-label="revert"
+                                    onClick={() => onRevert(row.id)}
+                                  >
+                                    <RevertIcon />
+                                  </IconButton>
+                                </Tooltip>
                               </>
                             ) : (
                               <>
@@ -395,7 +404,7 @@ export default function Drivers() {
                           </TableCell>
                           <CustomTableCell clas {...{ row, name: 'name', onChange }} />
                           <CustomTableCell {...{
-                            row, name: 'description', onChange,
+                            row, name: 'rollNumber', onChange,
                           }}
                           />
                         </TableRow>

@@ -1,6 +1,7 @@
 /* eslint-disable prefer-const */
+import {Tooltip} from '@material-ui/core';
 import axios from 'axios';
-import {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -23,6 +24,8 @@ import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import Input from '@material-ui/core/Input';
 import clsx from 'clsx';
 import { KeyboardDatePicker } from '@material-ui/pickers';
+import useUser from '../../lib/useUser';
+import ControlledOpenSelect from '../Select/select';
 import TableHeaderBar from '../TableHeaderBar';
 
 const useStyles = makeStyles((theme) => ({
@@ -142,6 +145,7 @@ const CustomTableCell = ({
 export default function Routes() {
   const classes = useStyles();
 
+  const { user } = useUser();
   const DateNow = new Date();
   let DateBefore = new Date();
   DateBefore.setDate(DateBefore.getDate() - 1);
@@ -150,6 +154,15 @@ export default function Routes() {
   const [previous, setPrevious] = React.useState({});
   const [created, setCreated] = useState(false);
   const [rows, setRows] = useState([]);
+  const [carrier, setCarrier] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      const getCarrier = user?.login?.filialParsed;
+
+      if (getCarrier && !carrier) setCarrier(getCarrier);
+    }
+  }, [user]);
 
   const getData = useCallback(async () => {
     const { data } = await axios({
@@ -222,7 +235,7 @@ export default function Routes() {
   };
 
   const onSave = async (row) => {
-    const age = `,${row.personalId},${row.shortName},${row.fullName},${row.routeType},${row.dbId}`;
+    const age = `,${carrier},${row.shortName},${row.fullName},${row.routeType},${row.dbId}`;
     if (created) {
       const fetchData = async () => {
         const data = await axios({
@@ -307,6 +320,7 @@ export default function Routes() {
     <Grid container spacing={3} className={classes.bg}>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
+          <ControlledOpenSelect carrier={carrier} setCarrier={setCarrier} />
           <TableHeaderBar
             selectedDateNow={selectedDateNow}
             handleDateChangeNow={(() => {})}
@@ -317,7 +331,7 @@ export default function Routes() {
               setCreated(true);
               setRows([createData({
                 name: '',
-                personalId: '',
+                personalId: carrier,
                 shortName: '',
                 fullName: '',
                 routeType: '',
@@ -341,7 +355,6 @@ export default function Routes() {
                       <TableRow>
                         <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Персональний ідентифікатор</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Коротке ім'я маршруту</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Повне ім'я маршруту</TableCell>
                         <TableCell className={classes.tableHeaderFirst} align="center">Тип маршруту</TableCell>
@@ -359,18 +372,22 @@ export default function Routes() {
                           >
                             {row.isEditMode ? (
                               <>
-                                <IconButton
-                                  aria-label="done"
-                                  onClick={() => onSave(row)}
-                                >
-                                  <DoneIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="revert"
-                                  onClick={() => onRevert(row.id)}
-                                >
-                                  <RevertIcon />
-                                </IconButton>
+                                <Tooltip title="Зберегти">
+                                  <IconButton
+                                    aria-label="done"
+                                    onClick={() => onSave(row)}
+                                  >
+                                    <DoneIcon />
+                                  </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Відмінити">
+                                  <IconButton
+                                    aria-label="revert"
+                                    onClick={() => onRevert(row.id)}
+                                  >
+                                    <RevertIcon />
+                                  </IconButton>
+                                </Tooltip>
                               </>
                             ) : (
                               <>
@@ -390,10 +407,6 @@ export default function Routes() {
                             )}
                           </TableCell>
                           <CustomTableCell clas {...{ row, name: 'name', onChange }} />
-                          <CustomTableCell {...{
-                            row, name: 'personalId', onChange,
-                          }}
-                          />
                           <CustomTableCell {...{
                             row, name: 'shortName', onChange,
                           }}
