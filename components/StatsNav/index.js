@@ -72,7 +72,6 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
 
     case 2: {
       return <Carriers />;
-      // return <Schedule />;
     }
 
     case 3: {
