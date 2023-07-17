@@ -325,14 +325,13 @@ const itemsMenu = [
       <AssignmentOutlinedIcon style={{ color: "#111827" }} fontSize="medium" />
     ),
     subMenu: [
-      // 7
+
       {
         id: 7,
         name: "Маршрути",
         url: "/schedule",
         img: <MapOutlinedIcon fontSize="small" />,
         doubleSubMenu: [
-          // 8
           {
             id: 8,
             name: "Контрольна точка",
@@ -344,7 +343,6 @@ const itemsMenu = [
               />
             ),
           },
-          // 9
           {
             id: 100,
             name: "Випуски",
@@ -356,7 +354,6 @@ const itemsMenu = [
               />
             ),
             tripleSubMenu: [
-              // 10
               {
                 id: 10,
                 name: "Рейси",
@@ -370,8 +367,16 @@ const itemsMenu = [
     ],
   },
   {
-    id: 13,
+    id: 11,
     name: "Наряд",
+    url: "/schedule",
+    img: (
+      <AssignmentOutlinedIcon style={{ color: "#111827" }} fontSize="medium" />
+    ),
+  },
+  {
+    id: 12,
+    name: "Формуляри",
     url: "/schedule",
     img: (
       <AssignmentOutlinedIcon style={{ color: "#111827" }} fontSize="medium" />
@@ -397,7 +402,7 @@ const itemsMenu = [
         fontSize="medium"
       />
     ),
-    // 16
+
     subMenu: [
       {
         id: 23,
@@ -405,7 +410,7 @@ const itemsMenu = [
         url: "/schedule",
         img: <SupervisorAccountOutlinedIcon fontSize="small" />,
       },
-      // 17
+
       {
         id: 24,
         name: "Ще не знають",

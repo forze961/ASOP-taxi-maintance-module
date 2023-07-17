@@ -102,6 +102,10 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
     case 10: {
       return <RouteFlights />;
     }
+// 13 -> 11
+    case 11: {
+      return <AccoutrementWrapped />;
+    }
 
 
     // case 1: {
