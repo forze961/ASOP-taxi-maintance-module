@@ -1,31 +1,33 @@
 /* eslint-disable prefer-const */
-import {Tooltip} from '@material-ui/core';
+// axios
 import axios from 'axios';
+// react hooks
 import {useState, useEffect, useCallback} from 'react';
+
+import { forwardRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+
+import TableCell from '@material-ui/core/TableCell';
+// component
+import MaterialTable from 'material-table';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
-import moment from 'moment';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TableHead from '@material-ui/core/TableHead';
-import IconButton from '@material-ui/core/IconButton';
 // Icons
-import EditIcon from '@material-ui/icons/EditOutlined';
-import DoneIcon from '@material-ui/icons/DoneAllTwoTone';
-import RevertIcon from '@material-ui/icons/NotInterestedOutlined';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import Input from '@material-ui/core/Input';
-import clsx from 'clsx';
-import { KeyboardDatePicker } from '@material-ui/pickers';
-import TableHeaderBar from '../TableHeaderBar';
-import {CarrierConst} from './constants';
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Check from '@material-ui/icons/Check';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import Clear from '@material-ui/icons/Clear';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Edit from '@material-ui/icons/Edit';
+import FilterList from '@material-ui/icons/FilterList';
+import FirstPage from '@material-ui/icons/FirstPage';
+import LastPage from '@material-ui/icons/LastPage';
+import Remove from '@material-ui/icons/Remove';
+import SaveAlt from '@material-ui/icons/SaveAlt';
+import Search from '@material-ui/icons/Search';
+import ViewColumn from '@material-ui/icons/ViewColumn';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(3),
     textAlign: 'left',
-    color: theme.palette.text.secondary,
+    color: "transparent" ,
   },
 
   table: {
@@ -77,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: '5px solid #ED9137',
   },
   bg: {
-    backgroundColor: '#fafafa'
+    backgroundColor: 'transparent',
   },
 }));
 
@@ -151,10 +153,21 @@ export default function Carriers() {
   const [loadingTable, setLoadingTable] = useState(false);
   const [previous, setPrevious] = useState({});
   const [created, setCreated] = useState(false);
+  // data for table
+  const [tableData, setTableData] = useState([
+    {name:'Петро', address: 'Левандівка вул.', number: '+380623777778'},
+    {name:'Олег', address: 'Гіпсова вул.', number: '+38063111111'},
+    {name:'Василь', address: 'Кульпарківська вул.', number: '+38062333333'},
+    {name:'Артур', address: null, number: '+38062333333'},
+    {name:'Пантелеймон', address: null, number: null},
+    {name:'Ярослав', address: null, number: null},
+  ])
 
   const [rows, setRows] = useState([]);
   console.log(rows)
 
+
+  // get data
   const getData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
@@ -306,116 +319,60 @@ export default function Carriers() {
       return state;
     });
   };
+  // from this array you can control your table like position and another ...
+  // align -control position
+
+  const columns =[
+    {title: 'Назва', field: "name", align:'left',emptyValue: ()=> <em>null</em>, defaultSort: "asc"},
+    {title: 'Поштова адреса', field: "address", align:'left',emptyValue: ()=> <em>null</em>, defaultSort: "asc"},
+    // if yo want to disabled for sort and search same column
+    // sorting: false, searchable: false
+    {title: 'Телефон', field: "number", align:'left', emptyValue: ()=> <em>null</em>, sorting: false, searchable: false }
+  ]
+// icons
+  const tableIcons = {
+    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+  };
+
+  
 
   return (
-    <Grid container spacing={3} className={classes.bg}>
-      <Grid item xs={12}>
+    <Grid item  spacing={2} xs={12} className={classes.bg}>
         <Paper className={classes.paper}>
-          <TableHeaderBar
-            selectedDateNow={selectedDateNow}
-            handleDateChangeNow={(() => {})}
-            disableDatepicker
-            titleNoDatepicker="Перевізники"
-            btnTitle="Додати перевізника"
-            btnOnClick={() => {
-              setCreated(true);
-              setRows([createNewData({
-                name: '',
-                address: '',
-                timezone: CarrierConst.timezone,
-                phone: '',
-                lang: CarrierConst.lang,
-              }, rows), ...rows]);
-            }}
+          <MaterialTable
+            title="Перевізники"
+            // columns
+            columns ={columns}
+            // icons
+            icons={tableIcons}
+            // data
+            data={tableData}
+            // in option wee add options for table like sorting ....
+            options={
+              {
+              sorting:true,
+              search: true,
+              pageSizeOptions:[5,10]
+            }
+            }
           />
-
-          <Box pt={2}>
-            {loadingTable ? (
-              <div style={{
-                display: 'flex', justifyContent: 'center',
-              }}
-              >
-                <CircularProgress style={{ color: '#1e88e5' }} />
-              </div>
-            ) : (
-              <>
-                <TableContainer style={{ overflowX: 0 }}>
-                  <Table className={classes.table} size="small" aria-label="a dense table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Поштова адреса</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Телефон</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.map((row, index) => (
-                        <TableRow key={row.id} style={{ backgroundColor: index % 2 !== 0 ? '#fafafa' : '#FFFFFF' }}>
-                          <TableCell
-                            className={clsx(classes.selectTableCell, {
-                              [classes.selectTableCellEdit]: row.isEditMode,
-                              [classes.selectTableCell]: !row.isEditMode,
-                            })}
-                            align="center"
-                          >
-                            {row.isEditMode ? (
-                              <>
-                                <Tooltip title="Зберегти">
-                                  <IconButton
-                                    aria-label="done"
-                                    onClick={() => onSave(row)}
-                                    tooltip="done"
-                                  >
-                                    <DoneIcon />
-                                  </IconButton>
-                                </Tooltip>
-                                <Tooltip title="Відмінити">
-                                  <IconButton
-                                    aria-label="revert"
-                                    onClick={() => onRevert(row.id)}
-                                  >
-                                    <RevertIcon />
-                                  </IconButton>
-                                </Tooltip>
-                              </>
-                            ) : (
-                              <>
-                                <IconButton
-                                  aria-label="delete"
-                                  onClick={() => onToggleEditMode(row.id)}
-                                >
-                                  <EditIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="revert"
-                                  onClick={() => onDelete(row.id)}
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </>
-                            )}
-                          </TableCell>
-                          <CustomTableCell clas {...{ row, name: 'name', onChange }} />
-                          <CustomTableCell {...{
-                            row, name: 'address', onChange,
-                          }}
-                          />
-                          <CustomTableCell {...{
-                            row, name: 'phone', onChange,
-                          }}
-                          />
-                        </TableRow>
-                      ))}
-
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </>
-            )}
-          </Box>
         </Paper>
-      </Grid>
     </Grid>
   );
 }
