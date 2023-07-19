@@ -1,10 +1,15 @@
 /* eslint-disable prefer-const */
-import {Tooltip} from '@material-ui/core';
-import axios from 'axios';
+import React from 'react'
 import {useState, useEffect, useCallback} from 'react';
+import axios from 'axios';
+import Grid from '@material-ui/core/Grid';
+import MaterialTable from 'material-table';
+
+import {Tooltip} from '@material-ui/core';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,7 +27,7 @@ import DoneIcon from '@material-ui/icons/DoneAllTwoTone';
 import RevertIcon from '@material-ui/icons/NotInterestedOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import Input from '@material-ui/core/Input';
-import clsx from 'clsx';
+// import clsx from 'clsx';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import TableHeaderBar from '../TableHeaderBar';
 import {CarrierConst} from './constants';
@@ -30,13 +35,20 @@ import {CarrierConst} from './constants';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    backgroundColor: 'transparent',
   },
   paper: {
-    padding: theme.spacing(3),
+    width: '100%',
+    padding: theme.spacing(2),
     textAlign: 'left',
     color: theme.palette.text.secondary,
   },
-
+  title:{
+    fontWeight: "bold",
+    fontSize: "14px",
+    textTransform: "uppercase",
+    color: "#455A64",
+  },
   table: {
     minWidth: 300,
     '& .MuiTableCell-root': {
@@ -77,8 +89,13 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: '5px solid #ED9137',
   },
   bg: {
-    backgroundColor: '#fafafa'
+    backgroundColor: 'transparent',
+    padding: "0px"
   },
+  wrapper:{
+    backgroundColor: 'transparent',
+    padding: "0px"
+  }
 }));
 
 const createNewData = (obj, rows) => ({
@@ -141,6 +158,11 @@ const CustomTableCell = ({
   );
 };
 
+// const theme = createMuiTheme({
+//   direction: 'ltr', // чи 'rtl' залежно від напрямку вашого сайту
+//   // інші налаштування теми
+// });
+
 export default function Carriers() {
   const classes = useStyles();
 
@@ -153,17 +175,19 @@ export default function Carriers() {
   const [created, setCreated] = useState(false);
 
   const [rows, setRows] = useState([]);
+  console.log(rows)
 
   const getData = useCallback(async () => {
     const { data } = await axios({
       method: 'get',
-      url: `/api/ausers`,
+      url: `/api/users`,
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
       },
     });
+    console.log(data)
     const formatted = data.reduce((acc, curr) => {
       const splitted = curr.age.split(',');
 
@@ -181,240 +205,266 @@ export default function Carriers() {
     setRows(formatted);
   }, [])
 
+  const columns =[
+    {title:"Ред", field:""}
+  ]
+
   useEffect(() => {
     getData().catch(console.error);
   }, [getData])
 
-  const onToggleEditMode = (id) => {
-    setRows((state) => rows.map((row) => {
-      if (row.id === id) {
-        return { ...row, isEditMode: !row.isEditMode };
-      }
-      return row;
-    }));
-  };
+  // const onToggleEditMode = (id) => {
+  //   setRows((state) => rows.map((row) => {
+  //     if (row.id === id) {
+  //       return { ...row, isEditMode: !row.isEditMode };
+  //     }
+  //     return row;
+  //   }));
+  // };
 
-  const onChange = (e, row) => {
-    if (!previous[row.id]) {
-      setPrevious((state) => ({ ...state, [row.id]: row }));
-    }
-    const { value } = e.target;
-    const { name } = e.target;
-    const { id } = row;
-    const newRows = rows.map((row) => {
-      if (row.id === id) {
-        return { ...row, [name]: value };
-      }
-      return row;
-    });
+  // const onChange = (e, row) => {
+  //   if (!previous[row.id]) {
+  //     setPrevious((state) => ({ ...state, [row.id]: row }));
+  //   }
+  //   const { value } = e.target;
+  //   const { name } = e.target;
+  //   const { id } = row;
+  //   const newRows = rows.map((row) => {
+  //     if (row.id === id) {
+  //       return { ...row, [name]: value };
+  //     }
+  //     return row;
+  //   });
 
-    setRows(newRows);
-  };
+  //   setRows(newRows);
+  // };
 
-  const onChangeDate = (value, name, row) => {
-    if (!previous[row.id]) {
-      setPrevious((state) => ({ ...state, [row.id]: row }));
-    }
-    const { id } = row;
-    const newRows = rows.map((row) => {
-      if (row.id === id) {
-        return { ...row, [name]: moment(value.ts ? value.ts : value).format('yyyy-MM-DD') };
-      }
-      return row;
-    });
-    setRows(newRows);
-  };
+  // const onChangeDate = (value, name, row) => {
+  //   if (!previous[row.id]) {
+  //     setPrevious((state) => ({ ...state, [row.id]: row }));
+  //   }
+  //   const { id } = row;
+  //   const newRows = rows.map((row) => {
+  //     if (row.id === id) {
+  //       return { ...row, [name]: moment(value.ts ? value.ts : value).format('yyyy-MM-DD') };
+  //     }
+  //     return row;
+  //   });
+  //   setRows(newRows);
+  // };
 
-  const onSave = async (row) => {
-    const age = `,${row.personalId},${row.address},${row.timezone},${row.phone},${row.lang}`;
-    if (created) {
-      const fetchData = async () => {
-        const data = await axios({
-          method: 'post',
-          url: `/api/ausers`,
-          headers: {
-            'Content-type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-          },
-          data: {
-            age,
-            name: row.name,
-          }
-        });
-        return data;
-      }
-      const record = await fetchData().catch(console.error);
-      if (record) {
-        onToggleEditMode(row.id);
-        setCreated(false);
-        return await getData();
-      }
-    }
+  // const onSave = async (row) => {
+  //   const age = `,${row.personalId},${row.address},${row.timezone},${row.phone},${row.lang}`;
+  //   if (created) {
+  //     const fetchData = async () => {
+  //       const data = await axios({
+  //         method: 'post',
+  //         url: `/api/ausers`,
+  //         headers: {
+  //           'Content-type': 'application/json',
+  //           'Access-Control-Allow-Origin': '*',
+  //           'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+  //         },
+  //         data: {
+  //           age,
+  //           name: row.name,
+  //         }
+  //       });
+  //       return data;
+  //     }
+  //     const record = await fetchData().catch(console.error);
+  //     if (record) {
+  //       onToggleEditMode(row.id);
+  //       setCreated(false);
+  //       return await getData();
+  //     }
+  //   }
 
-    const fetchData = async () => {
-      await axios({
-        method: 'put',
-        url: `/api/ausers`,
-        headers: {
-          'Content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-        },
-        data: {
-          age,
-          id: row.id,
-          name: row.name,
-        }
-      });
-    }
-    fetchData().catch(console.error);
-    onToggleEditMode(row.id);
-    setCreated(false);
-  }
+  //   const fetchData = async () => {
+  //     await axios({
+  //       method: 'put',
+  //       url: `/api/ausers`,
+  //       headers: {
+  //         'Content-type': 'application/json',
+  //         'Access-Control-Allow-Origin': '*',
+  //         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+  //       },
+  //       data: {
+  //         age,
+  //         id: row.id,
+  //         name: row.name,
+  //       }
+  //     });
+  //   }
+  //   fetchData().catch(console.error);
+  //   onToggleEditMode(row.id);
+  //   setCreated(false);
+  // }
 
-  const onRevert = (id) => {
-    const newRows = rows.map((row) => {
-      if (row.id === id) {
-        return previous[id] ? previous[id] : row;
-      }
-      return row;
-    });
-    setRows(newRows);
-    setPrevious((state) => {
-      delete state[id];
-      return state;
-    });
-    onToggleEditMode(id);
-  };
+  // const onRevert = (id) => {
+  //   const newRows = rows.map((row) => {
+  //     if (row.id === id) {
+  //       return previous[id] ? previous[id] : row;
+  //     }
+  //     return row;
+  //   });
+  //   setRows(newRows);
+  //   setPrevious((state) => {
+  //     delete state[id];
+  //     return state;
+  //   });
+  //   onToggleEditMode(id);
+  // };
 
-  const onDelete = async (id) => {
-    const newRows = rows.filter((row) => row.id !== id);
-    setRows(newRows);
-    await axios({
-      method: 'delete',
-      url: `/api/ausers/${id}`,
-      headers: {
-        'Content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-      },
-    });
-    setPrevious((state) => {
-      delete state[id];
-      return state;
-    });
-  };
-
+  // const onDelete = async (id) => {
+  //   const newRows = rows.filter((row) => row.id !== id);
+  //   setRows(newRows);
+  //   await axios({
+  //     method: 'delete',
+  //     url: `/api/ausers/${id}`,
+  //     headers: {
+  //       'Content-type': 'application/json',
+  //       'Access-Control-Allow-Origin': '*',
+  //       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+  //     },
+  //   });
+  //   setPrevious((state) => {
+  //     delete state[id];
+  //     return state;
+  //   });
+  // };
   return (
     <Grid container spacing={3} className={classes.bg}>
-      <Grid item xs={12}>
-        <Paper className={classes.paper}>
-          <TableHeaderBar
-            selectedDateNow={selectedDateNow}
-            handleDateChangeNow={(() => {})}
-            disableDatepicker
-            titleNoDatepicker="Перевізники"
-            btnTitle="Додати перевізника"
-            btnOnClick={() => {
-              setCreated(true);
-              setRows([createNewData({
-                name: '',
-                address: '',
-                timezone: CarrierConst.timezone,
-                phone: '',
-                lang: CarrierConst.lang,
-              }, rows), ...rows]);
-            }}
-          />
-
-          <Box pt={2}>
-            {loadingTable ? (
-              <div style={{
-                display: 'flex', justifyContent: 'center',
+      <Grid container xs={12}>
+        <Paper elevation={0} xs={12} className={classes.paper}>
+          {/* <h1 className={classes.title}>Перевізники</h1> */}
+            <MaterialTable 
+              title="Перевізники"
+              columns={columns}
+              options={{
+                search: true
               }}
-              >
-                <CircularProgress style={{ color: '#1e88e5' }} />
-              </div>
-            ) : (
-              <>
-                <TableContainer style={{ overflowX: 0 }}>
-                  <Table className={classes.table} size="small" aria-label="a dense table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Поштова адреса</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Телефон</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.map((row, index) => (
-                        <TableRow key={row.id} style={{ backgroundColor: index % 2 !== 0 ? '#fafafa' : '#FFFFFF' }}>
-                          <TableCell
-                            className={clsx(classes.selectTableCell, {
-                              [classes.selectTableCellEdit]: row.isEditMode,
-                              [classes.selectTableCell]: !row.isEditMode,
-                            })}
-                            align="center"
-                          >
-                            {row.isEditMode ? (
-                              <>
-                                <Tooltip title="Зберегти">
-                                  <IconButton
-                                    aria-label="done"
-                                    onClick={() => onSave(row)}
-                                    tooltip="done"
-                                  >
-                                    <DoneIcon />
-                                  </IconButton>
-                                </Tooltip>
-                                <Tooltip title="Відмінити">
-                                  <IconButton
-                                    aria-label="revert"
-                                    onClick={() => onRevert(row.id)}
-                                  >
-                                    <RevertIcon />
-                                  </IconButton>
-                                </Tooltip>
-                              </>
-                            ) : (
-                              <>
-                                <IconButton
-                                  aria-label="delete"
-                                  onClick={() => onToggleEditMode(row.id)}
-                                >
-                                  <EditIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="revert"
-                                  onClick={() => onDelete(row.id)}
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </>
-                            )}
-                          </TableCell>
-                          <CustomTableCell clas {...{ row, name: 'name', onChange }} />
-                          <CustomTableCell {...{
-                            row, name: 'address', onChange,
-                          }}
-                          />
-                          <CustomTableCell {...{
-                            row, name: 'phone', onChange,
-                          }}
-                          />
-                        </TableRow>
-                      ))}
-
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </>
-            )}
-          </Box>
+            />
         </Paper>
       </Grid>
     </Grid>
   );
+  // return (
+  //   <Grid container spacing={3} className={classes.bg}>
+  //     <Grid container xs={12}>
+  //       <Paper elevation={0} xs={12} className={classes.paper}>
+  //         <h1 className={classes.title}>Перевізники</h1>
+  //         <ThemeProvider theme={theme}>
+  //         <MaterialTable />
+  //         </ThemeProvider>
+  //         {/* <TableHeaderBar
+  //           selectedDateNow={selectedDateNow}
+  //           handleDateChangeNow={(() => {})}
+  //           disableDatepicker
+  //           titleNoDatepicker="Перевізники"
+  //           btnTitle="Додати перевізника"
+  //           btnOnClick={() => {
+  //             setCreated(true);
+  //             setRows([createNewData({
+  //               name: '',
+  //               address: '',
+  //               timezone: CarrierConst.timezone,
+  //               phone: '',
+  //               lang: CarrierConst.lang,
+  //             }, rows), ...rows]);
+  //           }}
+  //         /> */}
+
+  //         {/* <Box pt={2}>
+  //           {loadingTable ? (
+  //             <div style={{
+  //               display: 'flex', justifyContent: 'center',
+  //             }}
+  //             >
+  //               <CircularProgress style={{ color: '#1e88e5' }} />
+  //             </div>
+  //           ) : (
+  //             <>
+  //               <TableContainer style={{ overflowX: 0 }}>
+  //                 <Table className={classes.table} size="small" aria-label="a dense table">
+  //                   <TableHead>
+  //                     <TableRow>
+  //                       <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
+  //                       <TableCell className={classes.tableHeaderFirst} align="center">Назва</TableCell>
+  //                       <TableCell className={classes.tableHeaderFirst} align="center">Поштова адреса</TableCell>
+  //                       <TableCell className={classes.tableHeaderFirst} align="center">Телефон</TableCell>
+  //                     </TableRow>
+  //                   </TableHead>
+  //                   <TableBody>
+  //                     {rows.map((row, index) => (
+  //                       <TableRow key={row.id} style={{ backgroundColor: index % 2 !== 0 ? '#fafafa' : '#FFFFFF' }}>
+  //                         <TableCell
+  //                           className={clsx(classes.selectTableCell, {
+  //                             [classes.selectTableCellEdit]: row.isEditMode,
+  //                             [classes.selectTableCell]: !row.isEditMode,
+  //                           })}
+  //                           align="center"
+  //                         >
+  //                           {row.isEditMode ? (
+  //                             <>
+  //                               <Tooltip title="Зберегти">
+  //                                 <IconButton
+  //                                   aria-label="done"
+  //                                   onClick={() => onSave(row)}
+  //                                   tooltip="done"
+  //                                 >
+  //                                   <DoneIcon />
+  //                                 </IconButton>
+  //                               </Tooltip>
+  //                               <Tooltip title="Відмінити">
+  //                                 <IconButton
+  //                                   aria-label="revert"
+  //                                   onClick={() => onRevert(row.id)}
+  //                                 >
+  //                                   <RevertIcon />
+  //                                 </IconButton>
+  //                               </Tooltip>
+  //                             </>
+  //                           ) : (
+  //                             <>
+  //                               <IconButton
+  //                                 aria-label="delete"
+  //                                 onClick={() => onToggleEditMode(row.id)}
+  //                               >
+  //                                 <EditIcon />
+  //                               </IconButton>
+  //                               <IconButton
+  //                                 aria-label="revert"
+  //                                 onClick={() => onDelete(row.id)}
+  //                               >
+  //                                 <DeleteIcon />
+  //                               </IconButton>
+  //                             </>
+  //                           )}
+  //                         </TableCell>
+  //                         <CustomTableCell clas {...{ row, name: 'name', onChange }} />
+  //                         <CustomTableCell {...{
+  //                           row, name: 'address', onChange,
+  //                         }}
+  //                         />
+  //                         <CustomTableCell {...{
+  //                           row, name: 'phone', onChange,
+  //                         }}
+  //                         />
+  //                       </TableRow>
+  //                     ))}
+
+  //                   </TableBody>
+  //                 </Table>
+  //               </TableContainer>
+  //             </>
+  //           )}
+  //         </Box> */}
+  //       </Paper>
+  //       </Grid>
+  //   </Grid>
+  // );
 }
+
+
+

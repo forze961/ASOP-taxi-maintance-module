@@ -26,6 +26,9 @@ const styles = (theme: Theme) => ({
       },
     },
   },
+  icon:{
+    minWidth: "46px",
+  },
   menuLink: {
     fontWeight: 'bold',
     fontSize: 13,
@@ -182,7 +185,7 @@ class SideMenu extends PureComponent<Props, State> {
 
                 <ListItem button key={item.name} style={{ paddingLeft: '25px', backgroundColor: '#e0e0e0', borderRadius: '10px' }} onClick={() => setectTab(item)}>
                     <Tooltip title={item.name} aria-label="add">
-                      <ListItemIcon>
+                      <ListItemIcon className={classes.icon}>
                         <img src={`/images/menu/${item.img}`} alt={item.id}/>
                       </ListItemIcon>
                     </Tooltip>
@@ -191,7 +194,7 @@ class SideMenu extends PureComponent<Props, State> {
               ) : (
                 <ListItem button key={item.name} style={{ paddingLeft: '25px'}} onClick={() => setectTab(item)}>
                   <Tooltip title={item.name} aria-label="add">
-                    <ListItemIcon>
+                    <ListItemIcon className={classes.icon}>
                       <img src={`/images/menu/${item.img}`} alt={item.id} />
                     </ListItemIcon>
                   </Tooltip>

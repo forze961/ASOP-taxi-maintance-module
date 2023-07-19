@@ -8,9 +8,14 @@ import Document, {
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../lib/theme';
 
+
+
+
+
+
 // $FlowIgnore[incompatible-use]
 export default class MyDocument extends Document {
-  render(): React$Node {
+  render() {
     return (
       <Html lang="en">
         <Head>
@@ -69,11 +74,13 @@ MyDocument.getInitialProps = async (ctx) => {
   const sheets = new ServerStyleSheets();
   const originalRenderPage = ctx.renderPage;
 
-  ctx.renderPage = () => originalRenderPage({
-    enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-  });
-  const initialProps = await Document.getInitialProps(ctx);
+  ctx.renderPage = () =>
+    originalRenderPage({
+      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+    });
 
+  const initialProps = await Document.getInitialProps(ctx);
+  
   return {
     ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.
