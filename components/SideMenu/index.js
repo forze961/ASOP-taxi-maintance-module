@@ -73,7 +73,9 @@ const styles = (theme) => ({
     fontColor: "#FEFEFE",
     
   },
-
+  icon:{
+    minWidth: "47px",
+  },
   nested: {
     padding: "8px 26px",
     backgroundColor: "transparent",
@@ -524,7 +526,7 @@ class SideMenu extends PureComponent {
                       onClick={() => selectTab(item)}
                     >
                       <Tooltip title={item.name} aria-label="add">
-                        <ListItemIcon>{item.img}</ListItemIcon>
+                        <ListItemIcon className={classes.icon}>{item.img}</ListItemIcon>
                       </Tooltip>
                       <ListItemText primary={item.name} />
                     </ListItem>
@@ -543,7 +545,7 @@ class SideMenu extends PureComponent {
                         }
                       >
                         <Tooltip title={item.name} aria-label="add">
-                          <ListItemIcon>{item.img}</ListItemIcon>
+                          <ListItemIcon className={classes.icon}>{item.img}</ListItemIcon>
                         </Tooltip>
                         <ListItemText primary={item.name} />
                         {this.state.openTooltipId === item.id ? (
@@ -576,7 +578,7 @@ class SideMenu extends PureComponent {
                                     title={subItem.name}
                                     aria-label="add"
                                   >
-                                    <ListItemIcon>{subItem.img}</ListItemIcon>
+                                    <ListItemIcon className={classes.icon} >{subItem.img}</ListItemIcon>
                                   </Tooltip>
                                   <ListItemText primary={subItem.name} />
                                 </ListItem>
@@ -600,7 +602,7 @@ class SideMenu extends PureComponent {
                                       title={subItem.name}
                                       aria-label="add"
                                     >
-                                      <ListItemIcon>{subItem.img}</ListItemIcon>
+                                      <ListItemIcon className={classes.icon} >{subItem.img}</ListItemIcon>
                                     </Tooltip>
                                     <ListItemText primary={subItem.name} />
                                     {this.state.openDoubleSubMenu ===
