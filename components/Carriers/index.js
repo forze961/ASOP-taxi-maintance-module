@@ -11,7 +11,9 @@ import MaterialTable from "material-table";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 // Icons
+// https://v4.mui.com/components/material-icons/#api
 import AddBox from "@material-ui/icons/AddBox";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import Check from "@material-ui/icons/Check";
 import ChevronLeft from "@material-ui/icons/ChevronLeft";
@@ -36,15 +38,18 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: "transparent",
   },
-  Addbutton:{
+  buttonAdd:{
     borderRadius: 4,
     background: '#144367',
     padding: 8,
-    display: 'inline-block',
+    display: 'inline-flex', // Змінюємо на "inline-flex", щоб застосувати флексбоксовий контейнер
+    justifyContent: 'center', // Це вирівняє вміст по центру горизонталі
+    alignItems: 'center', // Це вирівняє вміст по центру вертикалі
     cursor: 'pointer',
     width: 188,
     height: 44,
-    border: 'none'
+    border: 'none',
+    gap: 8,
   },
   bg: {
     backgroundColor: "transparent",
@@ -321,8 +326,8 @@ export default function Carriers() {
   // icons
   const tableIcons = {
     Add: forwardRef((props, ref) => (
-      <button className={classes.Addbutton} style={{ color: "white", background: "#144367" }} ref={ref} {...props}>
-        <AddBox />
+      <button className={classes.buttonAdd} ref={ref} {...props}>
+        <AddCircleOutlineIcon />
         Додати перевізника
       </button>
     )),
