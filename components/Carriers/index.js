@@ -400,6 +400,7 @@ export default function Carriers() {
           options={{
             sorting: true,
             search: true,
+            searchFieldAlignment:"left",
             pageSizeOptions: [5, 10],
             // mod pagination
             paginationType: "stepped",
