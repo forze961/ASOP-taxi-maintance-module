@@ -36,44 +36,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: "transparent",
   },
-
-  table: {
-    minWidth: 300,
-    "& .MuiTableCell-root": {
-      borderRight: "1px solid rgba(224, 224, 224, 1)",
-    },
-  },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    "&:hover": {},
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-    },
-  },
-
-  formControl: {
-    minWidth: 120,
-  },
-  smallTableCell: {
-    maxWidth: "30px",
-  },
-  tableHeaderFirst: {
-    backgroundColor: "#FFFBF4",
-  },
-  tableHeaderSecond: {
-    backgroundColor: "#FFFBF4",
-  },
-  selectTableCell: {
-    width: 140,
-    borderLeft: "1px solid rgba(224, 224, 224, 1)",
-  },
-  selectTableCellEdit: {
-    width: 140,
-    borderLeft: "5px solid #ED9137",
+  Addbutton:{
+    borderRadius: 4,
+    background: '#144367',
+    padding: 8,
+    display: 'inline-block',
+    cursor: 'pointer',
+    width: 188,
+    height: 44,
+    border: 'none'
   },
   bg: {
     backgroundColor: "transparent",
@@ -346,9 +317,15 @@ export default function Carriers() {
       searchable: false,
     },
   ];
+  //
   // icons
   const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+    Add: forwardRef((props, ref) => (
+      <button className={classes.Addbutton} style={{ color: "white", background: "#144367" }} ref={ref} {...props}>
+        <AddBox />
+        Додати перевізника
+      </button>
+    )),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
     Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
@@ -405,13 +382,14 @@ export default function Carriers() {
                 setTableData(updatedDAta);
                 setTimeout(() => resolve(), 500);
               }),
-              onRowDelete: (selectedRow)=> new Promise((resolve,reject)=>{
+            onRowDelete: (selectedRow) =>
+              new Promise((resolve, reject) => {
                 const updatedDAta = [...tableData];
-                updatedDAta.splice(selectedRow.tableData.id,1)
+                updatedDAta.splice(selectedRow.tableData.id, 1);
 
                 console.log(selectedRow);
                 setTimeout(() => resolve(), 1000);
-              })
+              }),
           }}
           // in option wee add options for table like sorting ....
           options={{
@@ -423,6 +401,9 @@ export default function Carriers() {
             showFirstLastPageButtons: false,
             addRowPosition: "first",
             actionsColumnIndex: -1,
+            rowStyle: (data, index) =>
+              index % 2 === 0 ? { backgroundColor: "#F0F0F0" } : null,
+            headerStyle: { backgroundColor: "#FFFBF4" },
           }}
         />
       </Paper>
