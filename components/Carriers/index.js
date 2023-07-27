@@ -407,6 +407,7 @@ export default function Carriers() {
             showFirstLastPageButtons: false,
             addRowPosition: "first",
             actionsColumnIndex: -1,
+    
             rowStyle: (data, index) =>
               index % 2 === 0 ? { backgroundColor: "#F0F0F0" } : null,
             headerStyle: { backgroundColor: "#FFFBF4" },
