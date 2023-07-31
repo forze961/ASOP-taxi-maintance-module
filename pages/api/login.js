@@ -6,8 +6,8 @@ export default withIronSession(
   async (req, res) => {
     if (req?.method === 'POST') {
       const { email, password } = req?.body;
-
-      const login = await fetchJson(`${process.env.APP_PROTOCOL}nginx/api/auth-service`, {
+      // if you have error 401 local-machine when you login change  ngnix/api/auth-service to localhost/api/auth-service;
+      const login = await fetchJson(`${process.env.APP_PROTOCOL}localhost/api/auth-service`, {
         method: 'POST',
         cache: 'no-cache',
         headers: {

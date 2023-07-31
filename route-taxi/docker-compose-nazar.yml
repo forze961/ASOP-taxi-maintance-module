@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend-module:
+    image: ${DOCKER_REGISTRY_HOSTNAME:-localhost:5000}/backend-module:0.2
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - ${BACK_PORT}:${BACK_PORT}
+    environment:
+      - REGISTRY_HOST=${REGISTRY_HOST:-localhost:5000}
+    volumes:
+      - ./config.json:/opt/route-taxi/backend-module/config.json:ro
+    secrets:
+      - registry_auth
+    networks:
+      main:
+        aliases:
+          - ${BACK_HOST}
+
+  nginx:
+    image: ${DOCKER_REGISTRY_HOSTNAME:-localhost:5000}/nginx:latest
+    ports:
+      - ${NGINX_PORT}:${NGINX_PORT}
+    env_file:
+      - .env
+    restart: always
+    environment:
+      - REGISTRY_HOST=${REGISTRY_HOST:-localhost:5000}
+    depends_on:
+      - backend-module
+    secrets:
+      - registry_auth
+    networks:
+      main:
+        aliases:
+          - nginx
+
+secrets:
+  registry_auth:
+    file: auth.txt
+
+networks:
+  main:

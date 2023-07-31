@@ -325,7 +325,7 @@ export default function Vehicle() {
             selectedDateNow={selectedDateNow}
             handleDateChangeNow={(() => {})}
             disableDatepicker
-            titleNoDatepicker="Рухомі одиниці"
+            titleNoDatepicker="Рухомі Склади"
             btnTitle="Додати транспортний засіб"
             btnOnClick={() => {
               setCreated(true);
