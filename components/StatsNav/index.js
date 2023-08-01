@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import {AccoutrementWrapped} from '../Accoutrement';
 import Callendar from '../Callendar';
 import Carriers from '../Carriers';
+import Users from '../Users'
+import Role from '../Role'
 import Drivers from '../Drivers';
 import Fare from '../Fare';
 import PaymentWays from '../PaymentWays';
@@ -106,6 +108,13 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
     case 11: {
       return <AccoutrementWrapped />;
     }
+    case 23: {
+      return <Role />;
+    }
+    case 24: {
+      return <Users />;
+    }
+
 
 
     // case 1: {

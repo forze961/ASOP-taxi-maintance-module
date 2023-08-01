@@ -36,6 +36,8 @@ import SupervisorAccountOutlinedIcon from "@material-ui/icons/SupervisorAccountO
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 // адмінустровання
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+// користувачі
+import RecentActorsOutlinedIcon from '@material-ui/icons/RecentActorsOutlined';
 // звіти
 import ContactMailOutlinedIcon from "@material-ui/icons/ContactMailOutlined";
 // контроль точка
@@ -408,16 +410,16 @@ const itemsMenu = [
     subMenu: [
       {
         id: 23,
-        name: "Ролі Route taxi",
+        name: "Ролі",
         url: "/schedule",
-        img: <SupervisorAccountOutlinedIcon fontSize="small" />,
+        img: <SupervisorAccountOutlinedIcon fontSize="small" style={{ color: "#756f6f" }}/>,
       },
 
       {
         id: 24,
-        name: "Ще не знають",
+        name: "Користувачі",
         url: "/schedule",
-        img: <HelpOutlineOutlinedIcon fontSize="small" />,
+        img: <RecentActorsOutlinedIcon fontSize="small"  style={{ color: "#756f6f" }}/>,
       },
     ],
   },
