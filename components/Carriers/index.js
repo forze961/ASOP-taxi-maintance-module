@@ -134,7 +134,6 @@ export default function Carriers() {
   ]);
 
   const [rows, setRows] = useState([]);
-  console.log(rows);
 
   // get data
   const getData = useCallback(async () => {
