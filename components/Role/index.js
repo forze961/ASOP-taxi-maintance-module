@@ -33,23 +33,173 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(3),
-    textAlign: 'left',
+    textAlign: "left",
     color: theme.palette.text.secondary,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
+  },
+  title: {
+    marginBottom: "10px",
   },
 }));
 
-
-
-
 const Role = (props) => {
   const classes = useStyles();
+
+  const tableIcons = {
+    Add: forwardRef((props, ref) => (
+      <button className={classes.buttonAdd} ref={ref} {...props}>
+        <AddCircleOutlineIcon />
+        Додати перевізника
+      </button>
+    )),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+    DetailPanel: forwardRef((props, ref) => (
+      <ChevronRight {...props} ref={ref} />
+    )),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+    PreviousPage: forwardRef((props, ref) => (
+      <ChevronLeft {...props} ref={ref} />
+    )),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+    SortArrow: forwardRef((props, ref) => (
+      <ArrowDownward {...props} ref={ref} />
+    )),
+    ThirdStateCheck: forwardRef((props, ref) => (
+      <Remove {...props} ref={ref} />
+    )),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
+  };
+
+  const [tableData, setTableData] = useState([
+    {
+      id: "1",
+      name: "Tomak",
+      description: "lorem",
+      rights: 'see'
+    },
+    {
+      id: "2",
+      name: "Nazik",
+      description: "lorem",
+      rights: 'see'
+    },
+    {
+      id: "3",
+      name: "Petro",
+      description: "lorem",
+      rights: 'see'
+    },
+    {
+      id: "4",
+      name: "Oleg",
+      description: "lorem",
+      rights: 'see'
+    },
+    {
+      id: "5",
+      name: "Saha",
+      description: "lorem",
+      rights: 'see'
+    },
+    {
+      id: "6",
+      name: "Nazik",
+      description: "lorem",
+      rights: 'see'
+    },
+  ]);
+
+  const columns =[
+  {
+    title: "Role id",
+    field: "id",
+    align: "left",
+    emptyValue: () => <em>null</em>,
+    defaultSort: "asc",
+  },
+  {
+    title: "Role name",
+    field: "name",
+    align: "left",
+    emptyValue: () => <em>null</em>,
+    defaultSort: "asc",
+  },
+  {
+    title: "Role description",
+    field: "description",
+    align: "left",
+    emptyValue: () => <em>null</em>,
+    defaultSort: "asc",
+  },
+  {
+    title: "Role Rights",
+    field: "Rights",
+    align: "left",
+    emptyValue: () => <em>null</em>,
+    defaultSort: "asc",
+  }
+  ]
+
+
   // JSX рендеринг
   return (
-        <Paper className={classes.paper}>
-          <h4>Ролі</h4>
-          <MaterialTable />
-        </Paper>
+    <Paper className={classes.paper}>
+      <h4 className={classes.title} >Ролі</h4>
+      <MaterialTable
+        icons={tableIcons}
+        columns={columns}
+        // data
+        data={tableData}
+        title=""
+        options={{
+          sorting: true,
+          search: true,
+          searchFieldAlignment: "right",
+          pageSizeOptions: [5, 10],
+          // mod pagination
+          paginationType: "stepped",
+          showFirstLastPageButtons: false,
+          addRowPosition: "first",
+          actionsColumnIndex: -1,
+          rowStyle: (data, index) =>
+            index % 2 === 0 ? { backgroundColor: "#F0F0F0" } : null,
+          headerStyle: { backgroundColor: "#FFFBF4" },
+        }}
+
+        editable={{
+          // Callback function to add a new row to the table
+          onRowUpdate: (newRow, oldRow) =>
+            new Promise((resolve, reject) => {
+              const updatedDAta = [...tableData];
+              updatedDAta[oldRow.tableData.id] = newRow;
+              setTableData(updatedDAta);
+              setTimeout(() => resolve(), 500);
+            }),
+          onRowDelete: (selectedRow) =>
+            new Promise((resolve, reject) => {
+              const updatedDAta = [...tableData];
+              updatedDAta.splice(selectedRow.tableData.id, 1);
+
+              console.log(selectedRow);
+              setTimeout(() => resolve(), 1000);
+            }),
+        }}
+
+        detailPanel={rowData => {
+          return (
+            `<h1>{ roe}</h1>`
+          )
+        }}
+      />
+    </Paper>
   );
 };
 

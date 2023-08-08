@@ -209,7 +209,6 @@ const Users = (props) => {
     )),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
   };
-
   // JSX рендеринг
   return (
     <Paper className={classes.paper}>
