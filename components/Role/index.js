@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginBottom: "10px",
   },
+  wrapper: {
+    margin: "30px",
+  },
 }));
 
 const Role = (props) => {
@@ -77,82 +80,298 @@ const Role = (props) => {
     )),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
   };
-
   const [tableData, setTableData] = useState([
     {
       id: "1",
       name: "Tomak",
       description: "lorem",
-      rights: 'see'
+      rights: "see",
+      permission: [
+        {
+          page: "Довідник",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+      ],
     },
     {
       id: "2",
       name: "Nazik",
       description: "lorem",
-      rights: 'see'
+      rights: "see",
+      permission: [
+        {
+          page: "Довідник",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+      ],
     },
     {
       id: "3",
       name: "Petro",
       description: "lorem",
-      rights: 'see'
+      rights: "see",
+      permission: [
+        {
+          page: "Довідник",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Перевізники",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Календар",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Рухомі склади",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Водії",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Вартість проїзду",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Розклад руху",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Маршрути",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Контральна точка",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Випуски",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Рейси маршрутів",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Наряд",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Формуляри",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "звіти",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+        {
+          page: "Aдміністрування",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+
+      ],
     },
     {
       id: "4",
       name: "Oleg",
       description: "lorem",
-      rights: 'see'
+      rights: "see",
+      permission: [
+        {
+          page: "Довідник",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+      ],
     },
     {
       id: "5",
       name: "Saha",
       description: "lorem",
-      rights: 'see'
+      rights: "see",
+      permission: [
+        {
+          page: "Довідник",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+      ],
     },
     {
       id: "6",
       name: "Nazik",
       description: "lorem",
-      rights: 'see'
+      rights: "see",
+      permission: [
+        {
+          page: "Довідник",
+          reade: false,
+          create: true,
+          update: false,
+          delete: true,
+          token: false,
+        },
+      ],
     },
   ]);
 
-  const columns =[
-  {
-    title: "Role id",
-    field: "id",
-    align: "left",
-    emptyValue: () => <em>null</em>,
-    defaultSort: "asc",
-  },
-  {
-    title: "Role name",
-    field: "name",
-    align: "left",
-    emptyValue: () => <em>null</em>,
-    defaultSort: "asc",
-  },
-  {
-    title: "Role description",
-    field: "description",
-    align: "left",
-    emptyValue: () => <em>null</em>,
-    defaultSort: "asc",
-  },
-  {
-    title: "Role Rights",
-    field: "Rights",
-    align: "left",
-    emptyValue: () => <em>null</em>,
-    defaultSort: "asc",
-  }
-  ]
+  const columns = [
+    {
+      title: "Role id",
+      field: "id",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+    },
+    {
+      title: "Role name",
+      field: "name",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+    },
+    {
+      title: "Role description",
+      field: "description",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+    },
+    {
+      title: "Role Rights",
+      field: "Rights",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+    },
+  ];
 
+  const subColumns = [
+    {
+      title: "Page",
+      field: "page",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+    },
+    {
+      title: "Read",
+      field: "reade",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+    },
+    { 
+      title: "Create",
+      field: "create",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+    },
+    { 
+      title: "Update",
+      field: "update",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+     },
+    { 
+      title: "Delete",
+      field: "delete",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+     },
+    { 
+      title: "Access by API token",
+      field: "token",
+      align: "left",
+      emptyValue: () => <em>null</em>,
+      defaultSort: "asc",
+     },
+  ];
 
   // JSX рендеринг
   return (
     <Paper className={classes.paper}>
-      <h4 className={classes.title} >Ролі</h4>
+      <h4 className={classes.title}>Ролі</h4>
       <MaterialTable
         icons={tableIcons}
         columns={columns}
@@ -173,7 +392,6 @@ const Role = (props) => {
             index % 2 === 0 ? { backgroundColor: "#F0F0F0" } : null,
           headerStyle: { backgroundColor: "#FFFBF4" },
         }}
-
         editable={{
           // Callback function to add a new row to the table
           onRowUpdate: (newRow, oldRow) =>
@@ -192,11 +410,24 @@ const Role = (props) => {
               setTimeout(() => resolve(), 1000);
             }),
         }}
-
-        detailPanel={rowData => {
+        detailPanel={(rowData) => {
           return (
-            `<h1>{ roe}</h1>`
-          )
+            <div className={classes.wrapper}>
+              <h4 className={classes.title}>
+                User {rowData.name} with id: {rowData.id}
+              </h4>
+              <MaterialTable
+                icons={tableIcons}
+                title=""
+                columns={subColumns}
+                data={rowData?.permission}
+                options={{
+                  pageSizeOptions: false,
+                  showFirstLastPageButtons: false,
+                }}
+              />
+            </div>
+          );
         }}
       />
     </Paper>
