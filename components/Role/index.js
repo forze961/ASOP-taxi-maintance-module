@@ -422,6 +422,9 @@ const Role = (props) => {
                 columns={subColumns}
                 data={rowData?.permission}
                 options={{
+                  sorting: false,
+                  search: false,
+                  paging: false,
                   pageSizeOptions: false,
                   showFirstLastPageButtons: false,
                 }}

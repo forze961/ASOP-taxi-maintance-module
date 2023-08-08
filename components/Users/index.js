@@ -243,9 +243,9 @@ const Users = (props) => {
           sorting: true,
           search: true,
           searchFieldAlignment: "right",
-          pageSizeOptions: [5, 10],
+          pageSizeOptions: 10,
           // mod pagination
-          paginationType: "stepped",
+          paginationType: false,
           showFirstLastPageButtons: false,
           addRowPosition: "first",
           actionsColumnIndex: -1,
