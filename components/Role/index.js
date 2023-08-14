@@ -379,6 +379,7 @@ const Role = (props) => {
         data={tableData}
         title=""
         options={{
+          draggable: false,
           sorting: true,
           search: true,
           searchFieldAlignment: "right",
@@ -403,11 +404,11 @@ const Role = (props) => {
             }),
           onRowDelete: (selectedRow) =>
             new Promise((resolve, reject) => {
-              const updatedDAta = [...tableData];
-              updatedDAta.splice(selectedRow.tableData.id, 1);
-
+              const updatedData = [...tableData];
+              updatedData.splice(selectedRow.tableData.id, 1);
+              setTableData(updatedData)
               console.log(selectedRow);
-              setTimeout(() => resolve(), 1000);
+              setTimeout(() => resolve(), 500);
             }),
         }}
         detailPanel={(rowData) => {
@@ -422,6 +423,7 @@ const Role = (props) => {
                 columns={subColumns}
                 data={rowData?.permission}
                 options={{
+                  draggable: false,
                   sorting: false,
                   search: false,
                   paging: false,
