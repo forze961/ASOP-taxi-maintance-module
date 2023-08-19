@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import { useRouter } from 'next/router';
 import {AccoutrementWrapped} from '../Accoutrement';
-import Callendar from '../Callendar';
+import Calendar from '../Calendar';
 import Carriers from '../Carriers';
 import Users from '../Users'
 import Role from '../Role'
@@ -74,7 +74,7 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
     }
     // 9 -> 2
     case 2: {
-      return <Callendar />;
+      return <Calendar />;
     }
     // 3-> 3
     case 3: {

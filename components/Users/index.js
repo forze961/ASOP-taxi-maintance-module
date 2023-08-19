@@ -241,6 +241,7 @@ const Users = (props) => {
         options={{
           filtering: filter,
           sorting: true,
+          draggable: false,
           search: true,
           searchFieldAlignment: "right",
           pageSizeOptions: 10,

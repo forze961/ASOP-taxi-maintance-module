@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: "transparent",
   },
+  title:{
+    fontSize: '14px'
+  },
   buttonAdd:{
     borderRadius: 4,
     background: '#144367',
@@ -359,8 +362,9 @@ export default function Carriers() {
   return (
     <Grid item spacing={2} xs={12} className={classes.bg}>
       <Paper className={classes.paper}>
+        <h1 className={classes.title}>Перевізники</h1>
         <MaterialTable
-          title="Перевізники"
+          title=" "
           // columns
           columns={columns}
           // icons
@@ -390,7 +394,6 @@ export default function Carriers() {
               new Promise((resolve, reject) => {
                 const updatedDAta = [...tableData];
                 updatedDAta.splice(selectedRow.tableData.id, 1);
-
                 console.log(selectedRow);
                 setTimeout(() => resolve(), 1000);
               }),
@@ -398,6 +401,7 @@ export default function Carriers() {
           // in option wee add options for table like sorting ....
           options={{
             sorting: true,
+            draggable: false,
             search: true,
             searchFieldAlignment:"left",
             pageSizeOptions: [5, 10],
@@ -406,7 +410,6 @@ export default function Carriers() {
             showFirstLastPageButtons: false,
             addRowPosition: "first",
             actionsColumnIndex: -1,
-    
             rowStyle: (data, index) =>
               index % 2 === 0 ? { backgroundColor: "#F0F0F0" } : null,
             headerStyle: { backgroundColor: "#FFFBF4" },
