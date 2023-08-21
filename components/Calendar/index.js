@@ -51,27 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const createData = (obj) => ({
-  id: Math.floor(Math.random() * 1000),
-  ...obj,
-  isEditMode: true,
-});
 
-const getCellSplit = (row, name) => {
-  if (row[name] && typeof row[name] === "string" && row[name].includes("/")) {
-    const splited = row[name].split("/");
-
-    return (
-      <>
-        {splited[0]}
-        <Box pt={1} />
-        {splited[1]}
-      </>
-    );
-  }
-
-  return row[name];
-};
 
 export default function Callendar() {
   const classes = useStyles();
@@ -184,10 +164,6 @@ export default function Callendar() {
       searchable: false,
     },
   ];
-
-  const DateNow = new Date();
-  let DateBefore = new Date();
-  DateBefore.setDate(DateBefore.getDate() - 1);
 
   const [rows, setRows] = useState([]);
 
@@ -321,7 +297,7 @@ export default function Callendar() {
     <Grid container spacing={3} className={classes.bg}>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <h1 className={classes.title}>Календар</h1>
+          <h2 className={classes.title}>Календар</h2>
           {/* <Box pt={2}>
             {loadingTable ? (
               <div style={{
