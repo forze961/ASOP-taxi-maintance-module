@@ -168,6 +168,58 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
     //   return <AccoutrementWrapped />;
     // }
 
+
+    // case 1: {
+    //   return <Schedule />;
+    // }
+
+    // case 2: {
+    //   return <Carriers />;
+    // }
+
+    // case 3: {
+    //   return <Vehicle />
+    // }
+
+    // case 4: {
+    //   return <Drivers />
+    // }
+
+    // case 5: {
+    //   return <Routes />;
+    // }
+
+    // case 6: {
+    //   return <Tariffs />;
+    // }
+
+    // case 7: {
+    //   return <ReportsWrapped />;
+    // }
+
+    // case 8: {
+    //   return <Stops />;
+    // }
+
+    // case 9: {
+    //   return <Callendar />;
+    // }
+
+    // case 10: {
+    //   return <PaymentWays />;
+    // }
+
+    // case 11: {
+    //   return <Fare />;
+    // }
+
+    // case 12: {
+    //   return <RouteFlights />;
+    // }
+    // case 13: {
+    //   return <AccoutrementWrapped />;
+    // }
+
     default: <Schedule />;
   }
 };
