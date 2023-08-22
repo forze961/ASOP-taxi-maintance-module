@@ -6,8 +6,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import { useRouter } from 'next/router';
 import {AccoutrementWrapped} from '../Accoutrement';
-import Callendar from '../Callendar';
+import Calendar from '../Calendar';
 import Carriers from '../Carriers';
+import Users from '../Users'
+import Role from '../Role'
 import Drivers from '../Drivers';
 import Fare from '../Fare';
 import PaymentWays from '../PaymentWays';
@@ -72,7 +74,7 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
     }
     // 9 -> 2
     case 2: {
-      return <Callendar />;
+      return <Calendar />;
     }
     // 3-> 3
     case 3: {
@@ -106,6 +108,65 @@ const getCurrPage = (id, sizeClient, menuOpen) => {
     case 11: {
       return <AccoutrementWrapped />;
     }
+    case 23: {
+      return <Role />;
+    }
+    case 24: {
+      return <Users />;
+    }
+
+
+
+    // case 1: {
+    //   return <Schedule />;
+    // }
+
+    // case 2: {
+    //   return <Carriers />;
+    // }
+
+    // case 3: {
+    //   return <Vehicle />
+    // }
+
+    // case 4: {
+    //   return <Drivers />
+    // }
+
+    // case 5: {
+    //   return <Routes />;
+    // }
+
+    // case 6: {
+    //   return <Tariffs />;
+    // }
+
+    // case 7: {
+    //   return <ReportsWrapped />;
+    // }
+
+    // case 8: {
+    //   return <Stops />;
+    // }
+
+    // case 9: {
+    //   return <Callendar />;
+    // }
+
+    // case 10: {
+    //   return <PaymentWays />;
+    // }
+
+    // case 11: {
+    //   return <Fare />;
+    // }
+
+    // case 12: {
+    //   return <RouteFlights />;
+    // }
+    // case 13: {
+    //   return <AccoutrementWrapped />;
+    // }
 
 
     // case 1: {
@@ -183,3 +244,4 @@ export default function NavTabs({ menuFilter, menuOpen }) {
     </div>
   );
 }
+

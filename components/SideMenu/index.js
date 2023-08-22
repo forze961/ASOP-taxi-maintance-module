@@ -23,11 +23,11 @@ import LocalShippingOutlinedIcon from "@material-ui/icons/LocalShippingOutlined"
 // оплата
 import AttachMoneyRoundedIcon from "@material-ui/icons/AttachMoneyRounded";
 // водії
-import FaceRoundedIcon from "@material-ui/icons/FaceRounded";
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 // calendar
 import DateRangeIcon from "@material-ui/icons/DateRange";
 // склади
-import ApartmentIcon from "@material-ui/icons/Apartment";
+import DesktopMacIcon from '@material-ui/icons/DesktopMac';
 // довідник
 import ChromeReaderModeOutlinedIcon from "@material-ui/icons/ChromeReaderModeOutlined";
 // ролі
@@ -36,8 +36,10 @@ import SupervisorAccountOutlinedIcon from "@material-ui/icons/SupervisorAccountO
 import HelpOutlineOutlinedIcon from "@material-ui/icons/HelpOutlineOutlined";
 // адмінустровання
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+// користувачі
+import RecentActorsOutlinedIcon from '@material-ui/icons/RecentActorsOutlined';
 // звіти
-import ContactMailOutlinedIcon from "@material-ui/icons/ContactMailOutlined";
+import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 // контроль точка
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 // випуски
@@ -46,6 +48,8 @@ import RecordVoiceOverOutlinedIcon from "@material-ui/icons/RecordVoiceOverOutli
 import MapOutlinedIcon from "@material-ui/icons/MapOutlined";
 //рейси
 import RvHookupOutlinedIcon from "@material-ui/icons/RvHookupOutlined";
+// наряд-формуляри
+import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined';
 // arrow
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
@@ -301,14 +305,14 @@ const itemsMenu = [
         id: 3,
         name: "Рухомі склади",
         url: "/schedule",
-        img: <ApartmentIcon fontSize="small" />,
+        img: <DesktopMacIcon fontSize="small" />,
       },
       // 4-item subMenu
       {
         id: 4,
         name: "Водії",
         url: "/schedule",
-        img: <FaceRoundedIcon fontSize="small" />,
+        img: <PeopleAltIcon fontSize="small" />,
       },
       // 5-item subMenu
       {
@@ -373,7 +377,7 @@ const itemsMenu = [
     name: "Наряд",
     url: "/schedule",
     img: (
-      <AssignmentOutlinedIcon style={{ color: "#111827" }} fontSize="medium" />
+      <TableChartOutlinedIcon style={{ color: "#111827" }} fontSize="medium" />
     ),
   },
   {
@@ -381,7 +385,7 @@ const itemsMenu = [
     name: "Формуляри",
     url: "/schedule",
     img: (
-      <AssignmentOutlinedIcon style={{ color: "#111827" }} fontSize="medium" />
+      <TableChartOutlinedIcon style={{ color: "#111827" }} fontSize="medium" />
     ),
   },
 
@@ -390,7 +394,7 @@ const itemsMenu = [
     name: "Звіти",
     url: "/schedule",
     img: (
-      <ContactMailOutlinedIcon style={{ color: "#111827" }} fontSize="medium" />
+      <InsertDriveFileOutlinedIcon style={{ color: "#111827" }} fontSize="medium" />
     ),
   },
 
@@ -408,16 +412,16 @@ const itemsMenu = [
     subMenu: [
       {
         id: 23,
-        name: "Ролі Route taxi",
+        name: "Ролі",
         url: "/schedule",
-        img: <SupervisorAccountOutlinedIcon fontSize="small" />,
+        img: <SupervisorAccountOutlinedIcon fontSize="small" style={{ color: "#756f6f" }}/>,
       },
 
       {
         id: 24,
-        name: "Ще не знають",
+        name: "Користувачі",
         url: "/schedule",
-        img: <HelpOutlineOutlinedIcon fontSize="small" />,
+        img: <RecentActorsOutlinedIcon fontSize="small"  style={{ color: "#756f6f" }}/>,
       },
     ],
   },

@@ -1,33 +1,37 @@
 /* eslint-disable prefer-const */
-import {Tooltip} from '@material-ui/core';
+
 import axios from 'axios';
 import React, { useState, useEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
+import { forwardRef } from "react";
+
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import moment from 'moment';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TableHead from '@material-ui/core/TableHead';
-import IconButton from '@material-ui/core/IconButton';
+// component
+import MaterialTable from "material-table";
+import Paper from "@material-ui/core/Paper";
+import {Tooltip} from '@material-ui/core';
+import Grid from "@material-ui/core/Grid";
 // Icons
-import EditIcon from '@material-ui/icons/EditOutlined';
-import DoneIcon from '@material-ui/icons/DoneAllTwoTone';
-import RevertIcon from '@material-ui/icons/NotInterestedOutlined';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import Input from '@material-ui/core/Input';
-import clsx from 'clsx';
-import { KeyboardDatePicker } from '@material-ui/pickers';
-import ControlledOpenSelect from '../Select/select';
-import SelectSmall from '../Select/select';
-import TableHeaderBar from '../TableHeaderBar';
-import useUser from '../../lib/useUser';
+// https://v4.mui.com/components/material-icons/#api
+import AddBox from "@material-ui/icons/AddBox";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import ArrowDownward from "@material-ui/icons/ArrowDownward";
+import Check from "@material-ui/icons/Check";
+import ChevronLeft from "@material-ui/icons/ChevronLeft";
+import ChevronRight from "@material-ui/icons/ChevronRight";
+import Clear from "@material-ui/icons/Clear";
+import DeleteOutline from "@material-ui/icons/DeleteOutline";
+import Edit from "@material-ui/icons/Edit";
+import FilterList from "@material-ui/icons/FilterList";
+import FirstPage from "@material-ui/icons/FirstPage";
+import LastPage from "@material-ui/icons/LastPage";
+import Remove from "@material-ui/icons/Remove";
+import SaveAlt from "@material-ui/icons/SaveAlt";
+import Search from "@material-ui/icons/Search";
+import ViewColumn from "@material-ui/icons/ViewColumn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,124 +49,23 @@ const useStyles = makeStyles((theme) => ({
       borderRight: '1px solid rgba(224, 224, 224, 1)',
     },
   },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    '&:hover': {
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  },
-
-  formControl: {
-    minWidth: 120,
-  },
-  smallTableCell: {
-    maxWidth: '30px',
-  },
-  tableHeaderFirst: {
-    backgroundColor: '#FFFBF4',
-  },
-  tableHeaderSecond: {
-    backgroundColor: '#FFFBF4',
-  },
-  selectTableCell: {
-    width: 140,
-    borderLeft: '1px solid rgba(224, 224, 224, 1)',
-  },
-  selectTableCellEdit: {
-    width: 140,
-    borderLeft: '5px solid #ED9137',
+  title: {
+    fontSize: "14px",
   },
   bg: {
     backgroundColor: '#fafafa',
   },
 }));
 
-const createData = (obj) => ({
-  id: Math.floor(Math.random() * 1000),
-  ...obj,
-  isEditMode: true,
-});
 
-const getCellSplit = (row, name) => {
-  if (row[name] && typeof row[name] === 'string' && row[name].includes('/')) {
-    const splited = row[name].split('/');
-
-    return (
-      <>
-        {splited[0]}
-        <Box pt={1} />
-        {splited[1]}
-      </>
-    );
-  }
-
-  return row[name];
-};
-
-const CustomTableCell = ({
-  row, name, onChange, onChangeDate,
-}) => {
-  const classes = useStyles();
-  const { isEditMode } = row;
-  return (
-    <TableCell align="center" className={classes.tableCell}>
-      {
-        isEditMode ? (
-            name.includes('date') ? (
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="yyyy-MM-dd"
-                id="date-picker-inline"
-                label="Оберіть дату"
-                value={row[name]}
-                onChange={(value) => onChangeDate(value, name, row)}
-                autoOk
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-            ) : (
-              <Input
-                value={row[name]}
-                name={name}
-                onChange={(e) => onChange(e, row)}
-                className={classes.input}
-              />
-            )
-          )
-          : (getCellSplit(row, name))
-      }
-    </TableCell>
-  );
-};
 
 export default function Vehicle() {
   const classes = useStyles();
-
-  const { user } = useUser();
-  const DateNow = new Date();
-  let DateBefore = new Date();
-  DateBefore.setDate(DateBefore.getDate() - 1);
-  const [selectedDateNow, setSelectedDateNow] = useState(DateNow);
   const [loadingTable, setLoadingTable] = useState(false);
   const [previous, setPrevious] = React.useState({});
   const [carrier, setCarrier] = React.useState('');
   const [created, setCreated] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      const getCarrier = user?.login?.filialParsed;
-
-      if (getCarrier && !carrier) setCarrier(getCarrier);
-    }
-  }, [user]);
 
   const [rows, setRows] = useState([]);
 
@@ -282,20 +185,6 @@ export default function Vehicle() {
     setCreated(false);
   };
 
-  const onRevert = (id) => {
-    const newRows = rows.map((row) => {
-      if (row.id === id) {
-        return previous[id] ? previous[id] : row;
-      }
-      return row;
-    });
-    setRows(newRows);
-    setPrevious((state) => {
-      delete state[id];
-      return state;
-    });
-    onToggleEditMode(id);
-  };
 
   const onDelete = async (id) => {
     const newRows = rows.filter((row) => row.id !== id);
@@ -316,106 +205,92 @@ export default function Vehicle() {
     });
   };
 
+
+    // connect icons
+    const tableIcons = {
+      Add: forwardRef((props, ref) => (
+        <button className={classes.buttonAdd} ref={ref} {...props}>
+          <AddCircleOutlineIcon />
+          Додати перевізника
+        </button>
+      )),
+      Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+      Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+      Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+      DetailPanel: forwardRef((props, ref) => (
+        <ChevronRight {...props} ref={ref} />
+      )),
+      Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+      Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+      Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+      FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+      LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+      NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+      PreviousPage: forwardRef((props, ref) => (
+        <ChevronLeft {...props} ref={ref} />
+      )),
+      ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+      Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+      SortArrow: forwardRef((props, ref) => (
+        <ArrowDownward {...props} ref={ref} />
+      )),
+      ThirdStateCheck: forwardRef((props, ref) => (
+        <Remove {...props} ref={ref} />
+      )),
+      ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
+    };
+
+    // in this variables we can change columns in table
+
+    const columns = [
+      {
+        title: "Державний номер",
+        field: "stateNumber",
+        align: "left",
+        emptyValue: () => <em>null</em>,
+        defaultSort: "asc",
+      },
+      // if yo want to disabled for sort and search same column
+      // sorting: false, searchable: false
+      {
+        title: "Бортовий номер",
+        field: "boardNumber",
+        align: "left",
+        emptyValue: () => <em>null</em>,
+        sorting: false,
+        searchable: false,
+      },
+
+    ];
+
   return (
     <Grid container spacing={3} className={classes.bg}>
       <Grid item xs={12}>
+
         <Paper className={classes.paper}>
-          <ControlledOpenSelect carrier={carrier} setCarrier={setCarrier} />
-          <TableHeaderBar
-            selectedDateNow={selectedDateNow}
-            handleDateChangeNow={(() => {})}
-            disableDatepicker
-            titleNoDatepicker="Рухомі Склади"
-            btnTitle="Додати транспортний засіб"
-            btnOnClick={() => {
-              setCreated(true);
-              setRows([createData({
-                name: '',
-                description: carrier,
-                rollNumber: ''
-              }), ...rows]);
+        <h2>Рухомі одиниці</h2>
+        <MaterialTable
+            title=" "
+            icons={tableIcons}
+            // columns
+            columns={columns}
+            // in option wee add options for table like sorting ....
+            options={{
+              sorting: true,
+              draggable: false,
+              search: true,
+              searchFieldAlignment: "left",
+              pageSizeOptions: [5, 10],
+              // mod pagination
+              paginationType: "stepped",
+              showFirstLastPageButtons: false,
+              addRowPosition: "first",
+              actionsColumnIndex: 0,
+              rowStyle: (data, index) =>
+                index % 2 === 0 ? { backgroundColor: "#F0F0F0" } : null,
+              headerStyle: { backgroundColor: "#FFFBF4" },
             }}
           />
-
-          <Box pt={2}>
-            {loadingTable ? (
-              <div style={{
-                display: 'flex', justifyContent: 'center',
-              }}
-              >
-                <CircularProgress style={{ color: '#1e88e5' }} />
-              </div>
-            ) : (
-              <>
-                <TableContainer style={{ overflowX: 0 }}>
-                  <Table className={classes.table} size="small" aria-label="a dense table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Ред.</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Державний номер</TableCell>
-                        <TableCell className={classes.tableHeaderFirst} align="center">Бортовий номер</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.map((row, index) => (
-                        <TableRow key={row.id} style={{ backgroundColor: index % 2 !== 0 ? '#fafafa' : '#FFFFFF' }}>
-                          <TableCell
-                            className={clsx(classes.selectTableCell, {
-                              [classes.selectTableCellEdit]: row.isEditMode,
-                              [classes.selectTableCell]: !row.isEditMode,
-                            })}
-                            align="center"
-                          >
-                            {row.isEditMode ? (
-                              <>
-                                <Tooltip title="Зберегти">
-                                  <IconButton
-                                    aria-label="done"
-                                    onClick={() => onSave(row)}
-                                  >
-                                    <DoneIcon />
-                                  </IconButton>
-                                </Tooltip>
-                                <Tooltip title="Відмінити">
-                                  <IconButton
-                                    aria-label="revert"
-                                    onClick={() => onRevert(row.id)}
-                                  >
-                                    <RevertIcon />
-                                  </IconButton>
-                                </Tooltip>
-                              </>
-                            ) : (
-                              <>
-                                <IconButton
-                                  aria-label="delete"
-                                  onClick={() => onToggleEditMode(row.id)}
-                                >
-                                  <EditIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="revert"
-                                  onClick={() => onDelete(row.id)}
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </>
-                            )}
-                          </TableCell>
-                          <CustomTableCell clas {...{ row, name: 'name', onChange }} />
-                          <CustomTableCell {...{
-                            row, name: 'rollNumber', onChange,
-                          }}
-                          />
-                        </TableRow>
-                      ))}
-
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </>
-            )}
-          </Box>
         </Paper>
       </Grid>
     </Grid>
